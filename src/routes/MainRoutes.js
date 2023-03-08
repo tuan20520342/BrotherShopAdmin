@@ -1,6 +1,7 @@
 import MainLayout from '../layouts/MainLayout';
 import TestPage from '~/pages/test';
 import NotFoundPage from '~/pages/NotFound';
+import StaffsPage from '~/pages/StaffsPage';
 
 const MainRoutes = {
   path: '/',
@@ -11,11 +12,11 @@ const MainRoutes = {
       element: <TestPage />,
     },
     {
-      path: '/about',
-      element: <TestPage />,
+      path: '/staffs',
+      element: <StaffsPage />,
     },
     {
-      path: '/my-account',
+      path: '/products',
       element: <TestPage />,
     },
     {
