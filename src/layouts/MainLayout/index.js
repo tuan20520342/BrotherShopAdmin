@@ -18,14 +18,6 @@ import {
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 import { useState } from 'react';
 const { Header, Content, Footer, Sider } = Layout;
-function getItem(label, key, icon, children) {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  };
-}
 
 const AuthLayout = () => {
   const navigate = useNavigate();
@@ -48,6 +40,7 @@ const AuthLayout = () => {
             background: 'rgba(255, 255, 255, 0.2)',
           }}
         />
+
         <Menu
           theme="dark"
           defaultSelectedKeys={['1']}
@@ -55,7 +48,7 @@ const AuthLayout = () => {
           selectedKeys={[
             location.pathname === '/'
               ? '1'
-              : location.pathname === '/staffs'
+              : location.pathname === '/staffs' || location.pathname === '/add-staff'
               ? '2'
               : location.pathname === '/products'
               ? '3'

@@ -4,9 +4,12 @@ import { useState, useEffect } from 'react';
 import TableStaffs from '~/components/Staffs/TableStaffs';
 import { Typography, Row, Col, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import Toolbar from '~/components/UI/Toolbar';
+import { useNavigate } from 'react-router-dom';
 const { Title } = Typography;
 
 const StaffsPage = () => {
+  const navigate = useNavigate();
   const staffs = [
     {
       id: 1,
@@ -41,7 +44,9 @@ const StaffsPage = () => {
   ];
   const [keyWord, setKeyWord] = useState('');
 
-  const handleAddStaff = () => {};
+  const handleAddStaff = () => {
+    navigate('/add-staff');
+  };
 
   return (
     <>
@@ -49,47 +54,9 @@ const StaffsPage = () => {
         <Col span={24}>
           <Title level={2}>Danh sách nhân viên</Title>
         </Col>
-      </Row>
-      <Row wrap={true} gutter={8} justify="end">
-        <Col
-          //   sm={4}
-          //   xs={{
-          //     span: 24,
-          //   }}
-          style={{ marginBottom: '4px' }}
-        >
-          <Search
-            style={{
-              width: 'fit-content',
-            }}
-            name="search"
-            placeholder="Tìm kiếm..."
-            allowClear
-            // onSearch={(value) => {
-            //   setKeyWord(value);
-            // }}
-            onChange={(e) => {
-              setKeyWord(e.target.value);
-            }}
-          />
+        <Col span={24}>
+          <Toolbar title={'Thêm nhân viên'} setKeyWord={setKeyWord} handleAdd={handleAddStaff} />
         </Col>
-        <Col style={{ marginBottom: '4px' }}>
-          <Button type="primary" onClick={handleAddStaff} icon={<PlusOutlined />}>
-            {/* <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-4 h-4 mr-3"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-            </svg> */}
-            Thêm nhân viên
-          </Button>
-        </Col>
-      </Row>
-      <Row>
         <Col span={24}>
           <TableStaffs keyWord={keyWord} data={staffs} />
         </Col>

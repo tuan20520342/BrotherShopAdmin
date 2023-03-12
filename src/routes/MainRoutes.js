@@ -2,6 +2,8 @@ import MainLayout from '../layouts/MainLayout';
 import TestPage from '~/pages/test';
 import NotFoundPage from '~/pages/NotFound';
 import StaffsPage from '~/pages/StaffsPage';
+import AddItemForm from '~/pages/AddItemForm';
+import AddStaffForm from '~/components/Staffs/AddStaffForm';
 
 const MainRoutes = {
   path: '/',
@@ -14,6 +16,10 @@ const MainRoutes = {
     {
       path: '/staffs',
       element: <StaffsPage />,
+    },
+    {
+      path: '/add-staff',
+      element: <AddItemForm title={'Thêm nhân viên'} form={<AddStaffForm />} />,
     },
     {
       path: '/products',
