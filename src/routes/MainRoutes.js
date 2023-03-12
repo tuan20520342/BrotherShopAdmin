@@ -4,6 +4,8 @@ import NotFoundPage from '~/pages/NotFound';
 import StaffsPage from '~/pages/StaffsPage';
 import AddItemForm from '~/pages/AddItemForm';
 import AddStaffForm from '~/components/Staffs/AddStaffForm';
+import ProductsPage from '~/pages/ProductsPage';
+import AddProductForm from '~/components/Prouducts/AddProductForm';
 
 const MainRoutes = {
   path: '/',
@@ -23,7 +25,11 @@ const MainRoutes = {
     },
     {
       path: '/products',
-      element: <TestPage />,
+      element: <ProductsPage />,
+    },
+    {
+      path: '/add-product',
+      element: <AddItemForm title={'Thêm sản phẩm'} form={<AddProductForm />} />,
     },
     {
       path: '/wishlist',

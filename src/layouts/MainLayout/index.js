@@ -50,7 +50,7 @@ const AuthLayout = () => {
               ? '1'
               : location.pathname === '/staffs' || location.pathname === '/add-staff'
               ? '2'
-              : location.pathname === '/products'
+              : location.pathname === '/products' || location.pathname === '/add-product'
               ? '3'
               : '-1',
           ]}
