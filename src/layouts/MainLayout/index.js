@@ -14,15 +14,21 @@ import {
   DesktopOutlined,
   TeamOutlined,
   DashboardOutlined,
+  MenuUnfoldOutlined,
 } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import { Breadcrumb, Layout, Menu, Row, theme } from 'antd';
 import { useState } from 'react';
+import MainLayoutSider from './MainLayoutSider';
+import MainLayoutDrawer from './MainLayoutDrawer';
 const { Header, Content, Footer, Sider } = Layout;
 
 const AuthLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
+  const [drawerCollapsed, setDrawerCollapsed] = useState(false);
+  const [visibleButton, setVisibleButton] = useState(false);
+
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -32,76 +38,22 @@ const AuthLayout = () => {
         minHeight: '100vh',
       }}
     >
-      <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-        <div
-          style={{
-            height: 32,
-            margin: 16,
-            background: 'rgba(255, 255, 255, 0.2)',
-          }}
-        />
-
-        <Menu
-          theme="dark"
-          defaultSelectedKeys={['1']}
-          mode="inline"
-          selectedKeys={[
-            location.pathname === '/'
-              ? '1'
-              : location.pathname === '/staffs' || location.pathname === '/add-staff'
-              ? '2'
-              : location.pathname === '/products' || location.pathname === '/add-product'
-              ? '3'
-              : location.pathname === '/orders'
-              ? '4'
-              : '-1',
-          ]}
-        >
-          <Menu.Item
-            key="1"
-            icon={<DashboardOutlined />}
-            onClick={() => {
-              navigate('/');
-            }}
-          >
-            Trang chủ
-          </Menu.Item>
-          <Menu.Item
-            key="2"
-            icon={<TeamOutlined />}
-            onClick={() => {
-              navigate('/staffs');
-            }}
-          >
-            Nhân viên
-          </Menu.Item>
-          <Menu.Item
-            key="3"
-            icon={<FileOutlined />}
-            onClick={() => {
-              navigate('/products');
-            }}
-          >
-            Sản phẩm
-          </Menu.Item>
-          <Menu.Item
-            key="4"
-            icon={<FileOutlined />}
-            onClick={() => {
-              navigate('/orders');
-            }}
-          >
-            Đơn hàng
-          </Menu.Item>
-        </Menu>
-      </Sider>
+      <MainLayoutSider collapsed={collapsed} setCollapsed={setCollapsed} setVisibleButton={setVisibleButton} />
+      <MainLayoutDrawer collapsed={drawerCollapsed} setCollapsed={setDrawerCollapsed} />
       <Layout className="site-layout">
         <Header
           style={{
             padding: 0,
             background: colorBgContainer,
           }}
-        />
+        >
+          {visibleButton && (
+            <MenuUnfoldOutlined
+              style={{ marginLeft: '8px', fontSize: '24px', lineHeight: '28px' }}
+              onClick={() => setDrawerCollapsed(!drawerCollapsed)}
+            />
+          )}
+        </Header>
         <Content
           style={{
             margin: '0 16px',
