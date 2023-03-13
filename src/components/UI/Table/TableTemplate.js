@@ -6,8 +6,8 @@ const TableTemplate = (props) => {
     <Table
       pagination={props.pagination}
       locale={{
-        triggerDesc: 'Nhấp để sắp xếp giảm dần',
-        triggerAsc: 'Nhấp để sắp xếp tăng dần',
+        triggerDesc: 'Nhấn để sắp xếp giảm dần',
+        triggerAsc: 'Nhấn để sắp xếp tăng dần',
         cancelSort: 'Trở về mặc định',
       }}
       rowKey={props.rowKey}

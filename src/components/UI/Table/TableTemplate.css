@@ -1,19 +1,32 @@
 .table-striped-rows .ant-table-thead .ant-table-cell {
   font-weight: bold;
+  background: white;
 }
 .table-striped-rows tr:nth-child(2n + 1) td {
-  background-color: #fbfbfbfb;
+  background: #f7fafc;
 }
 
-/* .ant-table-thead > tr.ant-table-row-hover:not(.ant-table-expanded-row) > td,
-.ant-table-tbody > tr.ant-table-row-hover:not(.ant-table-expanded-row) > td,
-.ant-table-thead > tr:hover:not(.ant-table-expanded-row) > td,
-.ant-table-tbody > tr:hover:not(.ant-table-expanded-row) > td {
-  background: unset;
+/* .table-striped-rows .ant-table-thead > tr.ant-table-row-hover:not(.ant-table-expanded-row) > td,
+.table-striped-rows .ant-table-tbody > tr.ant-table-row-hover:not(.ant-table-expanded-row) > td, */
+/* .table-striped-rows .ant-table-thead > tr:nth-child(2n):hover:not(.ant-table-expanded-row) > td, */
+/* .table-striped-rows .ant-table-tbody > tr:nth-child(2n):hover:not(.ant-table-expanded-row) > td {
+  background: white;
+}
+
+.table-striped-rows .ant-table-tbody > tr:nth-child(2n + 1):hover:not(.ant-table-expanded-row) > td {
+  background: #f7fafc;
 } */
 
+.table-striped-rows .ant-table-tbody > tr:hover:not(.ant-table-expanded-row) > td.ant-table-cell.ant-table-column-sort {
+  background: #f0f0f0;
+}
+
+.table-striped-rows td.ant-table-cell.ant-table-column-sort {
+  background: #f0f0f0;
+}
 .table-striped-rows {
-  margin: 4px 0;
+  margin: 6px 0;
+  filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
 }
 
 /* .table-striped-rows .ant-table-tbody > tr > td {

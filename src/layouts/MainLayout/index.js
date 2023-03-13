@@ -52,6 +52,8 @@ const AuthLayout = () => {
               ? '2'
               : location.pathname === '/products' || location.pathname === '/add-product'
               ? '3'
+              : location.pathname === '/orders'
+              ? '4'
               : '-1',
           ]}
         >
@@ -81,6 +83,15 @@ const AuthLayout = () => {
             }}
           >
             Sản phẩm
+          </Menu.Item>
+          <Menu.Item
+            key="4"
+            icon={<FileOutlined />}
+            onClick={() => {
+              navigate('/orders');
+            }}
+          >
+            Đơn hàng
           </Menu.Item>
         </Menu>
       </Sider>
