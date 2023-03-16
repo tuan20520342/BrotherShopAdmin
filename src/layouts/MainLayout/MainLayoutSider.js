@@ -14,8 +14,9 @@ import {
   ExpandOutlined,
   AppstoreAddOutlined,
   MoneyCollectOutlined,
-  EnterOutlined,
-  RollbackOutlined,
+  ShoppingCartOutlined,
+  AppstoreOutlined,
+  SkinOutlined,
   FileOutlined,
 } from '@ant-design/icons';
 import { useHistory, useLocation, useNavigate } from 'react-router-dom';
@@ -60,10 +61,14 @@ const MainLayoutSider = ({ collapsed, setCollapsed, setVisibleButton }) => {
             ? '1'
             : location.pathname === '/staffs' || location.pathname === '/add-staff'
             ? '2'
-            : location.pathname === '/products' || location.pathname === '/add-product'
+            : location.pathname === '/customers'
             ? '3'
-            : location.pathname === '/orders'
+            : location.pathname === '/products' || location.pathname === '/add-product'
             ? '4'
+            : location.pathname === '/categories'
+            ? '5'
+            : location.pathname === '/orders'
+            ? '6'
             : '-1',
         ]}
       >
@@ -79,7 +84,7 @@ const MainLayoutSider = ({ collapsed, setCollapsed, setVisibleButton }) => {
         </Menu.Item>
         <Menu.Item
           key="2"
-          icon={<TeamOutlined />}
+          icon={<UserOutlined />}
           onClick={() => {
             navigate('/staffs');
           }}
@@ -89,7 +94,17 @@ const MainLayoutSider = ({ collapsed, setCollapsed, setVisibleButton }) => {
         </Menu.Item>
         <Menu.Item
           key="3"
-          icon={<FileOutlined />}
+          icon={<TeamOutlined />}
+          onClick={() => {
+            navigate('/customers');
+          }}
+          title=""
+        >
+          Khách hàng
+        </Menu.Item>
+        <Menu.Item
+          key="4"
+          icon={<SkinOutlined />}
           onClick={() => {
             navigate('/products');
           }}
@@ -98,8 +113,18 @@ const MainLayoutSider = ({ collapsed, setCollapsed, setVisibleButton }) => {
           Sản phẩm
         </Menu.Item>
         <Menu.Item
-          key="4"
-          icon={<FileOutlined />}
+          key="5"
+          icon={<AppstoreOutlined />}
+          onClick={() => {
+            navigate('/categories');
+          }}
+          title=""
+        >
+          Danh mục sản phẩm
+        </Menu.Item>
+        <Menu.Item
+          key="6"
+          icon={<ShoppingCartOutlined />}
           onClick={() => {
             navigate('/orders');
           }}
