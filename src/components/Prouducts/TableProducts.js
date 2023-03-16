@@ -125,31 +125,27 @@ const TableProducts = ({ keyWord, data, loading }) => {
       align: 'center',
       render: (text, record, index) => (
         <Space size="middle" key={index}>
-          <Button type="primary" icon={<EyeFilled />} onClick={() => handleEditStaff(record)}></Button>
-          {record.role === 'MANAGER' ? (
-            <Button type="primary" icon={<DeleteFilled />} disabled></Button>
-          ) : (
-            <Popconfirm
-              placement="top"
-              title="Bạn có chắc muốn xóa nhân viên này?"
-              okText="Xác nhận"
-              cancelText="Hủy"
-              // cancelButtonProps={{
-              //   className: 'text-gray-400 border-gray-400 hover:text-gray-500 hover:border-gray-500',
-              // }}
-              onConfirm={() => handleRemoveStaff(record)}
-            >
-              <Button type="primary" icon={<DeleteFilled />} danger></Button>
-            </Popconfirm>
-          )}
+          <Button type="primary" icon={<EyeFilled />} onClick={() => handleEditProduct(record)}></Button>
+          <Popconfirm
+            placement="top"
+            title="Bạn có chắc muốn xóa sản phẩm này?"
+            okText="Xác nhận"
+            cancelText="Hủy"
+            // cancelButtonProps={{
+            //   className: 'text-gray-400 border-gray-400 hover:text-gray-500 hover:border-gray-500',
+            // }}
+            onConfirm={() => handleRemoveProduct(record)}
+          >
+            <Button type="primary" icon={<DeleteFilled />} danger></Button>
+          </Popconfirm>
         </Space>
       ),
     },
   ];
 
-  const handleRemoveStaff = (record) => {};
+  const handleRemoveProduct = (record) => {};
 
-  const handleEditStaff = (staff) => {};
+  const handleEditProduct = (staff) => {};
   // if (loading === true) {
   //   return (
   //     <div className="w-full flex items-center justify-center mb-12 h-4/5">

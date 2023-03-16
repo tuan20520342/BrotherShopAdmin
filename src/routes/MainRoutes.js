@@ -7,6 +7,7 @@ import AddStaffForm from '~/components/Staffs/AddStaffForm';
 import ProductsPage from '~/pages/ProductsPage';
 import AddProductForm from '~/components/Prouducts/AddProductForm';
 import OrdersPage from '~/pages/OrdersPage';
+import CustomersPage from '~/pages/CustomersPage';
 
 const MainRoutes = {
   path: '/',
@@ -37,8 +38,8 @@ const MainRoutes = {
       element: <OrdersPage />,
     },
     {
-      path: '/cart',
-      element: <TestPage />,
+      path: '/customers',
+      element: <CustomersPage />,
     },
     {
       path: '*',
