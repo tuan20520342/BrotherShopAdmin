@@ -229,7 +229,7 @@ const AddStaffForm = () => {
             <TextArea rows={2} placeholder="Khác" />
           </Form.Item>
         </Col>
-        <Col span={24} key={8}>
+        <Col span={24} key={9}>
           <Form.Item name="avatar" label="Ảnh nhân viên">
             <ImgCrop rotationSlider>
               <Upload

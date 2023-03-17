@@ -8,6 +8,7 @@ import ProductsPage from '~/pages/ProductsPage';
 import AddProductForm from '~/components/Prouducts/AddProductForm';
 import OrdersPage from '~/pages/OrdersPage';
 import CustomersPage from '~/pages/CustomersPage';
+import CategoriesPage from '~/pages/CategoriesPage';
 
 const MainRoutes = {
   path: '/',
@@ -32,6 +33,10 @@ const MainRoutes = {
     {
       path: '/add-product',
       element: <AddItemForm title={'Thêm sản phẩm'} form={<AddProductForm />} />,
+    },
+    {
+      path: '/categories',
+      element: <CategoriesPage />,
     },
     {
       path: '/orders',
