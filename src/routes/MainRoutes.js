@@ -9,6 +9,7 @@ import AddProductForm from '~/components/Prouducts/AddProductForm';
 import OrdersPage from '~/pages/OrdersPage';
 import CustomersPage from '~/pages/CustomersPage';
 import CategoriesPage from '~/pages/CategoriesPage';
+import WearhouseReceiptPage from '~/pages/WearhouseReceiptPage';
 
 const MainRoutes = {
   path: '/',
@@ -37,6 +38,10 @@ const MainRoutes = {
     {
       path: '/categories',
       element: <CategoriesPage />,
+    },
+    {
+      path: '/warehouse-receipt',
+      element: <WearhouseReceiptPage />,
     },
     {
       path: '/orders',

@@ -16,11 +16,13 @@ import {
   DashboardOutlined,
   MenuUnfoldOutlined,
 } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, Row, theme } from 'antd';
+import { Breadcrumb, Layout, Menu, Row, theme, Col, Space, Typography } from 'antd';
 import { useState } from 'react';
 import MainLayoutSider from './MainLayoutSider';
 import MainLayoutDrawer from './MainLayoutDrawer';
+import DropDownAvatar from './DropDownAvatar';
 const { Header, Content, Footer, Sider } = Layout;
+const { Text } = Typography;
 
 const AuthLayout = () => {
   const navigate = useNavigate();
@@ -36,6 +38,7 @@ const AuthLayout = () => {
     <Layout
       style={{
         minHeight: '100vh',
+        minWidth: '100px',
       }}
     >
       <MainLayoutSider collapsed={collapsed} setCollapsed={setCollapsed} setVisibleButton={setVisibleButton} />
@@ -47,12 +50,22 @@ const AuthLayout = () => {
             background: colorBgContainer,
           }}
         >
-          {visibleButton && (
-            <MenuUnfoldOutlined
-              style={{ marginLeft: '8px', fontSize: '24px', lineHeight: '28px' }}
-              onClick={() => setDrawerCollapsed(!drawerCollapsed)}
-            />
-          )}
+          <Row justify="space-between">
+            <Col>
+              {visibleButton && (
+                <MenuUnfoldOutlined
+                  style={{ marginLeft: '8px', fontSize: '24px', lineHeight: '28px' }}
+                  onClick={() => setDrawerCollapsed(!drawerCollapsed)}
+                />
+              )}
+            </Col>
+            <Col>
+              <Space style={{ marginRight: '8px' }}>
+                <DropDownAvatar />
+                {!visibleButton && <Text strong>Nguyễn Văn A</Text>}
+              </Space>
+            </Col>
+          </Row>
         </Header>
         <Content
           style={{

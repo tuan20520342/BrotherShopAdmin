@@ -17,7 +17,7 @@ import {
   ShoppingCartOutlined,
   AppstoreOutlined,
   SkinOutlined,
-  FileOutlined,
+  SnippetsOutlined,
 } from '@ant-design/icons';
 import { useHistory, useLocation, useNavigate } from 'react-router-dom';
 import Sider from 'antd/es/layout/Sider';
@@ -67,8 +67,10 @@ const MainLayoutSider = ({ collapsed, setCollapsed, setVisibleButton }) => {
             ? '4'
             : location.pathname === '/categories'
             ? '5'
-            : location.pathname === '/orders'
+            : location.pathname === '/warehouse-receipt'
             ? '6'
+            : location.pathname === '/orders'
+            ? '7'
             : '-1',
         ]}
       >
@@ -124,6 +126,16 @@ const MainLayoutSider = ({ collapsed, setCollapsed, setVisibleButton }) => {
         </Menu.Item>
         <Menu.Item
           key="6"
+          icon={<SnippetsOutlined />}
+          onClick={() => {
+            navigate('/warehouse-receipt');
+          }}
+          title=""
+        >
+          Phiếu nhập kho
+        </Menu.Item>
+        <Menu.Item
+          key="7"
           icon={<ShoppingCartOutlined />}
           onClick={() => {
             navigate('/orders');
