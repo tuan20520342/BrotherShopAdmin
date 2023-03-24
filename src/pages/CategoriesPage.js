@@ -6,20 +6,16 @@ import { PlusOutlined } from '@ant-design/icons';
 import Toolbar from '~/components/UI/Toolbar';
 import { useNavigate } from 'react-router-dom';
 import TableCategories from '~/components/Categories/TableCategories';
+import ModalForm from '~/HOC/ModalForm';
+import { modalActions } from '~/redux/reducer/ModalReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import AddCategoryForm from '~/components/Categories/AddCategoryForm';
+
 const { Title } = Typography;
 
 const CategoriesPage = () => {
-  const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
+  const dispatch = useDispatch();
+
   const categories = [
     {
       id: 1,
@@ -37,7 +33,12 @@ const CategoriesPage = () => {
   const [keyWord, setKeyWord] = useState('');
 
   const handleAddCategory = () => {
-    showModal();
+    dispatch(
+      modalActions.showModal({
+        title: 'Thêm danh mục sản phẩm',
+        ComponentContent: <AddCategoryForm />,
+      }),
+    );
   };
 
   return (
@@ -47,27 +48,13 @@ const CategoriesPage = () => {
           <Title level={2}>Danh mục sản phẩm</Title>
         </Col>
         <Col span={24}>
-          <Toolbar title={'Thêm danh mục'} setKeyWord={setKeyWord} handleAdd={showModal} />
+          <Toolbar title={'Thêm danh mục'} setKeyWord={setKeyWord} handleAdd={handleAddCategory} />
         </Col>
         <Col span={24}>
           <TableCategories data={categories} keyWord={keyWord} />
         </Col>
       </Row>
-      <Modal title="Thêm danh mục" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-        <Form>
-          <Form.Item
-            name="category"
-            label="Tên danh mục"
-            rules={[
-              {
-                required: true,
-              },
-            ]}
-          >
-            <Input placeholder="Tên danh mục" />
-          </Form.Item>
-        </Form>
-      </Modal>
+      <ModalForm />
     </>
   );
 };

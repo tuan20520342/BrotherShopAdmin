@@ -51,9 +51,9 @@ const TableProducts = ({ keyWord, data, loading }) => {
       showOnDesktop: true,
     },
     {
-      title: 'Giá nhập',
-      dataIndex: 'cost',
-      key: 'cost',
+      title: 'Giá cũ',
+      dataIndex: 'oldPrice',
+      key: 'oldPrice',
       showOnResponse: true,
       showOnDesktop: true,
       sorter: (a, b) => a.cost - b.cost,

@@ -1,5 +1,5 @@
 import logo from './logo.svg';
-import { Checkbox, ConfigProvider, Radio } from 'antd';
+import { ConfigProvider } from 'antd';
 import React from 'react';
 import Routes from './routes';
 

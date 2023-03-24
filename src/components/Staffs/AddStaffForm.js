@@ -105,7 +105,7 @@ const AddStaffForm = () => {
     //   role: 'EMPLOYEE',
     //   active: true,
     // };
-    // console.log(newStaff);
+    console.log(values);
   };
   return (
     <Form
@@ -231,7 +231,7 @@ const AddStaffForm = () => {
         </Col>
         <Col span={24} key={9}>
           <Form.Item name="avatar" label="Ảnh nhân viên">
-            <ImgCrop rotationSlider>
+            <ImgCrop>
               <Upload
                 action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                 listType="picture-card"
@@ -242,15 +242,6 @@ const AddStaffForm = () => {
                 {fileList.length >= 1 ? null : uploadButton}
               </Upload>
             </ImgCrop>
-            <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
-              <img
-                alt="example"
-                style={{
-                  width: '100%',
-                }}
-                src={previewImage}
-              />
-            </Modal>
           </Form.Item>
         </Col>
       </Row>
@@ -264,6 +255,15 @@ const AddStaffForm = () => {
           </Button>
         </Space>
       </Row>
+      <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
+        <img
+          alt="example"
+          style={{
+            width: '100%',
+          }}
+          src={previewImage}
+        />
+      </Modal>
     </Form>
   );
 };
