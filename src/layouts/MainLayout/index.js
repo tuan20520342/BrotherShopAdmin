@@ -50,7 +50,7 @@ const AuthLayout = () => {
             background: colorBgContainer,
           }}
         >
-          <Row justify="space-between" style={{ marginLeft: '8px', marginRight: '8px' }}>
+          <Row justify="space-between" style={{ marginLeft: '10px', marginRight: '10px' }}>
             <Col>
               {visibleButton && (
                 <MenuUnfoldOutlined

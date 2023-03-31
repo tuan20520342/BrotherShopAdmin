@@ -9,8 +9,9 @@ import AddProductForm from '~/components/Prouducts/AddProductForm';
 import OrdersPage from '~/pages/OrdersPage';
 import CustomersPage from '~/pages/CustomersPage';
 import CategoriesPage from '~/pages/CategoriesPage';
-import WearhouseReceiptPage from '~/pages/WearhouseReceiptPage';
+import WearhouseReceiptsPage from '~/pages/WarehouseReceiptsPage';
 import ProfilePage from '~/pages/ProfilePage';
+import AddWarehouseReceipt from '~/components/WarehouseReceipt/AddWarehouseReceipt';
 
 const MainRoutes = {
   path: '/',
@@ -42,7 +43,7 @@ const MainRoutes = {
     },
     {
       path: '/warehouse-receipt',
-      element: <WearhouseReceiptPage />,
+      element: <WearhouseReceiptsPage />,
     },
     {
       path: '/orders',
@@ -59,6 +60,10 @@ const MainRoutes = {
     {
       path: '/profile',
       element: <ProfilePage />,
+    },
+    {
+      path: '/add-warehouse-receipt',
+      element: <AddItemForm title={'Thêm phiếu nhập kho'} form={<AddWarehouseReceipt />} />,
     },
   ],
 };
