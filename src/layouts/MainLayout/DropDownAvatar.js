@@ -1,12 +1,13 @@
 import React from 'react';
 import { DownOutlined, SmileOutlined, UserOutlined, ExportOutlined } from '@ant-design/icons';
-import { Dropdown, Space, Menu, Avatar } from 'antd';
+import { Dropdown, Space, Menu, Avatar, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import AlertCustom from '~/components/UI/Notification/Alert';
 import { useSelector, useDispatch } from 'react-redux';
+const { Text } = Typography;
 
-const DropDownAvatar = () => {
+const DropDownAvatar = ({ visibleText }) => {
   // const { staff } = useSelector((state) => state.staffsSlice);
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -34,7 +35,7 @@ const DropDownAvatar = () => {
           navigate('/profile');
         }}
       >
-        Thay đổi thông tin
+        Thông tin cá nhân
       </Menu.Item>
       <Menu.Item key="2" icon={<ExportOutlined />} onClick={handleLogout}>
         Đăng xuất
@@ -43,7 +44,10 @@ const DropDownAvatar = () => {
   );
   return (
     <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
-      <Avatar className="bg-blue-300" icon={<UserOutlined />} />
+      <Space style={{ cursor: 'pointer' }}>
+        <Avatar className="bg-blue-300" icon={<UserOutlined />} />
+        {visibleText && <Text strong>Nguyễn Văn A</Text>}
+      </Space>
     </Dropdown>
   );
 };

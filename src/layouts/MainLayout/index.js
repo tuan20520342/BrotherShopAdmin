@@ -50,20 +50,17 @@ const AuthLayout = () => {
             background: colorBgContainer,
           }}
         >
-          <Row justify="space-between">
+          <Row justify="space-between" style={{ marginLeft: '8px', marginRight: '8px' }}>
             <Col>
               {visibleButton && (
                 <MenuUnfoldOutlined
-                  style={{ marginLeft: '8px', fontSize: '24px', lineHeight: '28px' }}
+                  style={{ fontSize: '24px', lineHeight: '28px' }}
                   onClick={() => setDrawerCollapsed(!drawerCollapsed)}
                 />
               )}
             </Col>
             <Col>
-              <Space style={{ marginRight: '8px' }}>
-                <DropDownAvatar />
-                {!visibleButton && <Text strong>Nguyễn Văn A</Text>}
-              </Space>
+              <DropDownAvatar visibleText={!visibleButton} />
             </Col>
           </Row>
         </Header>

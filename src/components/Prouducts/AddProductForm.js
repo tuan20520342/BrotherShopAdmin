@@ -133,7 +133,15 @@ const AddProductForm = () => {
     >
       <Row gutter={[16, 16]}>
         <Col xs={24} sm={16} md={24} lg={16}>
-          <div style={{ background: 'white', borderRadius: '6px', marginBottom: '16px', padding: '0 20px' }}>
+          <div
+            style={{
+              background: 'white',
+              borderRadius: '6px',
+              marginBottom: '16px',
+              padding: '0 20px',
+              filter: 'drop-shadow(0 1px 1px rgb(0 0 0 / 0.05))',
+            }}
+          >
             <Row>
               <Col span={24}>
                 <Title level={4}>Thông tin sản phẩm</Title>
@@ -158,7 +166,15 @@ const AddProductForm = () => {
               </Col>
             </Row>
           </div>
-          <div style={{ background: 'white', borderRadius: '6px', marginBottom: '16px', padding: '0 20px' }}>
+          <div
+            style={{
+              background: 'white',
+              borderRadius: '6px',
+              marginBottom: '16px',
+              padding: '0 20px',
+              filter: 'drop-shadow(0 1px 1px rgb(0 0 0 / 0.05))',
+            }}
+          >
             <Row
               gutter={{
                 xs: 8,
@@ -213,7 +229,15 @@ const AddProductForm = () => {
               </Col>
             </Row>
           </div>
-          <div style={{ background: 'white', borderRadius: '6px', marginBottom: '16px', padding: '0 20px' }}>
+          <div
+            style={{
+              background: 'white',
+              borderRadius: '6px',
+              marginBottom: '16px',
+              padding: '0 20px',
+              filter: 'drop-shadow(0 1px 1px rgb(0 0 0 / 0.05))',
+            }}
+          >
             <Row
               gutter={{
                 xs: 8,
@@ -249,7 +273,15 @@ const AddProductForm = () => {
           </div>
         </Col>
         <Col xs={24} sm={8} md={24} lg={8}>
-          <div style={{ background: 'white', borderRadius: '6px', marginBottom: '16px', padding: '0 20px' }}>
+          <div
+            style={{
+              background: 'white',
+              borderRadius: '6px',
+              marginBottom: '16px',
+              padding: '0 20px',
+              filter: 'drop-shadow(0 1px 1px rgb(0 0 0 / 0.05))',
+            }}
+          >
             <Row>
               <Col span={24}>
                 <Title level={4}>Hình ảnh sản phẩm</Title>
@@ -305,7 +337,15 @@ const AddProductForm = () => {
               </Col>
             </Row>
           </div>
-          <div style={{ background: 'white', borderRadius: '6px', marginBottom: '16px', padding: '20px' }}>
+          <div
+            style={{
+              background: 'white',
+              borderRadius: '6px',
+              marginBottom: '16px',
+              padding: '20px',
+              filter: 'drop-shadow(0 1px 1px rgb(0 0 0 / 0.05))',
+            }}
+          >
             <Row justify="center">
               <Space>
                 <Button size="large" type="primary" htmlType="submit">
