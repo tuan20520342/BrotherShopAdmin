@@ -10,6 +10,7 @@ import OrdersPage from '~/pages/OrdersPage';
 import CustomersPage from '~/pages/CustomersPage';
 import CategoriesPage from '~/pages/CategoriesPage';
 import WearhouseReceiptPage from '~/pages/WearhouseReceiptPage';
+import ProfilePage from '~/pages/ProfilePage';
 
 const MainRoutes = {
   path: '/',
@@ -56,20 +57,8 @@ const MainRoutes = {
       element: <NotFoundPage />,
     },
     {
-      path: '/contact',
-      element: <TestPage />,
-    },
-    {
-      path: '/checkout',
-      element: <TestPage />,
-    },
-    {
-      path: '/shop',
-      element: <TestPage />,
-    },
-    {
-      path: '/product/:id',
-      element: <TestPage />,
+      path: '/profile',
+      element: <ProfilePage />,
     },
   ],
 };
