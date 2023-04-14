@@ -9,3 +9,6 @@ export const URL_PRODUCT = `${DOMAIN_NAME}/products`;
 
 //CATEGORIES
 export const URL_CATEGORIES = `${DOMAIN_NAME}/categories`;
+
+//STAFF
+export const URL_ADD_STAFF = `${DOMAIN_NAME}/staffs/create`;

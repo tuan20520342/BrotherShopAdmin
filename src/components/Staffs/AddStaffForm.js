@@ -21,6 +21,8 @@ import {
   Col,
 } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import * as SagaActionTypes from '~/redux/constants/constant';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -48,6 +50,7 @@ const validateMessages = {
 
 const AddStaffForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
@@ -91,21 +94,32 @@ const AddStaffForm = () => {
     navigate('/staffs');
   };
   const onFinish = (values) => {
-    // let newStaff = {
-    //   fullname: values.staff_name,
-    //   birthday: values.staff_birth.toISOString(),
-    //   identityNumber: values.staff_cccd,
-    //   gender: values.staff_gender,
-    //   phoneNumber: values.staff_phone_number,
-    //   email: values.staff_email,
-    //   address: values.staff_address,
-    //   other: values.staff_other_information,
-    //   password: '12345678',
-    //   avatar: imageChange,
-    //   role: 'EMPLOYEE',
-    //   active: true,
-    // };
-    console.log(values);
+    let newStaff = {
+      // fullname: values.staff_name,
+      // birthday: values.staff_birth.toISOString(),
+      // identityNumber: values.staff_cccd,
+      // gender: values.staff_gender,
+      // phoneNumber: values.staff_phone_number,
+      // email: values.staff_email,
+      // address: values.staff_address,
+      // other: values.staff_other_information,
+      // password: '12345678',
+      // avatar: imageChange,
+      // role: 'EMPLOYEE',
+      // active: true,
+      role: 'Nhân viên',
+      name: values.staff_name,
+      address: values.staff_address,
+      phone: values.staff_phone_number,
+      gender: values.staff_gender,
+      birthday: values.staff_birth.toDate(),
+      email: values.staff_email,
+    };
+    dispatch({
+      type: SagaActionTypes.POST_STAFF_SAGA,
+      newStaff: newStaff,
+    });
+    console.log(newStaff);
   };
   return (
     <Form
@@ -193,9 +207,9 @@ const AddStaffForm = () => {
                 width: '40%',
               }}
             >
-              <Option value="MALE">Nam</Option>
-              <Option value="FEMALE">Nữ</Option>
-              <Option value="OTHER">Khác</Option>
+              <Option value="Nam">Nam</Option>
+              <Option value="Nữ">Nữ</Option>
+              <Option value="Khác">Khác</Option>
             </Select>
           </Form.Item>
         </Col>

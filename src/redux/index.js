@@ -3,12 +3,14 @@ import rootSaga from './rootSaga';
 import createSagaMiddleware from 'redux-saga';
 import modalSlice from './reducer/ModalReducer';
 import categorySlice from './reducer/CategoryReducer';
+import staffSlice from './reducer/StaffReducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
 const rootReducer = {
   modalSlice,
   categorySlice,
+  staffSlice,
 };
 
 export const store = configureStore({
