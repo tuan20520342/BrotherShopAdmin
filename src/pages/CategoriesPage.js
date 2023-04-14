@@ -10,26 +10,18 @@ import ModalForm from '~/HOC/ModalForm';
 import { modalActions } from '~/redux/reducer/ModalReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import AddCategoryForm from '~/components/Categories/AddCategoryForm';
+import * as SagaActionTypes from '~/redux/constants/constant';
 
 const { Title } = Typography;
 
 const CategoriesPage = () => {
   const dispatch = useDispatch();
+  const { categories, loading } = useSelector((state) => state.categorySlice);
 
-  const categories = [
-    {
-      id: 1,
-      name: 'Áo',
-    },
-    {
-      id: 2,
-      name: 'Quần',
-    },
-    {
-      id: 3,
-      name: 'Unisex',
-    },
-  ];
+  useEffect(() => {
+    dispatch({ type: SagaActionTypes.GET_CATEGORIES_SAGA });
+  }, []);
+
   const [keyWord, setKeyWord] = useState('');
 
   const handleAddCategory = () => {

@@ -2,11 +2,13 @@ import { configureStore } from '@reduxjs/toolkit';
 import rootSaga from './rootSaga';
 import createSagaMiddleware from 'redux-saga';
 import modalSlice from './reducer/ModalReducer';
+import categorySlice from './reducer/CategoryReducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
 const rootReducer = {
   modalSlice,
+  categorySlice,
 };
 
 export const store = configureStore({

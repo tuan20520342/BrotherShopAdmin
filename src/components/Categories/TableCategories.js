@@ -16,9 +16,9 @@ const TableCategories = ({ keyWord, data, loading }) => {
     },
     {
       title: 'Mã danh mục',
-      dataIndex: 'id',
+      dataIndex: '_id',
       key: 'id',
-      sorter: (a, b) => a.id - b.id,
+      sorter: (a, b) => a._id.localeCompare(b._id),
       filteredValue: [keyWord],
       onFilter: (value, record) => {
         return (
