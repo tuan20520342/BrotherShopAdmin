@@ -7,11 +7,20 @@ import { PlusOutlined } from '@ant-design/icons';
 import Toolbar from '~/components/UI/Toolbar';
 import { useNavigate } from 'react-router-dom';
 import TableProducts from '~/components/Prouducts/TableProducts';
+import * as SagaActionTypes from '~/redux/constants/constant';
+import { useDispatch, useSelector } from 'react-redux';
 const { Title } = Typography;
 
 const ProductsPage = () => {
   const navigate = useNavigate();
-  //   const staffs = [
+  const dispatch = useDispatch();
+  const { products, loading } = useSelector((state) => state.productSlice);
+
+  useEffect(() => {
+    dispatch({ type: SagaActionTypes.GET_PRODUCTS_SAGA });
+  }, []);
+
+  console.log(products);
   //     {
   //       id: 1,
   //       email: 'abc123@gmail.com',
@@ -59,7 +68,7 @@ const ProductsPage = () => {
           <Toolbar title={'Thêm sản phẩm'} setKeyWord={setKeyWord} handleAdd={handleAddProduct} />
         </Col>
         <Col span={24}>
-          <TableProducts keyWord={keyWord} />
+          <TableProducts data={products} keyWord={keyWord} />
         </Col>
       </Row>
     </>

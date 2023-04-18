@@ -5,7 +5,7 @@ export const DOMAIN_NAME = 'http://localhost:3001';
 // export const URL_TYPE_READER_BY_ID = (id) => `${DOMAIN_NAME}/loaidocgia/${id}`;
 
 //PRODUCT
-export const URL_PRODUCT = `${DOMAIN_NAME}/products`;
+export const URL_PRODUCTS = `${DOMAIN_NAME}/products`;
 
 //CATEGORIES
 export const URL_CATEGORIES = `${DOMAIN_NAME}/categories`;

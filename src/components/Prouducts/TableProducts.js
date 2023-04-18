@@ -15,18 +15,18 @@ const TableProducts = ({ keyWord, data, loading }) => {
       key: '',
       render: (text, record, index) => (page - 1) * 6 + index + 1,
     },
-    {
-      title: 'Hình ảnh',
-      dataIndex: 'image',
-      key: 'image',
-      showOnResponse: true,
-      showOnDesktop: true,
-    },
+    // {
+    //   title: 'Hình ảnh',
+    //   dataIndex: 'image',
+    //   key: 'image',
+    //   showOnResponse: true,
+    //   showOnDesktop: true,
+    // },
     {
       title: 'Mã sản phẩm',
-      dataIndex: 'id',
+      dataIndex: '_id',
       key: 'id',
-      sorter: (item1, item2) => item1.id.localeCompare(item2.id),
+      sorter: (item1, item2) => item1._id.localeCompare(item2._id),
       filteredValue: [keyWord],
       onFilter: (value, record) => {
         return (
@@ -45,74 +45,74 @@ const TableProducts = ({ keyWord, data, loading }) => {
     },
     {
       title: 'Tên sản phẩm',
-      dataIndex: 'title',
-      key: 'title',
+      dataIndex: 'name',
+      key: 'name',
       showOnResponse: true,
       showOnDesktop: true,
     },
-    {
-      title: 'Giá cũ',
-      dataIndex: 'oldPrice',
-      key: 'oldPrice',
-      showOnResponse: true,
-      showOnDesktop: true,
-      sorter: (a, b) => a.cost - b.cost,
-      render: (text, record, index) => {
-        return (
-          <div>
-            {record.cost.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}
-            <sup>đ</sup>
-          </div>
-        );
-      },
-    },
-    {
-      title: 'Giá bán',
-      dataIndex: 'price',
-      key: 'price',
-      showOnResponse: true,
-      showOnDesktop: true,
-      ellipsis: true,
-      sorter: (a, b) => a.price - b.price,
-      render: (text, record, index) => {
-        return (
-          <div>
-            {record.price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}
-            <sup>đ</sup>
-          </div>
-        );
-      },
-    },
-    {
-      title: 'Số lượng',
-      dataIndex: 'quantity',
-      key: 'quantity',
-      showOnResponse: true,
-      showOnDesktop: true,
-      ellipsis: true,
-      sorter: (a, b) => a.quantity - b.quantity,
-      render: (text, record, index) => {
-        return <div>{record.quantity.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}</div>;
-      },
-    },
+    // {
+    //   title: 'Giá cũ',
+    //   dataIndex: 'oldPrice',
+    //   key: 'oldPrice',
+    //   showOnResponse: true,
+    //   showOnDesktop: true,
+    //   sorter: (a, b) => a.cost - b.cost,
+    //   render: (text, record, index) => {
+    //     return (
+    //       <div>
+    //         {record.cost.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}
+    //         <sup>đ</sup>
+    //       </div>
+    //     );
+    //   },
+    // },
+    // {
+    //   title: 'Giá bán',
+    //   dataIndex: 'price',
+    //   key: 'price',
+    //   showOnResponse: true,
+    //   showOnDesktop: true,
+    //   ellipsis: true,
+    //   sorter: (a, b) => a.price - b.price,
+    //   render: (text, record, index) => {
+    //     return (
+    //       <div>
+    //         {record.price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}
+    //         <sup>đ</sup>
+    //       </div>
+    //     );
+    //   },
+    // },
+    // {
+    //   title: 'Số lượng',
+    //   dataIndex: 'quantity',
+    //   key: 'quantity',
+    //   showOnResponse: true,
+    //   showOnDesktop: true,
+    //   ellipsis: true,
+    //   sorter: (a, b) => a.quantity - b.quantity,
+    //   render: (text, record, index) => {
+    //     return <div>{record.quantity.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}</div>;
+    //   },
+    // },
 
-    {
-      title: 'Trạng thái',
-      dataIndex: 'state',
-      key: 'state',
-      showOnResponse: true,
-      showOnDesktop: true,
-      ellipsis: true,
-      render: (state) => (
-        <>
-          {state.map((item) => (
-            <Tag color={item.color} key={item.stateName}>
-              {item.stateName}
-            </Tag>
-          ))}
-        </>
-      ),
-    },
+    // {
+    //   title: 'Trạng thái',
+    //   dataIndex: 'state',
+    //   key: 'state',
+    //   showOnResponse: true,
+    //   showOnDesktop: true,
+    //   ellipsis: true,
+    //   render: (state) => (
+    //     <>
+    //       {state.map((item) => (
+    //         <Tag color={item.color} key={item.stateName}>
+    //           {item.stateName}
+    //         </Tag>
+    //       ))}
+    //     </>
+    //   ),
+    // },
     {
       title: 'Thao tác',
       key: 'action',
