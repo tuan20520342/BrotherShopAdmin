@@ -18,6 +18,7 @@ const TableTemplate = (props) => {
       // onChange={handleChange}
       scroll={{ x: 'max-content' }}
       summary={props.summary}
+      style={props.style}
     />
   );
 };

@@ -1,10 +1,11 @@
-import { Popconfirm, Space, Spin, Button } from 'antd';
+import { Popconfirm, Space, Button } from 'antd';
 import { DeleteFilled, EyeFilled } from '@ant-design/icons';
 import { useState } from 'react';
 import TableTemplate from '~/components/UI/Table/TableTemplate';
 import { modalActions } from '~/redux/reducer/ModalReducer';
 import { useDispatch } from 'react-redux';
 import EditCategoryForm from './EditCategoryForm';
+import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
 
 const TableCategories = ({ keyWord, data, loading }) => {
   const [page, setPage] = useState(1);
@@ -92,15 +93,9 @@ const TableCategories = ({ keyWord, data, loading }) => {
       }),
     );
   };
-  // if (loading === true) {
-  //   return (
-  //     <div className="w-full flex items-center justify-center mb-12 h-4/5">
-  //       <Space size="middle ">
-  //         <Spin size="large" tip="Loading..." />
-  //       </Space>
-  //     </div>
-  //   );
-  // }
+  if (loading) {
+    return <LoadingSpin />;
+  }
   return (
     <>
       <TableTemplate

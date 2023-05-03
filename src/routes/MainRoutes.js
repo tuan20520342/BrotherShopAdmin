@@ -12,6 +12,7 @@ import CategoriesPage from '~/pages/CategoriesPage';
 import WearhouseReceiptsPage from '~/pages/WarehouseReceiptsPage';
 import ProfilePage from '~/pages/ProfilePage';
 import AddWarehouseReceipt from '~/components/WarehouseReceipt/AddWarehouseReceipt';
+import EditProductPage from '~/pages/EditProductPage';
 
 const MainRoutes = {
   path: '/',
@@ -36,6 +37,10 @@ const MainRoutes = {
     {
       path: '/add-product',
       element: <AddItemForm title={'Thêm sản phẩm'} form={<AddProductForm />} />,
+    },
+    {
+      path: '/products/:id',
+      element: <EditProductPage />,
     },
     {
       path: '/categories',

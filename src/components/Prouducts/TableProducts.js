@@ -5,10 +5,14 @@ import { useState } from 'react';
 import TableTemplate from '~/components/UI/Table/TableTemplate';
 import { useDispatch } from 'react-redux';
 import * as SagaActionTypes from '~/redux/constants/constant';
+import { useNavigate } from 'react-router-dom';
+import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
 
 const TableProducts = ({ keyWord, data, loading }) => {
   const [page, setPage] = useState(1);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const columns = [
     {
       title: 'STT',
@@ -153,17 +157,12 @@ const TableProducts = ({ keyWord, data, loading }) => {
   const handleRemoveProduct = (record) => {};
 
   const handleEditProduct = (product) => {
-    dispatch({ type: SagaActionTypes.GET_PRODUCT_BY_ID_SAGA, id: product._id });
+    // dispatch({ type: SagaActionTypes.GET_PRODUCT_BY_ID_SAGA, id: product._id });
+    navigate(`/products/${product._id}`);
   };
-  // if (loading === true) {
-  //   return (
-  //     <div className="w-full flex items-center justify-center mb-12 h-4/5">
-  //       <Space size="middle ">
-  //         <Spin size="large" tip="Loading..." />
-  //       </Space>
-  //     </div>
-  //   );
-  // }
+  if (loading) {
+    return <LoadingSpin />;
+  }
   return (
     <>
       <TableTemplate

@@ -43,7 +43,7 @@ const CategoriesPage = () => {
           <Toolbar title={'Thêm danh mục'} setKeyWord={setKeyWord} handleAdd={handleAddCategory} />
         </Col>
         <Col span={24}>
-          <TableCategories data={categories} keyWord={keyWord} />
+          <TableCategories data={categories} keyWord={keyWord} loading={loading} />
         </Col>
       </Row>
       <ModalForm />

@@ -68,7 +68,7 @@ const ProductsPage = () => {
           <Toolbar title={'Thêm sản phẩm'} setKeyWord={setKeyWord} handleAdd={handleAddProduct} />
         </Col>
         <Col span={24}>
-          <TableProducts data={products} keyWord={keyWord} />
+          <TableProducts data={products} keyWord={keyWord} loading={loading} />
         </Col>
       </Row>
     </>
