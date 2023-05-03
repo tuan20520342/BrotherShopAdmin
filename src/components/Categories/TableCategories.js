@@ -15,22 +15,27 @@ const TableCategories = ({ keyWord, data, loading }) => {
       dataIndex: '',
       width: '5%',
       key: '',
+      align: 'center',
       render: (text, record, index) => (page - 1) * 6 + index + 1,
     },
     {
       title: 'Mã danh mục',
       dataIndex: '_id',
-      key: 'id',
+      key: '_id',
       sorter: (a, b) => a._id.localeCompare(b._id),
       filteredValue: [keyWord],
       onFilter: (value, record) => {
         return (
-          String(record.id).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.name).toLowerCase().includes(value.toLowerCase())
+          String(record._id).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.name).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.types.map((type) => type.type).join(', '))
+            .toLowerCase()
+            .includes(value.toLowerCase())
         );
       },
       showOnResponse: true,
       showOnDesktop: true,
+      align: 'center',
       render: (id) => id.substring(0, 6),
     },
     {
@@ -109,7 +114,7 @@ const TableCategories = ({ keyWord, data, loading }) => {
           showSizeChanger: false,
           pageSizeOptions: ['6'],
         }}
-        rowKey={'id'}
+        rowKey={'_id'}
       />
       {/* <ModalForm isModalOpen={isOpen} /> */}
     </>

@@ -33,6 +33,10 @@
   border: none;
   background: unset;
 } */
+
+.table-striped-rows .ant-table-thead .ant-table-cell {
+  text-align: center;
+}
 /* width */
 .table-striped-rows ::-webkit-scrollbar {
   width: 8px;

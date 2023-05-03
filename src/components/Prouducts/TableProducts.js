@@ -1,4 +1,4 @@
-import { Popconfirm, Space, Spin, Button, Tag } from 'antd';
+import { Popconfirm, Space, Spin, Button, Tag, Image } from 'antd';
 import dayjs from 'dayjs';
 import { DeleteFilled, EyeFilled } from '@ant-design/icons';
 import { useState } from 'react';
@@ -13,35 +13,42 @@ const TableProducts = ({ keyWord, data, loading }) => {
       dataIndex: '',
       width: '5%',
       key: '',
-      render: (text, record, index) => (page - 1) * 6 + index + 1,
+      render: (text, record, index) => (page - 1) * 4 + index + 1,
+      align: 'center',
     },
-    // {
-    //   title: 'Hình ảnh',
-    //   dataIndex: 'image',
-    //   key: 'image',
-    //   showOnResponse: true,
-    //   showOnDesktop: true,
-    // },
+    {
+      title: 'Hình ảnh',
+      dataIndex: ['images', 'mainImg'],
+      key: 'image',
+      align: 'center',
+      showOnResponse: true,
+      showOnDesktop: true,
+      render: (image) => <Image width={80} src={`https://res.cloudinary.com/ddajkcbs2/image/upload/${image}`} />,
+    },
     {
       title: 'Mã sản phẩm',
       dataIndex: '_id',
-      key: 'id',
+      key: '_id',
+      align: 'center',
       sorter: (item1, item2) => item1._id.localeCompare(item2._id),
       filteredValue: [keyWord],
       onFilter: (value, record) => {
         return (
-          String(record.id).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.product.title).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.cost).toLowerCase().includes(value.toLowerCase()) ||
+          String(record._id).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.name).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.oldPrice).toLowerCase().includes(value.toLowerCase()) ||
           String(record.price).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.quantity).toLowerCase().includes(value.toLowerCase()) ||
-          record.state.find((item) => item.stateName.toLowerCase().includes(value.toLowerCase())) ||
-          String(dayjs(record.EXP).format('DD/MM/YYYY')).toLowerCase().includes(value.toLowerCase()) ||
-          String(dayjs(record.MFG).format('DD/MM/YYYY')).toLowerCase().includes(value.toLowerCase())
+          String(record.sizes.reduce((acc, size) => acc + size.quantity, 0))
+            .toLowerCase()
+            .includes(value.toLowerCase())
+          // record.state.find((item) => item.stateName.toLowerCase().includes(value.toLowerCase())) ||
+          // String(dayjs(record.EXP).format('DD/MM/YYYY')).toLowerCase().includes(value.toLowerCase()) ||
+          // String(dayjs(record.MFG).format('DD/MM/YYYY')).toLowerCase().includes(value.toLowerCase())
         );
       },
       showOnResponse: true,
       showOnDesktop: true,
+      render: (id) => id.substring(0, 6),
     },
     {
       title: 'Tên sản phẩm',
@@ -50,51 +57,49 @@ const TableProducts = ({ keyWord, data, loading }) => {
       showOnResponse: true,
       showOnDesktop: true,
     },
-    // {
-    //   title: 'Giá cũ',
-    //   dataIndex: 'oldPrice',
-    //   key: 'oldPrice',
-    //   showOnResponse: true,
-    //   showOnDesktop: true,
-    //   sorter: (a, b) => a.cost - b.cost,
-    //   render: (text, record, index) => {
-    //     return (
-    //       <div>
-    //         {record.cost.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}
-    //         <sup>đ</sup>
-    //       </div>
-    //     );
-    //   },
-    // },
-    // {
-    //   title: 'Giá bán',
-    //   dataIndex: 'price',
-    //   key: 'price',
-    //   showOnResponse: true,
-    //   showOnDesktop: true,
-    //   ellipsis: true,
-    //   sorter: (a, b) => a.price - b.price,
-    //   render: (text, record, index) => {
-    //     return (
-    //       <div>
-    //         {record.price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}
-    //         <sup>đ</sup>
-    //       </div>
-    //     );
-    //   },
-    // },
-    // {
-    //   title: 'Số lượng',
-    //   dataIndex: 'quantity',
-    //   key: 'quantity',
-    //   showOnResponse: true,
-    //   showOnDesktop: true,
-    //   ellipsis: true,
-    //   sorter: (a, b) => a.quantity - b.quantity,
-    //   render: (text, record, index) => {
-    //     return <div>{record.quantity.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}</div>;
-    //   },
-    // },
+    {
+      title: 'Giá cũ',
+      dataIndex: 'oldPrice',
+      key: 'oldPrice',
+      showOnResponse: true,
+      showOnDesktop: true,
+      sorter: (a, b) => a.oldPrice - b.oldPrice,
+      render: (oldPrice) => (
+        <div>
+          {oldPrice?.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}
+          <sup>{oldPrice && `đ`}</sup>
+        </div>
+      ),
+    },
+    {
+      title: 'Giá bán',
+      dataIndex: 'price',
+      key: 'price',
+      showOnResponse: true,
+      showOnDesktop: true,
+      ellipsis: true,
+      sorter: (a, b) => a.price - b.price,
+      render: (price) => (
+        <div>
+          {price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}
+          <sup> đ</sup>
+        </div>
+      ),
+    },
+    {
+      title: 'Số lượng',
+      dataIndex: 'sizes',
+      key: 'sizes',
+      showOnResponse: true,
+      showOnDesktop: true,
+      ellipsis: true,
+      sorter: (a, b) =>
+        a.sizes.reduce((acc, size) => acc + size.quantity, 0) - b.sizes.reduce((acc, size) => acc + size.quantity, 0),
+      render: (sizes) => {
+        const quantity = sizes.reduce((acc, size) => acc + size.quantity, 0);
+        return <div>{quantity.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}</div>;
+      },
+    },
 
     // {
     //   title: 'Trạng thái',
@@ -164,11 +169,11 @@ const TableProducts = ({ keyWord, data, loading }) => {
           onChange(current) {
             setPage(current);
           },
-          defaultPageSize: 6,
+          defaultPageSize: 4,
           showSizeChanger: false,
-          pageSizeOptions: ['6'],
+          pageSizeOptions: ['4'],
         }}
-        rowKey={'id'}
+        rowKey={'_id'}
       />
       {/* <ModalForm isModalOpen={isOpen} /> */}
     </>
