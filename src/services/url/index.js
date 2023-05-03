@@ -6,6 +6,7 @@ export const DOMAIN_NAME = 'http://localhost:3001';
 
 //PRODUCT
 export const URL_PRODUCTS = `${DOMAIN_NAME}/products`;
+export const URL_PRODUCTS_ID = (id) => `${DOMAIN_NAME}/products/${id}`;
 
 //CATEGORIES
 export const URL_CATEGORIES = `${DOMAIN_NAME}/categories`;

@@ -24,6 +24,30 @@ function* actGetListProducts() {
   }
 }
 
+function* actGetProductById(action) {
+  try {
+    let { id } = action;
+    yield put(productActions.getProductByIdInLoading());
+
+    let res = yield call(() => ProductService.getProductById(id));
+    console.log(res);
+    let { status, data } = res;
+    if (status === 200) {
+      yield put(productActions.getProductByIdSuccess({ productId: data.product }));
+    } else {
+      //yield put(authActions.requestLogFailed());
+      console.log('an l r');
+    }
+  } catch (err) {
+    //yield put(authActions.requestLogFailed());
+    console.log('an l r');
+  }
+}
+
 export function* followActGetListProducts() {
   yield takeLatest(SagaActionTypes.GET_PRODUCTS_SAGA, actGetListProducts);
+}
+
+export function* followActGetProductById() {
+  yield takeLatest(SagaActionTypes.GET_PRODUCT_BY_ID_SAGA, actGetProductById);
 }

@@ -5,4 +5,7 @@ export const ProductService = {
   getProductsList: () => {
     return Axios.get(UrlApi.URL_PRODUCTS);
   },
+  getProductById: (id) => {
+    return Axios.get(UrlApi.URL_PRODUCTS_ID(id));
+  },
 };

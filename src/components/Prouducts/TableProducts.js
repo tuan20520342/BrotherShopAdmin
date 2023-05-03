@@ -3,10 +3,12 @@ import dayjs from 'dayjs';
 import { DeleteFilled, EyeFilled } from '@ant-design/icons';
 import { useState } from 'react';
 import TableTemplate from '~/components/UI/Table/TableTemplate';
+import { useDispatch } from 'react-redux';
+import * as SagaActionTypes from '~/redux/constants/constant';
 
 const TableProducts = ({ keyWord, data, loading }) => {
   const [page, setPage] = useState(1);
-
+  const dispatch = useDispatch();
   const columns = [
     {
       title: 'STT',
@@ -67,7 +69,7 @@ const TableProducts = ({ keyWord, data, loading }) => {
       render: (oldPrice) => (
         <div>
           {oldPrice?.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}
-          <sup>{oldPrice && `đ`}</sup>
+          <sup>{oldPrice && ` đ`}</sup>
         </div>
       ),
     },
@@ -150,7 +152,9 @@ const TableProducts = ({ keyWord, data, loading }) => {
 
   const handleRemoveProduct = (record) => {};
 
-  const handleEditProduct = (staff) => {};
+  const handleEditProduct = (product) => {
+    dispatch({ type: SagaActionTypes.GET_PRODUCT_BY_ID_SAGA, id: product._id });
+  };
   // if (loading === true) {
   //   return (
   //     <div className="w-full flex items-center justify-center mb-12 h-4/5">

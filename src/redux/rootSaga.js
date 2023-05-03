@@ -5,8 +5,12 @@ import * as ProductSaga from './sagaActions/ProductSaga';
 
 export default function* rootSaga() {
   yield all([
+    //Category
     CategorySaga.followActGetListCategories(),
+    //Staff
     StaffSaga.followActPostStaff(),
+    //Product
     ProductSaga.followActGetListProducts(),
+    ProductSaga.followActGetProductById(),
   ]);
 }
