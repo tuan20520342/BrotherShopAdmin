@@ -2,10 +2,13 @@ import { Popconfirm, Space, Spin, Button } from 'antd';
 import { DeleteFilled, EyeFilled } from '@ant-design/icons';
 import { useState } from 'react';
 import TableTemplate from '~/components/UI/Table/TableTemplate';
+import { modalActions } from '~/redux/reducer/ModalReducer';
+import { useDispatch } from 'react-redux';
+import EditCategoryForm from './EditCategoryForm';
 
 const TableCategories = ({ keyWord, data, loading }) => {
   const [page, setPage] = useState(1);
-
+  const dispatch = useDispatch();
   const columns = [
     {
       title: 'STT',
@@ -28,6 +31,7 @@ const TableCategories = ({ keyWord, data, loading }) => {
       },
       showOnResponse: true,
       showOnDesktop: true,
+      render: (id) => id.substring(0, 6),
     },
     {
       title: 'Tên danh mục',
@@ -36,6 +40,15 @@ const TableCategories = ({ keyWord, data, loading }) => {
       showOnResponse: true,
       showOnDesktop: true,
       sorter: (item1, item2) => item1.name.localeCompare(item2.name),
+    },
+    {
+      title: 'Loại',
+      dataIndex: 'types',
+      key: 'types',
+      showOnResponse: true,
+      showOnDesktop: true,
+      sorter: (item1, item2) => item1.name.localeCompare(item2.name),
+      render: (types) => types.map((type) => type.type).join(', '),
     },
     {
       title: 'Thao tác',
@@ -49,16 +62,13 @@ const TableCategories = ({ keyWord, data, loading }) => {
       align: 'center',
       render: (text, record, index) => (
         <Space size="middle" key={index}>
-          <Button type="primary" icon={<EyeFilled />} onClick={() => handleEditCustomer(record)}></Button>
+          <Button type="primary" icon={<EyeFilled />} onClick={() => handleEditCategory(record)}></Button>
           <Popconfirm
             placement="top"
             title="Bạn có chắc muốn xóa danh mục này?"
             okText="Xác nhận"
             cancelText="Hủy"
-            // cancelButtonProps={{
-            //   className: 'text-gray-400 border-gray-400 hover:text-gray-500 hover:border-gray-500',
-            // }}
-            onConfirm={() => handleRemoveCustomer(record)}
+            onConfirm={() => handleRemoveCategory(record)}
           >
             <Button type="primary" icon={<DeleteFilled />} danger></Button>
           </Popconfirm>
@@ -67,9 +77,16 @@ const TableCategories = ({ keyWord, data, loading }) => {
     },
   ];
 
-  const handleRemoveCustomer = (record) => {};
+  const handleRemoveCategory = (record) => {};
 
-  const handleEditCustomer = (customer) => {};
+  const handleEditCategory = (category) => {
+    dispatch(
+      modalActions.showModal({
+        title: 'Thông tin danh mục sản phẩm',
+        ComponentContent: <EditCategoryForm category={category} />,
+      }),
+    );
+  };
   // if (loading === true) {
   //   return (
   //     <div className="w-full flex items-center justify-center mb-12 h-4/5">

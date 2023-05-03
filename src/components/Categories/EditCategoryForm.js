@@ -51,8 +51,23 @@ const formItemLayoutWithOutLabel = {
   },
 };
 
-const AddCategoryForm = () => {
+const EditCategoryForm = ({ category }) => {
   const dispatch = useDispatch();
+  const [enableModify, setEnableModify] = useState(false);
+  const [componentDisabled, setComponentDisabled] = useState(true);
+  const handleEnableModify = () => {
+    setEnableModify(true);
+    setComponentDisabled(false);
+  };
+  const handleCancel = () => {
+    setEnableModify(false);
+    setComponentDisabled(true);
+    onReset();
+  };
+
+  const onReset = () => {
+    form.resetFields();
+  };
 
   const [form] = Form.useForm();
   const onFinish = (values) => {
@@ -67,7 +82,8 @@ const AddCategoryForm = () => {
       form={form}
       onFinish={onFinish}
       initialValues={{
-        staff_other_information: '',
+        category: category.name,
+        types: category.types.map((type) => type.type),
       }}
       validateMessages={validateMessages}
       {...formItemLayout}
@@ -81,7 +97,7 @@ const AddCategoryForm = () => {
           },
         ]}
       >
-        <Input placeholder="Tên danh mục" />
+        <Input placeholder="Tên danh mục" disabled={componentDisabled} />
       </Form.Item>
       <Form.List
         name="types"
@@ -121,10 +137,15 @@ const AddCategoryForm = () => {
                     style={{
                       width: '60%',
                     }}
+                    disabled={componentDisabled}
                   />
                 </Form.Item>
                 {fields.length > 1 ? (
-                  <MinusCircleOutlined className="dynamic-delete-button" onClick={() => remove(field.name)} />
+                  <MinusCircleOutlined
+                    className="dynamic-delete-button"
+                    onClick={() => remove(field.name)}
+                    disabled={componentDisabled}
+                  />
                 ) : null}
               </Form.Item>
             ))}
@@ -136,6 +157,7 @@ const AddCategoryForm = () => {
                   width: '60%',
                 }}
                 icon={<PlusOutlined />}
+                disabled={componentDisabled}
               >
                 Thêm loại danh mục
               </Button>
@@ -158,16 +180,35 @@ const AddCategoryForm = () => {
         )}
       </Form.List>
       <Row justify="end">
-        <Space>
+        {enableModify === false ? (
+          <Space>
+            <Button type="primary" onClick={() => handleEnableModify()}>
+              Chỉnh sửa
+            </Button>
+            <Button type="primary" danger onClick={handleClose}>
+              Đóng
+            </Button>
+          </Space>
+        ) : (
+          <Space>
+            <Button type="primary" danger onClick={handleCancel}>
+              Hủy
+            </Button>
+            <Button type="primary" htmlType="submit">
+              Lưu
+            </Button>
+          </Space>
+        )}
+        {/* <Space>
           <Button type="primary" htmlType="submit">
             Xác nhận
           </Button>
           <Button type="primary" danger onClick={handleClose}>
             Đóng
           </Button>
-        </Space>
+        </Space> */}
       </Row>
     </Form>
   );
 };
-export default AddCategoryForm;
+export default EditCategoryForm;
