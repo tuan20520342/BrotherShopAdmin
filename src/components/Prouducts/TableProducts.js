@@ -54,7 +54,7 @@ const TableProducts = ({ keyWord, data, loading }) => {
       },
       showOnResponse: true,
       showOnDesktop: true,
-      render: (id) => id.substring(0, 6),
+      render: (id) => id.substring(0, 6).toUpperCase(),
     },
     {
       title: 'Tên sản phẩm',
@@ -69,11 +69,12 @@ const TableProducts = ({ keyWord, data, loading }) => {
       key: 'oldPrice',
       showOnResponse: true,
       showOnDesktop: true,
-      sorter: (a, b) => a.oldPrice - b.oldPrice,
-      render: (oldPrice) => (
+      sorter: (a, b) => (a.oldPrice ?? a.price) - (b.oldPrice ?? b.price),
+      render: (value, record) => (
         <div>
-          {oldPrice?.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}
-          <sup>{oldPrice && ` đ`}</sup>
+          {record.oldPrice?.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',') ||
+            record.price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}
+          <sup> đ</sup>
         </div>
       ),
     },
@@ -104,6 +105,20 @@ const TableProducts = ({ keyWord, data, loading }) => {
       render: (sizes) => {
         const quantity = sizes.reduce((acc, size) => acc + size.quantity, 0);
         return <div>{quantity.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}</div>;
+      },
+    },
+    {
+      title: 'Đã bán',
+      dataIndex: 'sizes',
+      key: 'sold',
+      showOnResponse: true,
+      showOnDesktop: true,
+      ellipsis: true,
+      sorter: (a, b) =>
+        a.sizes.reduce((acc, size) => acc + size.sold, 0) - b.sizes.reduce((acc, size) => acc + size.sold, 0),
+      render: (sizes) => {
+        const quantitySold = sizes.reduce((acc, size) => acc + size.sold, 0);
+        return <div>{quantitySold.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}</div>;
       },
     },
 

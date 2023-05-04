@@ -37,7 +37,7 @@ const TableCategories = ({ keyWord, data, loading }) => {
       showOnResponse: true,
       showOnDesktop: true,
       align: 'center',
-      render: (id) => id.substring(0, 6),
+      render: (id) => id.substring(0, 6).toUpperCase(),
     },
     {
       title: 'Tên danh mục',
