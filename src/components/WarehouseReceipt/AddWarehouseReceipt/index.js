@@ -26,46 +26,21 @@ import { PlusOutlined } from '@ant-design/icons';
 import Toolbar from '~/components/UI/Toolbar';
 import { useNavigate } from 'react-router-dom';
 import TableProducts from '~/components/Prouducts/TableProducts';
+import ModalForm from '~/HOC/ModalForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { modalActions } from '~/redux/reducer/ModalReducer';
+import AddProductToReceipt from './AddProductToReceipt';
+import * as SagaActionTypes from '~/redux/constants/constant';
+import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
 const { Title } = Typography;
 const dateFormat = 'DD/MM/YYYY';
 
 const AddWarehouseReceipt = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [form] = Form.useForm();
-
-  //   const staffs = [
-  //     {
-  //       id: 1,
-  //       email: 'abc123@gmail.com',
-  //       fullname: 'Nguyen Van A',
-  //       birthday: '12/02/2002',
-  //       identityNumber: '1231231',
-  //       gender: 'MALE',
-  //       phoneNumber: '012312313',
-  //       address: 'KONTUM',
-  //       other: 'NONE',
-  //       avatar: '',
-  //       role: 'EMPLOYEE',
-  //       updatedAt: '',
-  //       active: true,
-  //     },
-  //     {
-  //       id: 2,
-  //       email: 'tuan@gmail.com',
-  //       fullname: 'CHRIST',
-  //       birthday: '22/11/1990',
-  //       identityNumber: '1231231231',
-  //       gender: 'FEMALE',
-  //       phoneNumber: '0912031123',
-  //       address: 'HCM',
-  //       other: '',
-  //       avatar: '',
-  //       role: 'MANAGER',
-  //       updatedAt: '',
-  //       active: true,
-  //     },
-  //   ];
   const [keyWord, setKeyWord] = useState('');
+  let { loading } = useSelector((state) => state.productSlice);
 
   const validateMessages = {
     required: 'Cần nhập ${label}!',
@@ -79,8 +54,25 @@ const AddWarehouseReceipt = () => {
     },
   };
 
+  useEffect(() => {
+    dispatch({ type: SagaActionTypes.GET_PRODUCTS_SAGA });
+  }, []);
+
   const handleAddProduct = () => {
-    // navigate('/add-product');
+    dispatch(
+      modalActions.showModal({
+        title: 'Thêm sản phẩm',
+        ComponentContent: <AddProductToReceipt />,
+      }),
+    );
+  };
+
+  const handleClose = () => {
+    navigate('/warehouse-receipt');
+  };
+
+  const handleSubmit = () => {
+    form.submit();
   };
 
   const onFinish = (values) => {
@@ -101,17 +93,19 @@ const AddWarehouseReceipt = () => {
     console.log(values);
   };
 
+  if (loading) {
+    return <LoadingSpin />;
+  }
+
   return (
     <>
       <Row>
         <Col span={24}>
           <Form
-            name="add_staff_form"
+            name="add_reciept_form"
             form={form}
             onFinish={onFinish}
-            initialValues={{
-              staff_other_information: '',
-            }}
+            initialValues={{}}
             validateMessages={validateMessages}
             style={{
               background: 'white',
@@ -129,9 +123,9 @@ const AddWarehouseReceipt = () => {
                 lg: 32,
               }}
             >
-              <Col span={24}>
+              <Col xs={24} sm={12} md={24} lg={12}>
                 <Form.Item
-                  name="staff_birth"
+                  name="date"
                   label="Ngày nhập hàng"
                   rules={[
                     {
@@ -144,6 +138,51 @@ const AddWarehouseReceipt = () => {
                     format={dateFormat}
                     disabledDate={(current) => current.isAfter(dayjs())}
                   />
+                </Form.Item>
+              </Col>
+              <Col xs={24} sm={12} md={24} lg={12}>
+                <Form.Item
+                  name="staff"
+                  label="Nhân viên nhập hàng"
+                  // rules={[
+                  //   {
+                  //     required: true,
+                  //   },
+                  // ]}
+                >
+                  <Select
+                    showSearch
+                    allowClear
+                    placeholder="Nhân viên"
+                    // filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
+                    // onChange={onChange}
+                  ></Select>
+                </Form.Item>
+              </Col>
+              <Col xs={24} sm={12} md={24} lg={12}>
+                <Form.Item
+                  name="supplier"
+                  label="Nhà cung cấp"
+                  rules={[
+                    {
+                      required: true,
+                    },
+                  ]}
+                >
+                  <Input placeholder="Nhà cung cấp" />
+                </Form.Item>
+              </Col>
+              <Col xs={24} sm={12} md={24} lg={12}>
+                <Form.Item
+                  name="deliver"
+                  label="Người giao hàng"
+                  rules={[
+                    {
+                      required: true,
+                    },
+                  ]}
+                >
+                  <Input placeholder="Người giao hàng" />
                 </Form.Item>
               </Col>
             </Row>
@@ -159,14 +198,15 @@ const AddWarehouseReceipt = () => {
       </Row>
       <Row justify="end" style={{ marginTop: '8px' }}>
         <Space>
-          <Button size="large" type="primary" htmlType="submit">
+          <Button size="large" type="primary" onClick={handleSubmit}>
             Lưu
           </Button>
-          <Button size="large" type="primary" danger>
+          <Button size="large" type="primary" danger onClick={handleClose}>
             Hủy
           </Button>
         </Space>
       </Row>
+      <ModalForm />
     </>
   );
 };

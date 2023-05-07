@@ -23,6 +23,7 @@ import {
 } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
 import * as SagaActionTypes from '~/redux/constants/constant';
+import { modalActions } from '~/redux/reducer/ModalReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import TableCategories from '../Categories/TableCategories';
 import TableProductSizes from './TableProductSizes';
@@ -55,7 +56,7 @@ const validateMessages = {
 const EditProductForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { productId } = useSelector((state) => state.productSlice);
+  let { productId } = useSelector((state) => state.productSlice);
 
   const [form] = Form.useForm();
   const [previewOpen, setPreviewOpen] = useState(false);

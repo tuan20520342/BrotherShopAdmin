@@ -14,7 +14,7 @@ const EditProductPage = () => {
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_PRODUCT_BY_ID_SAGA, id: id });
   }, []);
-  const { productId, idLoading } = useSelector((state) => state.productSlice);
+  let { idLoading } = useSelector((state) => state.productSlice);
 
   if (idLoading) {
     return <LoadingSpin />;
