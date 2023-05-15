@@ -1,3 +1,4 @@
+import LoginPage from '~/pages/LoginPage';
 import AuthLayout from '../layouts/AuthLayout';
 // import Login from "~/pages/Login";
 // import Register from "~/pages/Register";
@@ -9,7 +10,7 @@ const AuthenticationRoutes = {
   children: [
     {
       path: '/login',
-      element: <TestPage />,
+      element: <LoginPage />,
     },
     {
       path: '/register',

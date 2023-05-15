@@ -1,0 +1,24 @@
+#components-form-login {
+  background: white;
+  padding: 20px;
+  border-radius: 6px;
+  filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
+  min-width: 300px;
+}
+#components-form-login .login-form {
+  width: 100%;
+}
+#components-form-login .login-form-forgot {
+  float: right;
+  margin-bottom: 10px;
+}
+#components-form-login .ant-col-rtl .login-form-forgot {
+  float: left;
+}
+#components-form-login .login-form-button {
+  width: 100%;
+}
+
+#components-form-login .site-form-item-icon {
+  font-size: larger;
+}

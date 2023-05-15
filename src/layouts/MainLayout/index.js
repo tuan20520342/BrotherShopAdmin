@@ -24,7 +24,7 @@ import DropDownAvatar from './DropDownAvatar';
 const { Header, Content, Footer, Sider } = Layout;
 const { Text } = Typography;
 
-const AuthLayout = () => {
+const MainLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
@@ -100,4 +100,4 @@ const AuthLayout = () => {
     </Layout>
   );
 };
-export default AuthLayout;
+export default MainLayout;

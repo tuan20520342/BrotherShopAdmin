@@ -6,7 +6,7 @@ const initialState = {
 };
 
 const categorySlice = createSlice({
-  name: 'categoriesSlice',
+  name: 'categorySlice',
   initialState,
   reducers: {
     getCategoriesLoading: (state, action) => {
