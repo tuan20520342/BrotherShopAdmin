@@ -5,6 +5,7 @@ import modalSlice from './reducer/ModalReducer';
 import categorySlice from './reducer/CategoryReducer';
 import staffSlice from './reducer/StaffReducer';
 import productSlice from './reducer/ProductReducer';
+import authenticationSlice from './reducer/AuthReducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -13,6 +14,7 @@ const rootReducer = {
   categorySlice,
   staffSlice,
   productSlice,
+  authenticationSlice,
 };
 
 export const store = configureStore({

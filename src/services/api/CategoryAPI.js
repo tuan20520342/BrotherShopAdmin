@@ -1,12 +1,12 @@
-import Axios from 'axios';
+import axios from 'axios';
 import * as UrlApi from '../url';
 
 export const CategoryService = {
   getCategoriesList: () => {
-    return Axios.get(UrlApi.URL_CATEGORIES);
+    return axios.get(UrlApi.URL_CATEGORIES);
   },
   //   getInvoiceById: (id) => {
-  //     return Axios.get(UrlApi.URL_GET_INVOICES_BY_ID(id));
+  //     return axios.get(UrlApi.URL_GET_INVOICES_BY_ID(id));
   //   },
   //   postInvoice: (newInvoice) => {
   //     let { date, userId, total, details } = newInvoice;
@@ -17,6 +17,6 @@ export const CategoryService = {
   //       total: total,
   //       details: details,
   //     };
-  //     return Axios.post(UrlApi.URL_POST_INVOICES, d);
+  //     return axios.post(UrlApi.URL_POST_INVOICES, d);
   //   },
 };

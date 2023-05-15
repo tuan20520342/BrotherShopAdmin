@@ -1,11 +1,11 @@
-import Axios from 'axios';
+import axios from 'axios';
 import * as UrlApi from '../url';
 
 export const StaffService = {
   postStaff: (staff) => {
     let { role, name, address, email, phone, gender, birthday } = staff;
 
-    return Axios.post(UrlApi.URL_ADD_STAFF, {
+    return axios.post(UrlApi.URL_ADD_STAFF, {
       role: role,
       name: name,
       address: address,
@@ -16,7 +16,7 @@ export const StaffService = {
     });
   },
   //   getInvoiceById: (id) => {
-  //     return Axios.get(UrlApi.URL_GET_INVOICES_BY_ID(id));
+  //     return axios.get(UrlApi.URL_GET_INVOICES_BY_ID(id));
   //   },
   //   postInvoice: (newInvoice) => {
   //     let { date, userId, total, details } = newInvoice;
@@ -27,6 +27,6 @@ export const StaffService = {
   //       total: total,
   //       details: details,
   //     };
-  //     return Axios.post(UrlApi.URL_POST_INVOICES, d);
+  //     return axios.post(UrlApi.URL_POST_INVOICES, d);
   //   },
 };

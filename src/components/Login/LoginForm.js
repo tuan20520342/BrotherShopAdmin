@@ -1,10 +1,43 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import Cookies from 'js-cookie';
 import { Button, Checkbox, Form, Input, Typography, Row } from 'antd';
 import './styles/LoginForm.css';
+import { useDispatch, useSelector } from 'react-redux';
+import * as SagaActionTypes from '~/redux/constants/constant';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import AlertCustom from '~/components/UI/Notification/Alert';
+import { AuthenticationService } from '~/services/api/AuthAPI';
+import { authenticationAction } from '~/redux/reducer/AuthReducer';
 const { Title } = Typography;
 const LoginForm = () => {
-  const onFinish = (values) => {
-    console.log('Received values of form: ', values);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const onFinish = async (values) => {
+    let { email, password } = values;
+    let user = {
+      username: email,
+      password: password,
+    };
+    try {
+      const { data, status } = await AuthenticationService.postLogin(user);
+
+      if (status === 200) {
+        let { token, staff } = data;
+        const remainingMilliseconds = 60 * 60 * 1000;
+        const expiryDate = new Date(new Date().getTime() + remainingMilliseconds);
+        Cookies.set('token', token, { expires: expiryDate });
+        dispatch(authenticationAction.logIn({ currentUser: staff }));
+        navigate('/', { replace: true });
+        AlertCustom({ type: 'success', title: 'Đăng nhập thành công' });
+      } else {
+        AlertCustom({ type: 'error', title: 'Sai email hoặc password, vui lòng kiểm tra lại!' });
+      }
+    } catch (err) {
+      console.log(err);
+
+      AlertCustom({ type: 'error', title: 'Sai email hoặc password, vui lòng kiểm tra lại!' });
+    }
   };
   return (
     <div id="components-form-login">

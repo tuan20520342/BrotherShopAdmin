@@ -4,6 +4,9 @@ export const DOMAIN_NAME = 'http://localhost:3001';
 // export const URL_TYPE_READER = `${DOMAIN_NAME}/loaidocgia`;
 // export const URL_TYPE_READER_BY_ID = (id) => `${DOMAIN_NAME}/loaidocgia/${id}`;
 
+//AUTHENTICATION
+export const URL_AUTH_LOGIN = `${DOMAIN_NAME}/auth/staffs/login`;
+
 //PRODUCT
 export const URL_PRODUCTS = `${DOMAIN_NAME}/products`;
 export const URL_PRODUCTS_ID = (id) => `${DOMAIN_NAME}/products/${id}`;

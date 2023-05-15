@@ -1,24 +1,34 @@
-import React from "react";
-import Swal from "sweetalert2";
+import React from 'react';
+import Swal from 'sweetalert2';
 
 const AlertCustom = ({ type, title }) => {
-  if (type === "success") {
+  if (type === 'success') {
     return Swal.fire({
-      width: "400",
-      icon: "success",
+      width: '400',
+      icon: 'success',
       title: title,
       showConfirmButton: false,
       timer: 1000,
       timerProgressBar: true,
     });
   }
-  if (type === "error") {
+  if (type === 'error') {
     Swal.fire({
-      width: "400",
-      icon: "error",
+      width: '400',
+      icon: 'error',
       title: title,
       showConfirmButton: false,
       timer: 2500,
+      timerProgressBar: true,
+    });
+  }
+  if (type === 'loginToContinue') {
+    Swal.fire({
+      width: '400',
+      icon: 'error',
+      title: title,
+      showConfirmButton: false,
+      timer: 1000,
       timerProgressBar: true,
     });
   }

@@ -5,10 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import AlertCustom from '~/components/UI/Notification/Alert';
 import { useSelector, useDispatch } from 'react-redux';
+import Cookies from 'js-cookie';
+import { authenticationAction } from '~/redux/reducer/AuthReducer';
 const { Text } = Typography;
 
 const DropDownAvatar = ({ visibleText }) => {
   // const { staff } = useSelector((state) => state.staffsSlice);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleLogout = () => {
     Swal.fire({
@@ -22,6 +25,8 @@ const DropDownAvatar = ({ visibleText }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         AlertCustom({ type: 'success', title: 'Đăng xuất thành công' });
+        Cookies.remove('token');
+        dispatch(authenticationAction.logOut());
         navigate('/login');
       }
     });
