@@ -10,6 +10,7 @@ export default function* rootSaga() {
     CategorySaga.followActGetListCategories(),
     //Staff
     StaffSaga.followActPostStaff(),
+    StaffSaga.followActGetListStaffs(),
     //Product
     ProductSaga.followActGetListProducts(),
     ProductSaga.followActGetProductById(),

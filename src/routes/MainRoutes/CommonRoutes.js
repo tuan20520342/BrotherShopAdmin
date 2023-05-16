@@ -5,7 +5,7 @@ import StaffsPage from '~/pages/StaffsPage';
 import AddItemForm from '~/pages/AddItemForm';
 import AddStaffForm from '~/components/Staffs/AddStaffForm';
 import ProductsPage from '~/pages/ProductsPage';
-import AddProductForm from '~/components/Prouducts/AddProductForm';
+import AddProductForm from '~/components/Products/AddProductForm';
 import OrdersPage from '~/pages/OrdersPage';
 import CustomersPage from '~/pages/CustomersPage';
 import CategoriesPage from '~/pages/CategoriesPage';

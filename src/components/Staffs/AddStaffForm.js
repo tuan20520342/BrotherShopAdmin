@@ -107,7 +107,7 @@ const AddStaffForm = () => {
       // avatar: imageChange,
       // role: 'EMPLOYEE',
       // active: true,
-      role: 'Nhân viên',
+      role: '643f6259007149b3f3d19340',
       name: values.staff_name,
       address: values.staff_address,
       phone: values.staff_phone_number,

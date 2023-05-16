@@ -6,7 +6,7 @@ import { Typography, Row, Col, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import Toolbar from '~/components/UI/Toolbar';
 import { useNavigate } from 'react-router-dom';
-import TableProducts from '~/components/Prouducts/TableProducts';
+import TableProducts from '~/components/Products/TableProducts';
 const { Title } = Typography;
 
 const OrdersPage = () => {

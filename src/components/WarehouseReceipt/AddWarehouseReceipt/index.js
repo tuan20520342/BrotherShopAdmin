@@ -25,7 +25,7 @@ import {
 import { PlusOutlined } from '@ant-design/icons';
 import Toolbar from '~/components/UI/Toolbar';
 import { useNavigate } from 'react-router-dom';
-import TableProducts from '~/components/Prouducts/TableProducts';
+import TableProducts from '~/components/Products/TableProducts';
 import ModalForm from '~/HOC/ModalForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { modalActions } from '~/redux/reducer/ModalReducer';

@@ -5,13 +5,6 @@ import TableTemplate from '~/components/UI/Table/TableTemplate';
 
 const TableStaffs = ({ keyWord, data, loading }) => {
   const [page, setPage] = useState(1);
-  const renderRole = (role) => {
-    if (role === 'MANAGER') {
-      return 'Quản lý';
-    } else {
-      return 'Nhân viên bán hàng';
-    }
-  };
 
   const columns = [
     {
@@ -20,37 +13,41 @@ const TableStaffs = ({ keyWord, data, loading }) => {
       width: '5%',
       key: '',
       render: (text, record, index) => (page - 1) * 6 + index + 1,
+      align: 'center',
     },
     {
       title: 'Mã nhân viên',
-      dataIndex: 'id',
-      key: 'id',
-      sorter: (a, b) => a.id - b.id,
+      dataIndex: '_id',
+      key: '_id',
+      align: 'center',
+      sorter: (item1, item2) => item1._id.localeCompare(item2._id),
       filteredValue: [keyWord],
       onFilter: (value, record) => {
         return (
           String(record.id).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.fullname).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.phoneNumber).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.name).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.phone).toLowerCase().includes(value.toLowerCase()) ||
           String(record.email).toLowerCase().includes(value.toLowerCase()) ||
-          String(renderRole(record.role)).toLowerCase().includes(value.toLowerCase())
+          String(record.role.name).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.status).toLowerCase().includes(value.toLowerCase())
         );
       },
       showOnResponse: true,
       showOnDesktop: true,
+      render: (id) => id.substring(0, 6).toUpperCase(),
     },
     {
       title: 'Họ và tên',
-      dataIndex: 'fullname',
-      key: 'fullname',
+      dataIndex: 'name',
+      key: 'name',
       showOnResponse: true,
       showOnDesktop: true,
-      sorter: (item1, item2) => item1.fullname.localeCompare(item2.fullname),
+      sorter: (item1, item2) => item1.name.localeCompare(item2.name),
     },
     {
       title: 'Số điện thoại',
-      dataIndex: 'phoneNumber',
-      key: 'phoneNumber',
+      dataIndex: 'phone',
+      key: 'phone',
       showOnResponse: true,
       showOnDesktop: true,
     },
@@ -64,27 +61,21 @@ const TableStaffs = ({ keyWord, data, loading }) => {
     },
     {
       title: 'Vai trò',
-      dataIndex: 'role',
+      dataIndex: ['role', 'name'],
       key: 'role',
+      align: 'center',
       showOnResponse: true,
       showOnDesktop: true,
       ellipsis: true,
-      render: (role) => renderRole(role),
     },
     {
-      title: 'Trạng thái tài khoản',
-      dataIndex: 'active',
-      key: 'active',
+      title: 'Trạng thái',
+      dataIndex: 'status',
+      key: 'status',
       showOnResponse: true,
       showOnDesktop: true,
       ellipsis: true,
-      render: (active) => {
-        if (active) {
-          return 'Đang hoạt động';
-        } else {
-          return 'Tạm ngừng';
-        }
-      },
+      align: 'center',
     },
     {
       title: 'Thao tác',
@@ -152,7 +143,7 @@ const TableStaffs = ({ keyWord, data, loading }) => {
           showSizeChanger: false,
           pageSizeOptions: ['6'],
         }}
-        rowKey={'id'}
+        rowKey={'_id'}
       />
       {/* <ModalForm isModalOpen={isOpen} /> */}
     </>

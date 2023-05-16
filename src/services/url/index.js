@@ -16,3 +16,5 @@ export const URL_CATEGORIES = `${DOMAIN_NAME}/categories`;
 
 //STAFF
 export const URL_ADD_STAFF = `${DOMAIN_NAME}/staffs/create`;
+export const URL_STAFFS = `${DOMAIN_NAME}/staffs`;
+export const URL_STAFFS_ID = (id) => `${DOMAIN_NAME}/staffs/${id}`;

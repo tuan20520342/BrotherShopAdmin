@@ -77,7 +77,11 @@ const LoginForm = () => {
             },
           ]}
         >
-          <Input prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="Password" />
+          <Input.Password
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            type="password"
+            placeholder="Password"
+          />
         </Form.Item>
         <a className="login-form-forgot" href="">
           Quên mật khẩu?
