@@ -45,7 +45,7 @@ export const StaffService = {
     );
   },
   deleteStaff: (staffId) => {
-    return axios.delete(
+    return axios.post(
       UrlApi.URL_DELETE_STAFF,
       {
         staffId: staffId,

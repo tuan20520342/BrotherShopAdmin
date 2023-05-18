@@ -18,8 +18,6 @@ const StaffsPage = () => {
     dispatch({ type: SagaActionTypes.GET_STAFFS_SAGA });
   }, []);
 
-  console.log(staffs);
-
   const handleAddStaff = () => {
     navigate('/add-staff');
   };
@@ -34,7 +32,7 @@ const StaffsPage = () => {
           <Toolbar title={'Thêm nhân viên'} setKeyWord={setKeyWord} handleAdd={handleAddStaff} />
         </Col>
         <Col span={24}>
-          <TableStaffs keyWord={keyWord} data={staffs} loading={loading} />
+          <TableStaffs keyWord={keyWord} data={staffs} />
         </Col>
       </Row>
     </>
