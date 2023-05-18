@@ -13,6 +13,8 @@ import WearhouseReceiptsPage from '~/pages/WarehouseReceiptsPage';
 import ProfilePage from '~/pages/ProfilePage';
 import AddWarehouseReceipt from '~/components/WarehouseReceipt/AddWarehouseReceipt';
 import EditProductPage from '~/pages/EditProductPage';
+import EditStaffForm from '~/components/Staffs/EditStaffForm';
+import EditStaffPage from '~/pages/EditStaffPage';
 
 const CommonRoutes = [
   {
@@ -22,6 +24,10 @@ const CommonRoutes = [
   {
     path: '/staffs',
     element: <StaffsPage />,
+  },
+  {
+    path: '/staffs/:id',
+    element: <EditStaffPage />,
   },
   {
     path: '/add-staff',

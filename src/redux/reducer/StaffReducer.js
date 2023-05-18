@@ -2,8 +2,20 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   loading: false,
+  idLoading: false,
   isCreateStaffSucceeded: false,
   staffs: [],
+  staffById: {
+    account: '',
+    role: '',
+    name: '',
+    address: '',
+    email: '',
+    phone: '',
+    gender: '',
+    birthday: '',
+    status: '',
+  },
 };
 
 const staffSlice = createSlice({
@@ -20,6 +32,13 @@ const staffSlice = createSlice({
     },
     createStaffSucceeded: (state, action) => {
       state.isCreateStaffSucceeded = true;
+    },
+    getStaffByIdInLoading: (state, action) => {
+      state.idLoading = true;
+    },
+    getStaffByIdSuccess: (state, action) => {
+      state.staffById = action.payload.staffById;
+      state.idLoading = false;
     },
   },
 });

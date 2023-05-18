@@ -5,9 +5,11 @@ import TableTemplate from '~/components/UI/Table/TableTemplate';
 import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
 import { useDispatch } from 'react-redux';
 import * as SagaActionTypes from '~/redux/constants/constant';
+import { useNavigate } from 'react-router-dom';
 
 const TableStaffs = ({ keyWord, data, loading }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [page, setPage] = useState(1);
 
   const columns = [
@@ -94,7 +96,7 @@ const TableStaffs = ({ keyWord, data, loading }) => {
       render: (text, record, index) => (
         <Space size="middle" key={index}>
           <Button type="primary" icon={<EyeFilled />} onClick={() => handleEditStaff(record)}></Button>
-          {record.role.name === 'Chủ cửa hàng' ? (
+          {record.role.name === 'Chủ cửa hàng' || record.status === 'Đã nghỉ' ? (
             <Button type="primary" icon={<DeleteFilled />} disabled></Button>
           ) : (
             <Popconfirm
@@ -120,7 +122,9 @@ const TableStaffs = ({ keyWord, data, loading }) => {
     });
   };
 
-  const handleEditStaff = (staff) => {};
+  const handleEditStaff = (staff) => {
+    navigate(`/staffs/${staff._id}`);
+  };
 
   if (loading) {
     return <LoadingSpin />;
@@ -141,7 +145,6 @@ const TableStaffs = ({ keyWord, data, loading }) => {
         }}
         rowKey={'_id'}
       />
-      {/* <ModalForm isModalOpen={isOpen} /> */}
     </>
   );
 };

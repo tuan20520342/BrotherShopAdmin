@@ -59,7 +59,9 @@ const MainLayoutSider = ({ collapsed, setCollapsed, setVisibleButton }) => {
         selectedKeys={[
           location.pathname === '/'
             ? '1'
-            : location.pathname === '/staffs' || location.pathname === '/add-staff'
+            : location.pathname === '/staffs' ||
+              location.pathname === '/add-staff' ||
+              location.pathname.includes('/staffs')
             ? '2'
             : location.pathname === '/customers'
             ? '3'

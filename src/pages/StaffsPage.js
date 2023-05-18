@@ -11,7 +11,7 @@ const { Title } = Typography;
 const StaffsPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { staffs } = useSelector((state) => state.staffSlice);
+  const { staffs, loading } = useSelector((state) => state.staffSlice);
   const [keyWord, setKeyWord] = useState('');
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const StaffsPage = () => {
           <Toolbar title={'Thêm nhân viên'} setKeyWord={setKeyWord} handleAdd={handleAddStaff} />
         </Col>
         <Col span={24}>
-          <TableStaffs keyWord={keyWord} data={staffs} />
+          <TableStaffs keyWord={keyWord} data={staffs} loading={loading} />
         </Col>
       </Row>
     </>

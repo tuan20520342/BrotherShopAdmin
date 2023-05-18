@@ -19,3 +19,4 @@ export const URL_ADD_STAFF = `${DOMAIN_NAME}/staffs/create`;
 export const URL_STAFFS = `${DOMAIN_NAME}/staffs`;
 export const URL_STAFFS_ID = (id) => `${DOMAIN_NAME}/staffs/${id}`;
 export const URL_DELETE_STAFF = `${DOMAIN_NAME}/staffs/delete`;
+export const URL_PUT_STAFF = `${DOMAIN_NAME}/staffs/update`;

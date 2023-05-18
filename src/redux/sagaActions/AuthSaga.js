@@ -7,14 +7,14 @@ import Cookies from 'js-cookie';
 
 function* actLogin(action) {
   try {
-    let { user } = action;
+    const { user } = action;
 
-    let res = yield call(() => AuthenticationService.postLogin(user));
+    const res = yield call(() => AuthenticationService.postLogin(user));
 
-    let { data, status } = res;
+    const { data, status } = res;
 
     if (status === 200) {
-      let { token, staff } = data;
+      const { token, staff } = data;
 
       const remainingMilliseconds = 60 * 60 * 1000;
       const expiryDate = new Date(new Date().getTime() + remainingMilliseconds);

@@ -57,4 +57,26 @@ export const StaffService = {
       },
     );
   },
+
+  putStaff: (editStaff) => {
+    const { role, name, address, email, phone, gender, birthday, staffId } = editStaff;
+    return axios.put(
+      UrlApi.URL_PUT_STAFF,
+      {
+        role: role,
+        name: name,
+        address: address,
+        email: email,
+        phone: phone,
+        gender: gender,
+        birthday: birthday,
+        staffId: staffId,
+      },
+      Cookies.get('token') && {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`,
+        },
+      },
+    );
+  },
 };

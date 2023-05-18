@@ -9,9 +9,9 @@ function* actGetListProducts() {
   try {
     yield put(productActions.getProductsLoading());
 
-    let res = yield call(() => ProductService.getProductsList());
+    const res = yield call(() => ProductService.getProductsList());
     console.log(res);
-    let { status, data } = res;
+    const { status, data } = res;
     if (status === 200) {
       yield put(productActions.getProductsSuccess({ products: data.products }));
     } else {
@@ -26,12 +26,12 @@ function* actGetListProducts() {
 
 function* actGetProductById(action) {
   try {
-    let { id } = action;
+    const { id } = action;
     yield put(productActions.getProductByIdInLoading());
 
-    let res = yield call(() => ProductService.getProductById(id));
+    const res = yield call(() => ProductService.getProductById(id));
     console.log(res);
-    let { status, data } = res;
+    const { status, data } = res;
     if (status === 200) {
       yield put(productActions.getProductByIdSuccess({ productId: data.product }));
     } else {

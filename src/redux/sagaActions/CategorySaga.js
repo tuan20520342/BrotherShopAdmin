@@ -9,9 +9,9 @@ function* actGetListCategories() {
   try {
     yield put(categoryActions.getCategoriesLoading());
 
-    let res = yield call(() => CategoryService.getCategoriesList());
+    const res = yield call(() => CategoryService.getCategoriesList());
     console.log(res);
-    let { status, data } = res;
+    const { status, data } = res;
     if (status === 200) {
       yield put(categoryActions.getCategoriesSuccess({ categories: data.categories }));
     } else {

@@ -48,10 +48,12 @@ const validateMessages = {
   },
 };
 
-const AddStaffForm = () => {
+const EditStaffForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isCreateStaffSucceeded } = useSelector((state) => state.staffSlice);
+  const [enableModify, setEnableModify] = useState(false);
+  const [componentDisabled, setComponentDisabled] = useState(true);
+  const { staffById } = useSelector((state) => state.staffSlice);
   const [form] = Form.useForm();
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
@@ -92,31 +94,47 @@ const AddStaffForm = () => {
     </div>
   );
 
-  useEffect(() => {
-    if (isCreateStaffSucceeded) {
-      navigate('/staffs', { replace: true });
-    }
-  }, [isCreateStaffSucceeded]);
+  // useEffect(() => {
+  //   if (isCreateStaffSucceeded) {
+  //     navigate('/staffs', { replace: true });
+  //   }
+  // }, [isCreateStaffSucceeded]);
+
+  const handleEnableModify = () => {
+    setEnableModify(true);
+    setComponentDisabled(false);
+  };
 
   const handleClose = () => {
     navigate('/staffs');
   };
 
+  const handleFormCancel = () => {
+    setEnableModify(false);
+    setComponentDisabled(true);
+    onReset();
+  };
+
+  const onReset = () => {
+    form.resetFields();
+  };
+
   const onFinish = (values) => {
-    let newStaff = {
-      role: '643f6259007149b3f3d19340',
-      name: values.staff_name,
-      address: values.staff_address,
-      phone: values.staff_phone_number,
-      gender: values.staff_gender,
-      birthday: values.staff_birth.toDate(),
-      email: values.staff_email,
+    let editStaff = {
+      staffId: staffById._id,
+      role: staffById.role._id,
+      name: values.name,
+      address: values.address,
+      phone: values.phone,
+      gender: values.gender,
+      birthday: values.birthday.toDate(),
+      email: values.email,
     };
     dispatch({
-      type: SagaActionTypes.POST_STAFF_SAGA,
-      newStaff: newStaff,
+      type: SagaActionTypes.PUT_STAFF_SAGA,
+      editStaff: editStaff,
     });
-    console.log(newStaff);
+    console.log(editStaff);
   };
 
   return (
@@ -125,7 +143,14 @@ const AddStaffForm = () => {
       form={form}
       onFinish={onFinish}
       initialValues={{
-        staff_other_information: '',
+        name: staffById.name,
+        birthday: dayjs(staffById.birthday),
+        cccd: '111111111111',
+        gender: staffById.gender,
+        phone: staffById.phone,
+        email: staffById.email,
+        address: staffById.address,
+        otherInformation: '',
       }}
       validateMessages={validateMessages}
       style={{
@@ -145,7 +170,7 @@ const AddStaffForm = () => {
       >
         <Col xs={24} sm={12} md={24} lg={12} key={1}>
           <Form.Item
-            name="staff_name"
+            name="name"
             label="Họ và tên"
             rules={[
               {
@@ -153,12 +178,12 @@ const AddStaffForm = () => {
               },
             ]}
           >
-            <Input placeholder="Họ và tên" />
+            <Input placeholder="Họ và tên" disabled={componentDisabled} />
           </Form.Item>
         </Col>
         <Col xs={24} sm={12} md={24} lg={12} key={2}>
           <Form.Item
-            name="staff_birth"
+            name="birthday"
             label="Ngày sinh"
             rules={[
               {
@@ -170,12 +195,13 @@ const AddStaffForm = () => {
               placeholder="Ngày sinh"
               format={dateFormat}
               disabledDate={(current) => current.isAfter(dayjs())}
+              disabled={componentDisabled}
             />
           </Form.Item>
         </Col>
         <Col xs={24} sm={12} md={24} lg={12} key={3}>
           <Form.Item
-            name="staff_cccd"
+            name="cccd"
             label="CCCD"
             rules={[
               {
@@ -185,12 +211,12 @@ const AddStaffForm = () => {
               { required: true },
             ]}
           >
-            <Input placeholder="CCCD" />
+            <Input placeholder="CCCD" disabled={true} />
           </Form.Item>
         </Col>
         <Col xs={24} sm={12} md={24} lg={12} key={4}>
           <Form.Item
-            name="staff_gender"
+            name="gender"
             label="Giới tính"
             rules={[
               {
@@ -204,6 +230,7 @@ const AddStaffForm = () => {
               style={{
                 width: '40%',
               }}
+              disabled={componentDisabled}
             >
               <Option value="Nam">Nam</Option>
               <Option value="Nữ">Nữ</Option>
@@ -213,7 +240,7 @@ const AddStaffForm = () => {
         </Col>
         <Col xs={24} sm={12} md={24} lg={12} key={5}>
           <Form.Item
-            name="staff_phone_number"
+            name="phone"
             label="Số Điện Thoại"
             rules={[
               {
@@ -223,22 +250,22 @@ const AddStaffForm = () => {
               { required: true },
             ]}
           >
-            <Input placeholder="Số điện thoại" />
+            <Input placeholder="Số điện thoại" disabled={componentDisabled} />
           </Form.Item>
         </Col>
         <Col xs={24} sm={12} md={24} lg={12} key={6}>
-          <Form.Item name="staff_email" label="Email" rules={[{ type: 'email', required: true }]}>
-            <Input placeholder="Email" />
+          <Form.Item name="email" label="Email" rules={[{ type: 'email', required: true }]}>
+            <Input placeholder="Email" disabled={true} />
           </Form.Item>
         </Col>
         <Col xs={24} sm={12} md={24} lg={12} key={7}>
-          <Form.Item name="staff_address" label="Địa chỉ" rules={[{ required: true }]}>
-            <TextArea rows={2} placeholder="Địa chỉ" />
+          <Form.Item name="address" label="Địa chỉ" rules={[{ required: true }]}>
+            <TextArea rows={2} placeholder="Địa chỉ" disabled={componentDisabled} />
           </Form.Item>
         </Col>
         <Col span={24} key={8}>
-          <Form.Item name="staff_other_information" label="Khác">
-            <TextArea rows={2} placeholder="Khác" />
+          <Form.Item name="otherInformation" label="Khác">
+            <TextArea rows={2} placeholder="Khác" disabled={componentDisabled} />
           </Form.Item>
         </Col>
         <Col span={24} key={9}>
@@ -250,6 +277,7 @@ const AddStaffForm = () => {
                 fileList={fileList}
                 onPreview={handlePreview}
                 onChange={handleChange}
+                disabled={componentDisabled}
               >
                 {fileList.length >= 1 ? null : uploadButton}
               </Upload>
@@ -258,14 +286,25 @@ const AddStaffForm = () => {
         </Col>
       </Row>
       <Row justify="end">
-        <Space>
-          <Button size="large" type="primary" htmlType="submit">
-            Xác nhận
-          </Button>
-          <Button size="large" type="primary" danger onClick={handleClose}>
-            Đóng
-          </Button>
-        </Space>
+        {enableModify === false ? (
+          <Space>
+            <Button type="primary" onClick={() => handleEnableModify()}>
+              Chỉnh sửa
+            </Button>
+            <Button type="primary" danger onClick={handleClose}>
+              Đóng
+            </Button>
+          </Space>
+        ) : (
+          <Space>
+            <Button type="primary" danger onClick={handleFormCancel}>
+              Hủy
+            </Button>
+            <Button type="primary" htmlType="submit">
+              Lưu
+            </Button>
+          </Space>
+        )}
       </Row>
       <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
         <img
@@ -279,4 +318,4 @@ const AddStaffForm = () => {
     </Form>
   );
 };
-export default AddStaffForm;
+export default EditStaffForm;

@@ -14,8 +14,8 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const onFinish = async (values) => {
-    let { email, password } = values;
-    let user = {
+    const { email, password } = values;
+    const user = {
       username: email,
       password: password,
     };
@@ -23,7 +23,7 @@ const LoginForm = () => {
       const { data, status } = await AuthenticationService.postLogin(user);
 
       if (status === 200) {
-        let { token, staff } = data;
+        const { token, staff } = data;
         const remainingMilliseconds = 60 * 60 * 1000;
         const expiryDate = new Date(new Date().getTime() + remainingMilliseconds);
         Cookies.set('token', token, { expires: expiryDate });
@@ -35,7 +35,6 @@ const LoginForm = () => {
       }
     } catch (err) {
       console.log(err);
-
       AlertCustom({ type: 'error', title: 'Sai email hoặc password, vui lòng kiểm tra lại!' });
     }
   };

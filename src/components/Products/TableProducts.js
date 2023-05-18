@@ -47,9 +47,6 @@ const TableProducts = ({ keyWord, data, loading }) => {
           String(record.sizes.reduce((acc, size) => acc + size.quantity, 0))
             .toLowerCase()
             .includes(value.toLowerCase())
-          // record.state.find((item) => item.stateName.toLowerCase().includes(value.toLowerCase())) ||
-          // String(dayjs(record.EXP).format('DD/MM/YYYY')).toLowerCase().includes(value.toLowerCase()) ||
-          // String(dayjs(record.MFG).format('DD/MM/YYYY')).toLowerCase().includes(value.toLowerCase())
         );
       },
       showOnResponse: true,
@@ -122,23 +119,6 @@ const TableProducts = ({ keyWord, data, loading }) => {
       },
     },
 
-    // {
-    //   title: 'Trạng thái',
-    //   dataIndex: 'state',
-    //   key: 'state',
-    //   showOnResponse: true,
-    //   showOnDesktop: true,
-    //   ellipsis: true,
-    //   render: (state) => (
-    //     <>
-    //       {state.map((item) => (
-    //         <Tag color={item.color} key={item.stateName}>
-    //           {item.stateName}
-    //         </Tag>
-    //       ))}
-    //     </>
-    //   ),
-    // },
     {
       title: 'Thao tác',
       key: 'action',
@@ -157,9 +137,6 @@ const TableProducts = ({ keyWord, data, loading }) => {
             title="Bạn có chắc muốn xóa sản phẩm này?"
             okText="Xác nhận"
             cancelText="Hủy"
-            // cancelButtonProps={{
-            //   className: 'text-gray-400 border-gray-400 hover:text-gray-500 hover:border-gray-500',
-            // }}
             onConfirm={() => handleRemoveProduct(record)}
           >
             <Button type="primary" icon={<DeleteFilled />} danger></Button>
@@ -172,7 +149,6 @@ const TableProducts = ({ keyWord, data, loading }) => {
   const handleRemoveProduct = (record) => {};
 
   const handleEditProduct = (product) => {
-    // dispatch({ type: SagaActionTypes.GET_PRODUCT_BY_ID_SAGA, id: product._id });
     navigate(`/products/${product._id}`);
   };
   if (loading) {

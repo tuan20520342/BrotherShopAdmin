@@ -393,17 +393,6 @@ const EditProductForm = () => {
           </div>
         </Col>
       </Row>
-
-      {/* <Row justify="end">
-        <Space>
-          <Button size="large" type="primary" htmlType="submit">
-            Xác nhận
-          </Button>
-          <Button size="large" type="primary" danger onClick={handleClose}>
-            Đóng
-          </Button>
-        </Space>
-      </Row> */}
     </Form>
   );
 };

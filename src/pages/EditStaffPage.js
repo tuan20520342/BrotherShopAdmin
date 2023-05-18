@@ -5,16 +5,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as SagaActionTypes from '~/redux/constants/constant';
 import EditProductForm from '~/components/Products/EditProductForm';
 import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
+import EditStaffForm from '~/components/Staffs/EditStaffForm';
 
 const { Title } = Typography;
 
-const EditProductPage = () => {
+const EditStaffPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch({ type: SagaActionTypes.GET_PRODUCT_BY_ID_SAGA, id: id });
+    dispatch({ type: SagaActionTypes.GET_STAFF_BY_ID_SAGA, id: id });
   }, []);
-  const { idLoading } = useSelector((state) => state.productSlice);
+  const { idLoading } = useSelector((state) => state.staffSlice);
 
   if (idLoading) {
     return <LoadingSpin />;
@@ -24,14 +25,14 @@ const EditProductPage = () => {
     <>
       <Row>
         <Col span={24}>
-          <Title level={2}>{`Sản phẩm: ${id}`}</Title>
+          <Title level={2}>{`Nhân viên: ${id.substring(0, 6).toUpperCase()}`}</Title>
         </Col>
         <Col span={24}>
-          <EditProductForm />
+          <EditStaffForm />
         </Col>
       </Row>
     </>
   );
 };
 
-export default EditProductPage;
+export default EditStaffPage;
