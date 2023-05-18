@@ -3,6 +3,7 @@ import * as CategorySaga from './sagaActions/CategorySaga';
 import * as StaffSaga from './sagaActions/StaffSaga';
 import * as ProductSaga from './sagaActions/ProductSaga';
 import * as AuthSaga from './sagaActions/AuthSaga';
+import * as CustomerSaga from './sagaActions/CustomerSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -18,5 +19,8 @@ export default function* rootSaga() {
     ProductSaga.followActGetListProducts(),
     ProductSaga.followActGetProductById(),
     AuthSaga.followActLogin(),
+    //Customer
+    CustomerSaga.followActGetListCustomers(),
+    CustomerSaga.followActGetCustomerById(),
   ]);
 }

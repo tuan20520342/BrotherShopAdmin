@@ -18,6 +18,7 @@ const TableCategories = ({ keyWord, data, loading }) => {
       key: '',
       align: 'center',
       render: (text, record, index) => (page - 1) * 6 + index + 1,
+      ellipsis: true,
     },
     {
       title: 'Mã danh mục',
@@ -34,8 +35,7 @@ const TableCategories = ({ keyWord, data, loading }) => {
             .includes(value.toLowerCase())
         );
       },
-      showOnResponse: true,
-      showOnDesktop: true,
+      ellipsis: true,
       align: 'center',
       render: (id) => id.substring(0, 6).toUpperCase(),
     },
@@ -43,16 +43,14 @@ const TableCategories = ({ keyWord, data, loading }) => {
       title: 'Tên danh mục',
       dataIndex: 'name',
       key: 'name',
-      showOnResponse: true,
-      showOnDesktop: true,
+      ellipsis: true,
       sorter: (item1, item2) => item1.name.localeCompare(item2.name),
     },
     {
       title: 'Loại',
       dataIndex: 'types',
       key: 'types',
-      showOnResponse: true,
-      showOnDesktop: true,
+      ellipsis: true,
       sorter: (item1, item2) => item1.name.localeCompare(item2.name),
       render: (types) => types.map((type) => type.type).join(', '),
     },
@@ -62,8 +60,6 @@ const TableCategories = ({ keyWord, data, loading }) => {
       id: 'action',
       ellipsis: true,
       width: '10%',
-      showOnResponse: true,
-      showOnDesktop: true,
       fixed: 'right',
       align: 'center',
       render: (text, record, index) => (

@@ -17,14 +17,14 @@ const TableProducts = ({ keyWord, data, loading }) => {
       key: '',
       render: (text, record, index) => (page - 1) * 4 + index + 1,
       align: 'center',
+      ellipsis: true,
     },
     {
       title: 'Hình ảnh',
       dataIndex: ['images', 'mainImg'],
       key: 'image',
       align: 'center',
-      showOnResponse: true,
-      showOnDesktop: true,
+      ellipsis: true,
       render: (image) => <Image width={80} src={`https://res.cloudinary.com/ddajkcbs2/image/upload/${image}`} />,
     },
     {
@@ -45,23 +45,21 @@ const TableProducts = ({ keyWord, data, loading }) => {
             .includes(value.toLowerCase())
         );
       },
-      showOnResponse: true,
-      showOnDesktop: true,
+      ellipsis: true,
       render: (id) => id.substring(0, 8).toUpperCase(),
     },
     {
       title: 'Tên sản phẩm',
       dataIndex: 'name',
       key: 'name',
-      showOnResponse: true,
-      showOnDesktop: true,
+      ellipsis: true,
     },
     {
-      title: 'Giá cũ',
+      title: <div style={{ textAlign: 'center' }}>Giá cũ</div>,
       dataIndex: 'oldPrice',
       key: 'oldPrice',
-      showOnResponse: true,
-      showOnDesktop: true,
+      align: 'end',
+      ellipsis: true,
       sorter: (a, b) => (a.oldPrice ?? a.price) - (b.oldPrice ?? b.price),
       render: (value, record) => (
         <div>
@@ -72,11 +70,10 @@ const TableProducts = ({ keyWord, data, loading }) => {
       ),
     },
     {
-      title: 'Giá bán',
+      title: <div style={{ textAlign: 'center' }}>Giá bán</div>,
       dataIndex: 'price',
       key: 'price',
-      showOnResponse: true,
-      showOnDesktop: true,
+      align: 'end',
       ellipsis: true,
       sorter: (a, b) => a.price - b.price,
       render: (price) => (
@@ -87,11 +84,10 @@ const TableProducts = ({ keyWord, data, loading }) => {
       ),
     },
     {
-      title: 'Số lượng',
+      title: <div style={{ textAlign: 'center' }}>Số lượng</div>,
       dataIndex: 'sizes',
       key: 'sizes',
-      showOnResponse: true,
-      showOnDesktop: true,
+      align: 'end',
       ellipsis: true,
       sorter: (a, b) =>
         a.sizes.reduce((acc, size) => acc + size.quantity, 0) - b.sizes.reduce((acc, size) => acc + size.quantity, 0),
@@ -101,12 +97,11 @@ const TableProducts = ({ keyWord, data, loading }) => {
       },
     },
     {
-      title: 'Đã bán',
+      title: <div style={{ textAlign: 'center' }}>Đã bán</div>,
       dataIndex: 'sizes',
       key: 'sold',
-      showOnResponse: true,
-      showOnDesktop: true,
       ellipsis: true,
+      align: 'end',
       sorter: (a, b) =>
         a.sizes.reduce((acc, size) => acc + size.sold, 0) - b.sizes.reduce((acc, size) => acc + size.sold, 0),
       render: (sizes) => {
@@ -121,8 +116,6 @@ const TableProducts = ({ keyWord, data, loading }) => {
       id: 'action',
       ellipsis: true,
       width: '10%',
-      showOnResponse: true,
-      showOnDesktop: true,
       fixed: 'right',
       align: 'center',
       render: (text, record, index) => (

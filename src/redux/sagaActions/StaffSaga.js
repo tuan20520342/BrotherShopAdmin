@@ -43,7 +43,6 @@ function* actGetStaffById(action) {
     yield put(staffActions.getStaffByIdInLoading());
     const res = yield call(() => StaffService.getStaffById(id));
     const { status, data } = res;
-    console.log(data);
     if (status === 200) {
       yield put(staffActions.getStaffByIdSuccess({ staffById: data.staff }));
     } else {

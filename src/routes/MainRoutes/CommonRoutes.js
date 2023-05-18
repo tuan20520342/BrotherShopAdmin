@@ -15,6 +15,7 @@ import AddWarehouseReceipt from '~/components/WarehouseReceipt/AddWarehouseRecei
 import EditProductPage from '~/pages/EditProductPage';
 import EditStaffForm from '~/components/Staffs/EditStaffForm';
 import EditStaffPage from '~/pages/EditStaffPage';
+import CustomerDetailsPage from '~/pages/CustomerDetailsPage';
 
 const CommonRoutes = [
   {
@@ -60,6 +61,10 @@ const CommonRoutes = [
   {
     path: '/customers',
     element: <CustomersPage />,
+  },
+  {
+    path: '/customers/:id',
+    element: <CustomerDetailsPage />,
   },
   {
     path: '*',

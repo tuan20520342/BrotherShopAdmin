@@ -20,6 +20,7 @@ const TableStaffs = ({ keyWord, data, loading }) => {
       key: '',
       render: (text, record, index) => (page - 1) * 6 + index + 1,
       align: 'center',
+      ellipsis: true,
     },
     {
       title: 'Mã nhân viên',
@@ -38,31 +39,26 @@ const TableStaffs = ({ keyWord, data, loading }) => {
           String(record.status).toLowerCase().includes(value.toLowerCase())
         );
       },
-      showOnResponse: true,
-      showOnDesktop: true,
+      ellipsis: true,
       render: (id) => id.substring(0, 6).toUpperCase(),
     },
     {
       title: 'Họ và tên',
       dataIndex: 'name',
       key: 'name',
-      showOnResponse: true,
-      showOnDesktop: true,
+      ellipsis: true,
       sorter: (item1, item2) => item1.name.localeCompare(item2.name),
     },
     {
       title: 'Số điện thoại',
       dataIndex: 'phone',
       key: 'phone',
-      showOnResponse: true,
-      showOnDesktop: true,
+      ellipsis: true,
     },
     {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
-      showOnResponse: true,
-      showOnDesktop: true,
       ellipsis: true,
     },
     {
@@ -70,16 +66,12 @@ const TableStaffs = ({ keyWord, data, loading }) => {
       dataIndex: ['role', 'name'],
       key: 'role',
       align: 'center',
-      showOnResponse: true,
-      showOnDesktop: true,
       ellipsis: true,
     },
     {
       title: 'Trạng thái',
       dataIndex: 'status',
       key: 'status',
-      showOnResponse: true,
-      showOnDesktop: true,
       ellipsis: true,
       align: 'center',
     },
@@ -89,8 +81,6 @@ const TableStaffs = ({ keyWord, data, loading }) => {
       id: 'action',
       ellipsis: true,
       width: '10%',
-      showOnResponse: true,
-      showOnDesktop: true,
       fixed: 'right',
       align: 'center',
       render: (text, record, index) => (

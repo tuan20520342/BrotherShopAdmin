@@ -48,12 +48,12 @@ const validateMessages = {
   },
 };
 
-const EditStaffForm = () => {
+const CustomerDetailForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [enableModify, setEnableModify] = useState(false);
   const [componentDisabled, setComponentDisabled] = useState(true);
-  const { staffById } = useSelector((state) => state.staffSlice);
+  const { customerById } = useSelector((state) => state.customerSlice);
   const [form] = Form.useForm();
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
@@ -94,19 +94,13 @@ const EditStaffForm = () => {
     </div>
   );
 
-  // useEffect(() => {
-  //   if (isCreateStaffSucceeded) {
-  //     navigate('/staffs', { replace: true });
-  //   }
-  // }, [isCreateStaffSucceeded]);
-
   const handleEnableModify = () => {
     setEnableModify(true);
     setComponentDisabled(false);
   };
 
   const handleClose = () => {
-    navigate('/staffs');
+    navigate('/customers');
   };
 
   const handleFormCancel = () => {
@@ -120,20 +114,20 @@ const EditStaffForm = () => {
   };
 
   const onFinish = (values) => {
-    let editStaff = {
-      staffId: staffById._id,
-      role: staffById.role._id,
-      name: values.name,
-      address: values.address,
-      phone: values.phone,
-      gender: values.gender,
-      birthday: values.birthday.toDate(),
-      email: values.email,
-    };
-    dispatch({
-      type: SagaActionTypes.PUT_STAFF_SAGA,
-      editStaff: editStaff,
-    });
+    // let editStaff = {
+    //   staffId: customerById._id,
+    //   role: customerById.role._id,
+    //   name: values.name,
+    //   address: values.address,
+    //   phone: values.phone,
+    //   gender: values.gender,
+    //   birthday: values.birthday.toDate(),
+    //   email: values.email,
+    // };
+    // dispatch({
+    //   type: SagaActionTypes.PUT_STAFF_SAGA,
+    //   editStaff: editStaff,
+    // });
   };
 
   return (
@@ -142,13 +136,15 @@ const EditStaffForm = () => {
       form={form}
       onFinish={onFinish}
       initialValues={{
-        name: staffById.name,
-        birthday: dayjs(staffById.birthday),
+        name: customerById.name,
+        birthday: dayjs(customerById.birthday),
         cccd: '111111111111',
-        gender: staffById.gender,
-        phone: staffById.phone,
-        email: staffById.email,
-        address: staffById.address,
+        gender: customerById.gender,
+        phone: customerById.phone,
+        email: customerById.email,
+        address: customerById?.address?.map(
+          (item) => `${item.name}, ${item.phone}, ${item.detail}, ${item.ward}, ${item.district}, ${item.city}`,
+        ),
         otherInformation: '',
       }}
       validateMessages={validateMessages}
@@ -257,14 +253,21 @@ const EditStaffForm = () => {
             <Input placeholder="Email" disabled={true} />
           </Form.Item>
         </Col>
-        <Col xs={24} sm={12} md={24} lg={12} key={7}>
-          <Form.Item name="address" label="Địa chỉ" rules={[{ required: true }]}>
-            <TextArea rows={2} placeholder="Địa chỉ" disabled={componentDisabled} />
-          </Form.Item>
-        </Col>
-        <Col span={24} key={8}>
-          <Form.Item name="otherInformation" label="Khác">
-            <TextArea rows={2} placeholder="Khác" disabled={componentDisabled} />
+        <Col span={24} key={7}>
+          <Form.Item label="Địa chỉ">
+            <Form.List name="address">
+              {(fields, { add, remove }, { errors }) => (
+                <>
+                  {fields.map((field, index) => (
+                    <Form.Item key={field.key}>
+                      <Form.Item {...field} noStyle>
+                        <TextArea rows={2} placeholder="Tên loại danh mục" disabled={componentDisabled} />
+                      </Form.Item>
+                    </Form.Item>
+                  ))}
+                </>
+              )}
+            </Form.List>
           </Form.Item>
         </Col>
         <Col span={24} key={9}>
@@ -317,4 +320,4 @@ const EditStaffForm = () => {
     </Form>
   );
 };
-export default EditStaffForm;
+export default CustomerDetailForm;
