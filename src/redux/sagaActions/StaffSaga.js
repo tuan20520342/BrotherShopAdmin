@@ -12,6 +12,7 @@ function* actPostStaff(action) {
     console.log(res);
     if (res.status === 201) {
       AlertCustom({ type: 'success', title: 'Thêm nhân viên thành công' });
+      yield put(staffActions.createStaffSucceeded());
     } else {
       AlertCustom({ type: 'error', title: 'Thêm nhân viên thất bại' });
     }
@@ -24,17 +25,33 @@ function* actPostStaff(action) {
 function* actGetListStaffs() {
   try {
     yield put(staffActions.getStaffsLoading());
-
     let res = yield call(() => StaffService.getStaffsList());
     let { status, data } = res;
     if (status === 200) {
       yield put(staffActions.getStaffsSuccess({ staffs: data.staffs }));
     } else {
-      //yield put(authActions.requestLogFailed());
       console.log('an l r');
     }
   } catch (err) {
-    //yield put(authActions.requestLogFailed());
+    console.log(err);
+  }
+}
+
+function* actDeleteStaff(action) {
+  try {
+    let { staffId } = action;
+    let res = yield call(() => StaffService.deleteStaff(staffId));
+    let { status, data } = res;
+    if (status === 200) {
+      AlertCustom({
+        type: 'success',
+        title: 'Xóa nhân viên thành công',
+      });
+      yield put({ type: SagaActionTypes.GET_STAFFS_SAGA });
+    } else {
+      AlertCustom({ type: 'error', title: 'Xóa loại nhân viên thất bại' });
+    }
+  } catch (err) {
     console.log(err);
   }
 }
@@ -45,4 +62,8 @@ export function* followActPostStaff() {
 
 export function* followActGetListStaffs() {
   yield takeLatest(SagaActionTypes.GET_STAFFS_SAGA, actGetListStaffs);
+}
+
+export function* followActDeleteStaff() {
+  yield takeLatest(SagaActionTypes.DELETE_STAFF_SAGA, actDeleteStaff);
 }

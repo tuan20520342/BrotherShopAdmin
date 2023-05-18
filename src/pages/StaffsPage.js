@@ -36,7 +36,7 @@ const StaffsPage = () => {
           <Toolbar title={'Thêm nhân viên'} setKeyWord={setKeyWord} handleAdd={handleAddStaff} />
         </Col>
         <Col span={24}>
-          <TableStaffs keyWord={keyWord} data={staffs} />
+          <TableStaffs keyWord={keyWord} data={staffs} loading={loading} />
         </Col>
       </Row>
     </>

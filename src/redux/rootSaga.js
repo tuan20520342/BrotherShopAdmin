@@ -11,6 +11,7 @@ export default function* rootSaga() {
     //Staff
     StaffSaga.followActPostStaff(),
     StaffSaga.followActGetListStaffs(),
+    StaffSaga.followActDeleteStaff(),
     //Product
     ProductSaga.followActGetListProducts(),
     ProductSaga.followActGetProductById(),
