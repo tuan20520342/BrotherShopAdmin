@@ -1,16 +1,12 @@
-import { Popconfirm, Space, Spin, Button, Tag, Image } from 'antd';
-import dayjs from 'dayjs';
+import { Popconfirm, Space, Button, Image } from 'antd';
 import { DeleteFilled, EyeFilled } from '@ant-design/icons';
 import { useState } from 'react';
 import TableTemplate from '~/components/UI/Table/TableTemplate';
-import { useDispatch } from 'react-redux';
-import * as SagaActionTypes from '~/redux/constants/constant';
 import { useNavigate } from 'react-router-dom';
 import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
 
 const TableProducts = ({ keyWord, data, loading }) => {
   const [page, setPage] = useState(1);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const columns = [
@@ -54,7 +50,7 @@ const TableProducts = ({ keyWord, data, loading }) => {
       },
       showOnResponse: true,
       showOnDesktop: true,
-      render: (id) => id.substring(0, 6).toUpperCase(),
+      render: (id) => id.substring(0, 8).toUpperCase(),
     },
     {
       title: 'Tên sản phẩm',
@@ -122,23 +118,6 @@ const TableProducts = ({ keyWord, data, loading }) => {
       },
     },
 
-    // {
-    //   title: 'Trạng thái',
-    //   dataIndex: 'state',
-    //   key: 'state',
-    //   showOnResponse: true,
-    //   showOnDesktop: true,
-    //   ellipsis: true,
-    //   render: (state) => (
-    //     <>
-    //       {state.map((item) => (
-    //         <Tag color={item.color} key={item.stateName}>
-    //           {item.stateName}
-    //         </Tag>
-    //       ))}
-    //     </>
-    //   ),
-    // },
     {
       title: 'Thao tác',
       key: 'action',
@@ -157,9 +136,6 @@ const TableProducts = ({ keyWord, data, loading }) => {
             title="Bạn có chắc muốn xóa sản phẩm này?"
             okText="Xác nhận"
             cancelText="Hủy"
-            // cancelButtonProps={{
-            //   className: 'text-gray-400 border-gray-400 hover:text-gray-500 hover:border-gray-500',
-            // }}
             onConfirm={() => handleRemoveProduct(record)}
           >
             <Button type="primary" icon={<DeleteFilled />} danger></Button>
@@ -179,22 +155,19 @@ const TableProducts = ({ keyWord, data, loading }) => {
     return <LoadingSpin />;
   }
   return (
-    <>
-      <TableTemplate
-        dataSource={data}
-        columns={columns}
-        pagination={{
-          onChange(current) {
-            setPage(current);
-          },
-          defaultPageSize: 4,
-          showSizeChanger: false,
-          pageSizeOptions: ['4'],
-        }}
-        rowKey={'_id'}
-      />
-      {/* <ModalForm isModalOpen={isOpen} /> */}
-    </>
+    <TableTemplate
+      dataSource={data}
+      columns={columns}
+      pagination={{
+        onChange(current) {
+          setPage(current);
+        },
+        defaultPageSize: 4,
+        showSizeChanger: false,
+        pageSizeOptions: ['4'],
+      }}
+      rowKey={'_id'}
+    />
   );
 };
 

@@ -45,7 +45,7 @@ function* actDeleteStaff(action) {
     if (status === 200) {
       AlertCustom({
         type: 'success',
-        title: 'Xóa nhân viên thành công',
+        title: data.message,
       });
       yield put({ type: SagaActionTypes.GET_STAFFS_SAGA });
     } else {
