@@ -1,9 +1,7 @@
-import Search from 'antd/lib/input/Search';
 import React from 'react';
 import { useState, useEffect } from 'react';
 import TableStaffs from '~/components/Staffs/TableStaffs';
-import { Typography, Row, Col, Button } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { Typography, Row, Col } from 'antd';
 import Toolbar from '~/components/UI/Toolbar';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,7 +11,7 @@ const { Title } = Typography;
 const StaffsPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { staffs, loading } = useSelector((state) => state.staffSlice);
+  const { staffs } = useSelector((state) => state.staffSlice);
   const [keyWord, setKeyWord] = useState('');
 
   useEffect(() => {

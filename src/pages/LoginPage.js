@@ -1,8 +1,6 @@
-import { Spin, Col, Row } from 'antd';
-import { useEffect } from 'react';
+import { Col, Row } from 'antd';
 import { useLocation } from 'react-router-dom';
 import LoginForm from '~/components/Login/LoginForm';
-import AlertCustom from '~/components/UI/Notification/Alert';
 
 const LoginPage = () => {
   const { state } = useLocation();

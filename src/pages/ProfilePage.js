@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Row, Col, Button } from 'antd';
+import { Typography, Row, Col } from 'antd';
 import ProfileForm from '~/components/Profile/ProfileForm';
 const { Title } = Typography;
 

@@ -1,4 +1,4 @@
-import { Popconfirm, Space, Spin, Button } from 'antd';
+import { Popconfirm, Space, Button } from 'antd';
 import { DeleteFilled, EyeFilled } from '@ant-design/icons';
 import { useState } from 'react';
 import TableTemplate from '~/components/UI/Table/TableTemplate';

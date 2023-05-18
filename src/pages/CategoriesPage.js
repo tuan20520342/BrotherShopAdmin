@@ -1,10 +1,7 @@
-import Search from 'antd/lib/input/Search';
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { Typography, Row, Col, Button, Modal, Form, Input } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { Typography, Row, Col } from 'antd';
 import Toolbar from '~/components/UI/Toolbar';
-import { useNavigate } from 'react-router-dom';
 import TableCategories from '~/components/Categories/TableCategories';
 import ModalForm from '~/HOC/ModalForm';
 import { modalActions } from '~/redux/reducer/ModalReducer';

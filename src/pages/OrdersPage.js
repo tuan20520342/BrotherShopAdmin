@@ -1,16 +1,8 @@
-import Search from 'antd/lib/input/Search';
 import React from 'react';
-import { useState, useEffect } from 'react';
-import TableStaffs from '~/components/Staffs/TableStaffs';
-import { Typography, Row, Col, Button } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-import Toolbar from '~/components/UI/Toolbar';
-import { useNavigate } from 'react-router-dom';
-import TableProducts from '~/components/Products/TableProducts';
+import { Typography, Row, Col } from 'antd';
 const { Title } = Typography;
 
 const OrdersPage = () => {
-  const navigate = useNavigate();
   //   const staffs = [
   //     {
   //       id: 1,
@@ -43,7 +35,6 @@ const OrdersPage = () => {
   //       active: true,
   //     },
   //   ];
-  const [keyWord, setKeyWord] = useState('');
 
   return (
     <>
