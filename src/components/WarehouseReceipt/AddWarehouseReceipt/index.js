@@ -1,28 +1,7 @@
-import Search from 'antd/lib/input/Search';
 import React from 'react';
 import dayjs from 'dayjs';
 import { useState, useEffect } from 'react';
-import TableStaffs from '~/components/Staffs/TableStaffs';
-import {
-  Typography,
-  Row,
-  Col,
-  Button,
-  Form,
-  Input,
-  Radio,
-  Select,
-  Cascader,
-  DatePicker,
-  InputNumber,
-  TreeSelect,
-  Switch,
-  Checkbox,
-  Upload,
-  Space,
-  Modal,
-} from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { Row, Col, Button, Form, Input, Select, DatePicker, Space } from 'antd';
 import Toolbar from '~/components/UI/Toolbar';
 import { useNavigate } from 'react-router-dom';
 import TableProducts from '~/components/Products/TableProducts';
@@ -32,7 +11,6 @@ import { modalActions } from '~/redux/reducer/ModalReducer';
 import AddProductToReceipt from './AddProductToReceipt';
 import * as SagaActionTypes from '~/redux/constants/constant';
 import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
-const { Title } = Typography;
 const dateFormat = 'DD/MM/YYYY';
 
 const AddWarehouseReceipt = () => {
@@ -41,6 +19,9 @@ const AddWarehouseReceipt = () => {
   const [form] = Form.useForm();
   const [keyWord, setKeyWord] = useState('');
   let { loading } = useSelector((state) => state.productSlice);
+
+  const [products, setProducts] = useState([]);
+  const currentUser = useSelector((state) => state.authenticationSlice.currentUser);
 
   const validateMessages = {
     required: 'Cần nhập ${label}!',
@@ -56,13 +37,18 @@ const AddWarehouseReceipt = () => {
 
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_PRODUCTS_SAGA });
-  }, []);
+  }, [dispatch]);
 
-  const handleAddProduct = () => {
+  const handleAddProduct = (newProduct) => {
+    const updatedProducts = [...products, newProduct];
+    setProducts(updatedProducts);
+  };
+
+  const handleShowModalAddProduct = () => {
     dispatch(
       modalActions.showModal({
         title: 'Thêm sản phẩm',
-        ComponentContent: <AddProductToReceipt />,
+        ComponentContent: <AddProductToReceipt onAddProduct={handleAddProduct} />,
       }),
     );
   };
@@ -76,21 +62,7 @@ const AddWarehouseReceipt = () => {
   };
 
   const onFinish = (values) => {
-    // let newStaff = {
-    //   fullname: values.staff_name,
-    //   birthday: values.staff_birth.toISOString(),
-    //   identityNumber: values.staff_cccd,
-    //   gender: values.staff_gender,
-    //   phoneNumber: values.staff_phone_number,
-    //   email: values.staff_email,
-    //   address: values.staff_address,
-    //   other: values.staff_other_information,
-    //   password: '12345678',
-    //   avatar: imageChange,
-    //   role: 'EMPLOYEE',
-    //   active: true,
-    // };
-    console.log(values);
+    console.log({ ...values, products });
   };
 
   if (loading) {
@@ -144,6 +116,7 @@ const AddWarehouseReceipt = () => {
                 <Form.Item
                   name="staff"
                   label="Nhân viên nhập hàng"
+
                   // rules={[
                   //   {
                   //     required: true,
@@ -154,9 +127,10 @@ const AddWarehouseReceipt = () => {
                     showSearch
                     allowClear
                     placeholder="Nhân viên"
+                    value={currentUser.name}
                     // filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
                     // onChange={onChange}
-                  ></Select>
+                  />
                 </Form.Item>
               </Col>
               <Col xs={24} sm={12} md={24} lg={12}>
@@ -189,10 +163,10 @@ const AddWarehouseReceipt = () => {
           </Form>
         </Col>
         <Col span={24}>
-          <Toolbar title={'Thêm sản phẩm'} setKeyWord={setKeyWord} handleAdd={handleAddProduct} />
+          <Toolbar title={'Thêm sản phẩm'} setKeyWord={setKeyWord} handleAdd={handleShowModalAddProduct} />
         </Col>
         <Col span={24}>
-          <TableProducts keyWord={keyWord} />
+          <TableProducts keyWord={keyWord} data={products} />
         </Col>
         <Col span={24}></Col>
       </Row>

@@ -1,16 +1,12 @@
-import { Popconfirm, Space, Spin, Button, Tag, Image } from 'antd';
-import dayjs from 'dayjs';
+import { Popconfirm, Space, Button, Image } from 'antd';
 import { DeleteFilled, EyeFilled } from '@ant-design/icons';
 import { useState } from 'react';
 import TableTemplate from '~/components/UI/Table/TableTemplate';
-import { useDispatch } from 'react-redux';
-import * as SagaActionTypes from '~/redux/constants/constant';
 import { useNavigate } from 'react-router-dom';
 import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
 
 const TableProducts = ({ keyWord, data, loading }) => {
   const [page, setPage] = useState(1);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const columns = [
@@ -51,7 +47,7 @@ const TableProducts = ({ keyWord, data, loading }) => {
       },
       showOnResponse: true,
       showOnDesktop: true,
-      render: (id) => id.substring(0, 6).toUpperCase(),
+      render: (id) => id.substring(0, 8).toUpperCase(),
     },
     {
       title: 'Tên sản phẩm',
@@ -155,22 +151,19 @@ const TableProducts = ({ keyWord, data, loading }) => {
     return <LoadingSpin />;
   }
   return (
-    <>
-      <TableTemplate
-        dataSource={data}
-        columns={columns}
-        pagination={{
-          onChange(current) {
-            setPage(current);
-          },
-          defaultPageSize: 4,
-          showSizeChanger: false,
-          pageSizeOptions: ['4'],
-        }}
-        rowKey={'_id'}
-      />
-      {/* <ModalForm isModalOpen={isOpen} /> */}
-    </>
+    <TableTemplate
+      dataSource={data}
+      columns={columns}
+      pagination={{
+        onChange(current) {
+          setPage(current);
+        },
+        defaultPageSize: 4,
+        showSizeChanger: false,
+        pageSizeOptions: ['4'],
+      }}
+      rowKey={'_id'}
+    />
   );
 };
 

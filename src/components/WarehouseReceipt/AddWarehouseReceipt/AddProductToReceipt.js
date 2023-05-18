@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, Space, Row, Select, InputNumber, Image } from 'antd';
-import { useNavigate } from 'react-router-dom';
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-
-import ModalForm from '~/HOC/ModalForm';
 import { modalActions } from '~/redux/reducer/ModalReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import './style/CustomInputNumber.css';
@@ -48,7 +44,7 @@ const sizeLayout = {
   },
 };
 
-const AddProductToReceipt = () => {
+const AddProductToReceipt = ({ onAddProduct }) => {
   let { products } = useSelector((state) => state.productSlice);
   const dispatch = useDispatch();
   const [productById, setProductById] = useState('');
@@ -63,8 +59,10 @@ const AddProductToReceipt = () => {
 
   const onChange = (value) => {
     if (value !== undefined && products !== null) {
-      const productById = products.find((item) => item._id == value);
+      const productById = products.find((item) => item._id === value);
+      console.log(productById);
       setProductById(productById);
+
       form.setFieldsValue({
         name: productById.name,
         price: productById.price,
@@ -73,7 +71,26 @@ const AddProductToReceipt = () => {
   };
 
   const onFinish = (values) => {
-    console.log(values);
+    const { productId, name, price, S, M, L, XL } = values;
+
+    const newProduct = {
+      images: {
+        mainImg: productById.images.mainImg,
+      },
+      _id: productId,
+      name: name,
+      oldPrice: price,
+      price: price,
+      sizes: [
+        { quantity: S, sold: 0 },
+        { quantity: M, sold: 0 },
+        { quantity: L, sold: 0 },
+        { quantity: XL, sold: 0 },
+      ],
+    };
+
+    onAddProduct(newProduct);
+    handleClose();
   };
 
   const handleClose = () => {
