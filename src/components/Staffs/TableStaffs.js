@@ -2,8 +2,12 @@ import { Popconfirm, Space, Button } from 'antd';
 import { DeleteFilled, EyeFilled } from '@ant-design/icons';
 import { useState } from 'react';
 import TableTemplate from '~/components/UI/Table/TableTemplate';
+import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
+import { useDispatch } from 'react-redux';
+import * as SagaActionTypes from '~/redux/constants/constant';
 
 const TableStaffs = ({ keyWord, data, loading }) => {
+  const dispatch = useDispatch();
   const [page, setPage] = useState(1);
 
   const columns = [
@@ -90,24 +94,14 @@ const TableStaffs = ({ keyWord, data, loading }) => {
       render: (text, record, index) => (
         <Space size="middle" key={index}>
           <Button type="primary" icon={<EyeFilled />} onClick={() => handleEditStaff(record)}></Button>
-          {record.role === 'MANAGER' ? (
+          {record.role.name === 'Chủ cửa hàng' ? (
             <Button type="primary" icon={<DeleteFilled />} disabled></Button>
           ) : (
-            // <button
-            //   type="button"
-            //   className="bg-slate-400 text-white font-bold py-3 px-3 rounded inline-flex items-center"
-            //   disabled
-            // >
-            //   <DeleteFilled />
-            // </button>
             <Popconfirm
               placement="top"
               title="Bạn có chắc muốn xóa nhân viên này?"
               okText="Xác nhận"
               cancelText="Hủy"
-              // cancelButtonProps={{
-              //   className: 'text-gray-400 border-gray-400 hover:text-gray-500 hover:border-gray-500',
-              // }}
               onConfirm={() => handleRemoveStaff(record)}
             >
               <Button type="primary" icon={<DeleteFilled />} danger></Button>
@@ -118,18 +112,20 @@ const TableStaffs = ({ keyWord, data, loading }) => {
     },
   ];
 
-  const handleRemoveStaff = (record) => {};
+  const handleRemoveStaff = (record) => {
+    console.log(record);
+    dispatch({
+      type: SagaActionTypes.DELETE_STAFF_SAGA,
+      staffId: record._id,
+    });
+  };
 
   const handleEditStaff = (staff) => {};
-  // if (loading === true) {
-  //   return (
-  //     <div className="w-full flex items-center justify-center mb-12 h-4/5">
-  //       <Space size="middle ">
-  //         <Spin size="large" tip="Loading..." />
-  //       </Space>
-  //     </div>
-  //   );
-  // }
+
+  if (loading) {
+    return <LoadingSpin />;
+  }
+
   return (
     <>
       <TableTemplate
