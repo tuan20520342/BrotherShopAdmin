@@ -11,6 +11,7 @@ export default function* rootSaga() {
     CategorySaga.followActGetListCategories(),
     CategorySaga.followActUpdateCategory(),
     CategorySaga.followActRemoveCategory(),
+    CategorySaga.followActCreateCategory(),
     //Staff
     StaffSaga.followActPostStaff(),
     StaffSaga.followActGetListStaffs(),

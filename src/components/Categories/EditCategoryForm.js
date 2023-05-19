@@ -75,7 +75,6 @@ const EditCategoryForm = ({ category }) => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    console.log(values);
     const { category: updatedName, types } = values;
 
     const updatedCategory = {
@@ -144,13 +143,13 @@ const EditCategoryForm = ({ category }) => {
                     disabled={componentDisabled}
                   />
                 </Form.Item>
-                {fields.length > 1 ? (
+                {fields.length > 1 && category.types[index]?.products.length > 0 ? null : (
                   <MinusCircleOutlined
                     className="dynamic-delete-button"
                     onClick={() => remove(field.name)}
                     disabled={componentDisabled}
                   />
-                ) : null}
+                )}
               </Form.Item>
             ))}
             <Form.Item {...formItemLayoutWithOutLabel}>

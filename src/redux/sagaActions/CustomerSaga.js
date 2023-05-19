@@ -6,7 +6,7 @@ import AlertCustom from '~/components/UI/Notification/Alert';
 
 function* actGetListCustomers() {
   try {
-    yield put(customerActions.getCustomerByIdInLoading());
+    yield put(customerActions.getCustomersInLoading());
     const res = yield call(() => CustomerService.getCustomersList());
     const { status, data } = res;
     console.log(res);

@@ -1,13 +1,11 @@
 import { Space, Button } from 'antd';
 import { EyeFilled } from '@ant-design/icons';
 import dayjs from 'dayjs';
-import { useState } from 'react';
 import TableTemplate from '~/components/UI/Table/TableTemplate';
 import LoadingSpin from '../UI/LoadingSpin/LoadingSpin';
 import { useNavigate } from 'react-router-dom';
 
 const TableCustomers = ({ keyWord, data, loading }) => {
-  const [page, setPage] = useState(1);
   const navigate = useNavigate();
 
   const columns = [
@@ -16,7 +14,7 @@ const TableCustomers = ({ keyWord, data, loading }) => {
       dataIndex: '',
       width: '5%',
       key: '',
-      render: (text, record, index) => (page - 1) * 6 + index + 1,
+      render: (text, record, index) => data.indexOf(record) + 1,
       align: 'center',
       ellipsis: true,
     },
@@ -99,21 +97,10 @@ const TableCustomers = ({ keyWord, data, loading }) => {
       render: (text, record, index) => (
         <Space size="middle" key={index}>
           <Button type="primary" icon={<EyeFilled />} onClick={() => handleEditCustomer(record)}></Button>
-          {/* <Popconfirm
-            placement="top"
-            title="Bạn có chắc muốn xóa khách hàng này?"
-            okText="Xác nhận"
-            cancelText="Hủy"
-            onConfirm={() => handleRemoveCustomer(record)}
-          >
-            <Button type="primary" icon={<DeleteFilled />} danger></Button>
-          </Popconfirm> */}
         </Space>
       ),
     },
   ];
-
-  // const handleRemoveCustomer = (record) => {};
 
   const handleEditCustomer = (customer) => {
     navigate(`/customers/${customer._id}`);
@@ -124,22 +111,16 @@ const TableCustomers = ({ keyWord, data, loading }) => {
   }
 
   return (
-    <>
-      <TableTemplate
-        dataSource={data}
-        columns={columns}
-        pagination={{
-          onChange(current) {
-            setPage(current);
-          },
-          defaultPageSize: 6,
-          showSizeChanger: false,
-          pageSizeOptions: ['6'],
-        }}
-        rowKey={'_id'}
-      />
-      {/* <ModalForm isModalOpen={isOpen} /> */}
-    </>
+    <TableTemplate
+      dataSource={data}
+      columns={columns}
+      pagination={{
+        defaultPageSize: 6,
+        showSizeChanger: false,
+        pageSizeOptions: ['6'],
+      }}
+      rowKey={'_id'}
+    />
   );
 };
 

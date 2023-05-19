@@ -20,4 +20,11 @@ export const CategoryService = {
       },
     });
   },
+  createCategory: (data) => {
+    return axios.post(UrlApi.URL_CREATE_CATEGORY, data, {
+      headers: {
+        Authorization: `Bearer ${Cookies.get('token')}`,
+      },
+    });
+  },
 };

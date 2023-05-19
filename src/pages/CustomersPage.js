@@ -17,8 +17,6 @@ const CustomersPage = () => {
     dispatch({ type: SagaActionTypes.GET_CUSTOMERS_SAGA });
   }, [dispatch]);
 
-  console.log(customers);
-
   return (
     <>
       <Row>

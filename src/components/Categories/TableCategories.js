@@ -1,6 +1,5 @@
 import { Popconfirm, Space, Button } from 'antd';
 import { DeleteFilled, EyeFilled } from '@ant-design/icons';
-import { useState } from 'react';
 import TableTemplate from '~/components/UI/Table/TableTemplate';
 import { modalActions } from '~/redux/reducer/ModalReducer';
 import { useDispatch } from 'react-redux';
@@ -9,8 +8,8 @@ import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
 import * as SagaActionTypes from '~/redux/constants/constant';
 
 const TableCategories = ({ keyWord, data, loading }) => {
-  const [page, setPage] = useState(1);
   const dispatch = useDispatch();
+
   const columns = [
     {
       title: 'STT',
@@ -18,7 +17,7 @@ const TableCategories = ({ keyWord, data, loading }) => {
       width: '5%',
       key: '',
       align: 'center',
-      render: (text, record, index) => (page - 1) * 6 + index + 1,
+      render: (text, record, index) => data.indexOf(record) + 1,
       ellipsis: true,
     },
     {
@@ -102,22 +101,16 @@ const TableCategories = ({ keyWord, data, loading }) => {
     return <LoadingSpin />;
   }
   return (
-    <>
-      <TableTemplate
-        dataSource={data}
-        columns={columns}
-        pagination={{
-          onChange(current) {
-            setPage(current);
-          },
-          defaultPageSize: 6,
-          showSizeChanger: false,
-          pageSizeOptions: ['6'],
-        }}
-        rowKey={'_id'}
-      />
-      {/* <ModalForm isModalOpen={isOpen} /> */}
-    </>
+    <TableTemplate
+      dataSource={data}
+      columns={columns}
+      pagination={{
+        defaultPageSize: 6,
+        showSizeChanger: false,
+        pageSizeOptions: ['6'],
+      }}
+      rowKey={'_id'}
+    />
   );
 };
 

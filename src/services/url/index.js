@@ -15,6 +15,7 @@ export const URL_PRODUCTS_ID = (id) => `${DOMAIN_NAME}/products/${id}`;
 export const URL_CATEGORIES = `${DOMAIN_NAME}/categories`;
 export const URL_UPDATE_CATEGORY = `${DOMAIN_NAME}/categories/update`;
 export const URL_REMOVE_CATEGORY = `${DOMAIN_NAME}/categories/delete`;
+export const URL_CREATE_CATEGORY = `${DOMAIN_NAME}/categories/create`;
 
 //STAFF
 export const URL_ADD_STAFF = `${DOMAIN_NAME}/staffs/create`;

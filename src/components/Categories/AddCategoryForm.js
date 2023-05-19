@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+/* eslint-disable no-template-curly-in-string */
+import React from 'react';
 import { Form, Input, Button, Space, Row } from 'antd';
-import { useNavigate } from 'react-router-dom';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
-import ModalForm from '~/HOC/ModalForm';
 import { modalActions } from '~/redux/reducer/ModalReducer';
-import { useDispatch, useSelector } from 'react-redux';
+import * as SagaActionTypes from '~/redux/constants/constant';
+import { useDispatch } from 'react-redux';
 import './style/CategoryForm.css';
 
 const validateMessages = {
@@ -55,12 +55,23 @@ const AddCategoryForm = () => {
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
+
   const onFinish = (values) => {
     console.log(values);
+    const { category, types } = values;
+
+    const newCategory = {
+      name: category,
+      types,
+    };
+
+    dispatch({ type: SagaActionTypes.CREATE_CATEGORY_SAGA, newCategory });
   };
+
   const handleClose = () => {
     dispatch(modalActions.hideModal());
   };
+
   return (
     <Form
       name="add_category_form"

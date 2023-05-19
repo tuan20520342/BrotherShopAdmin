@@ -1,6 +1,5 @@
 import { Popconfirm, Space, Button } from 'antd';
 import { DeleteFilled, EyeFilled } from '@ant-design/icons';
-import { useState } from 'react';
 import TableTemplate from '~/components/UI/Table/TableTemplate';
 import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
 import { useDispatch } from 'react-redux';
@@ -10,7 +9,6 @@ import { useNavigate } from 'react-router-dom';
 const TableStaffs = ({ keyWord, data, loading }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [page, setPage] = useState(1);
 
   const columns = [
     {
@@ -18,7 +16,7 @@ const TableStaffs = ({ keyWord, data, loading }) => {
       dataIndex: '',
       width: '5%',
       key: '',
-      render: (text, record, index) => (page - 1) * 6 + index + 1,
+      render: (text, record, index) => data.indexOf(record) + 1,
       align: 'center',
       ellipsis: true,
     },
@@ -125,9 +123,6 @@ const TableStaffs = ({ keyWord, data, loading }) => {
         dataSource={data}
         columns={columns}
         pagination={{
-          onChange(current) {
-            setPage(current);
-          },
           defaultPageSize: 6,
           showSizeChanger: false,
           pageSizeOptions: ['6'],
