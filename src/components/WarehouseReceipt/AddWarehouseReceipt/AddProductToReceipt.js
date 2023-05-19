@@ -44,8 +44,8 @@ const sizeLayout = {
   },
 };
 
-const AddProductToReceipt = ({ onAddProduct }) => {
-  let { products } = useSelector((state) => state.productSlice);
+const AddProductToReceipt = ({ onAddProduct, onEditProduct, product }) => {
+  const { products } = useSelector((state) => state.productSlice);
   const dispatch = useDispatch();
   const [productById, setProductById] = useState('');
   const [form] = Form.useForm();
@@ -71,41 +71,50 @@ const AddProductToReceipt = ({ onAddProduct }) => {
   };
 
   const onFinish = (values) => {
-    const { productId, name, price, S, M, L, XL } = values;
+    const { productId, name, price, importPrice, S, M, L, XL } = values;
 
     const newProduct = {
       images: {
-        mainImg: productById.images.mainImg,
+        mainImg: product ? product.images.mainImg : productById.images.mainImg,
       },
       _id: productId,
       name: name,
-      oldPrice: price,
       price: price,
+      importPrice: importPrice,
       sizes: [
-        { quantity: S, sold: 0 },
-        { quantity: M, sold: 0 },
-        { quantity: L, sold: 0 },
-        { quantity: XL, sold: 0 },
+        { name: 'S', quantity: S },
+        { name: 'M', quantity: M },
+        { name: 'L', quantity: L },
+        { name: 'XL', quantity: XL },
       ],
     };
 
-    onAddProduct(newProduct);
+    if (product) {
+      onEditProduct(newProduct);
+    } else {
+      onAddProduct(newProduct);
+    }
     handleClose();
   };
 
   const handleClose = () => {
     dispatch(modalActions.hideModal());
   };
+
   return (
     <Form
       name="add_product_to_receipt"
       form={form}
       onFinish={onFinish}
       initialValues={{
-        S: 0,
-        M: 0,
-        L: 0,
-        XL: 0,
+        S: product?.sizes[0].quantity || 0,
+        M: product?.sizes[1].quantity || 0,
+        L: product?.sizes[2].quantity || 0,
+        XL: product?.sizes[3].quantity || 0,
+        productId: product?._id,
+        name: product?.name,
+        price: product?.price,
+        importPrice: product?.importPrice,
       }}
       validateMessages={validateMessages}
       {...formItemLayout}
@@ -138,7 +147,9 @@ const AddProductToReceipt = ({ onAddProduct }) => {
               <Form.Item name="image" label="Hình ảnh">
                 <Image
                   width={100}
-                  src={`https://res.cloudinary.com/ddajkcbs2/image/upload/${productById.images.mainImg}`}
+                  src={`https://res.cloudinary.com/ddajkcbs2/image/upload/${
+                    product ? product.images.mainImg : productById.images.mainImg
+                  }`}
                 />
               </Form.Item>
               <Form.Item name="price" label="Giá bán">

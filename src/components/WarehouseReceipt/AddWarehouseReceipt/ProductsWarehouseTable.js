@@ -1,11 +1,12 @@
 import { Popconfirm, Space, Button, Image } from 'antd';
 import { DeleteFilled, EyeFilled } from '@ant-design/icons';
 import TableTemplate from '~/components/UI/Table/TableTemplate';
-import { useNavigate } from 'react-router-dom';
-import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
+import AddProductToReceipt from './AddProductToReceipt';
+import { modalActions } from '~/redux/reducer/ModalReducer';
+import { useDispatch } from 'react-redux';
 
-const TableProducts = ({ keyWord, data, loading }) => {
-  const navigate = useNavigate();
+const ProductsWarehouseTable = ({ keyWord, data, onEditProduct }) => {
+  const dispatch = useDispatch();
 
   const columns = [
     {
@@ -53,27 +54,12 @@ const TableProducts = ({ keyWord, data, loading }) => {
       ellipsis: true,
     },
     {
-      title: <div style={{ textAlign: 'center' }}>Giá cũ</div>,
-      dataIndex: 'oldPrice',
-      key: 'oldPrice',
+      title: <div style={{ textAlign: 'center' }}>Giá nhập</div>,
+      dataIndex: 'importPrice',
+      key: 'importPrice',
       align: 'center',
       ellipsis: true,
-      sorter: (a, b) => (a.oldPrice ?? a.price) - (b.oldPrice ?? b.price),
-      render: (value, record) => (
-        <div>
-          {record.oldPrice?.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',') ||
-            record.price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}{' '}
-          đ
-        </div>
-      ),
-    },
-    {
-      title: <div style={{ textAlign: 'center' }}>Giá bán</div>,
-      dataIndex: 'price',
-      key: 'price',
-      align: 'center',
-      ellipsis: true,
-      sorter: (a, b) => a.price - b.price,
+      sorter: (a, b) => a.importPrice - b.importPrice,
       render: (price) => <div>{price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')} đ</div>,
     },
     {
@@ -89,20 +75,6 @@ const TableProducts = ({ keyWord, data, loading }) => {
         return <div>{quantity.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}</div>;
       },
     },
-    {
-      title: <div style={{ textAlign: 'center' }}>Đã bán</div>,
-      dataIndex: 'sizes',
-      key: 'sold',
-      ellipsis: true,
-      align: 'center',
-      sorter: (a, b) =>
-        a.sizes.reduce((acc, size) => acc + size.sold, 0) - b.sizes.reduce((acc, size) => acc + size.sold, 0),
-      render: (sizes) => {
-        const quantitySold = sizes.reduce((acc, size) => acc + size.sold, 0);
-        return <div>{quantitySold.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}</div>;
-      },
-    },
-
     {
       title: 'Thao tác',
       key: 'action',
@@ -131,11 +103,14 @@ const TableProducts = ({ keyWord, data, loading }) => {
   const handleRemoveProduct = (record) => {};
 
   const handleEditProduct = (product) => {
-    navigate(`/products/${product._id}`);
+    dispatch(
+      modalActions.showModal({
+        title: 'Cập nhật sản phẩm',
+        ComponentContent: <AddProductToReceipt product={product} onEditProduct={onEditProduct} />,
+      }),
+    );
   };
-  if (loading) {
-    return <LoadingSpin />;
-  }
+
   return (
     <TableTemplate
       dataSource={data}
@@ -150,4 +125,4 @@ const TableProducts = ({ keyWord, data, loading }) => {
   );
 };
 
-export default TableProducts;
+export default ProductsWarehouseTable;

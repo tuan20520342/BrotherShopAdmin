@@ -73,15 +73,14 @@ function* actCreateCategory(action) {
     const { status, data } = res;
 
     if (status === 201) {
-      yield put(modalActions.hideModal());
       AlertCustom({ type: 'success', title: data.message });
+      yield put(modalActions.hideModal());
+      yield put({ type: SagaActionTypes.GET_CATEGORIES_SAGA });
     } else {
       AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
     }
   } catch (err) {
     AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
-  } finally {
-    yield put({ type: SagaActionTypes.GET_CATEGORIES_SAGA });
   }
 }
 

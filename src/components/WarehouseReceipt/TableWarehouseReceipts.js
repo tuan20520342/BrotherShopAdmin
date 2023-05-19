@@ -1,28 +1,28 @@
-import { Popconfirm, Space, Spin, Button, Tag } from 'antd';
+import { Popconfirm, Space, Button } from 'antd';
 import dayjs from 'dayjs';
 import { DeleteFilled, EyeFilled } from '@ant-design/icons';
-import { useState } from 'react';
 import TableTemplate from '~/components/UI/Table/TableTemplate';
 
 const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
-  const [page, setPage] = useState(1);
-
   const columns = [
     {
       title: 'STT',
       dataIndex: '',
       width: '5%',
       key: '',
-      render: (text, record, index) => (page - 1) * 6 + index + 1,
+      align: 'center',
+      render: (text, record, index) => data.indexOf(record) + 1,
     },
 
     {
       title: 'Mã phiếu nhập kho',
-      dataIndex: 'id',
-      key: 'id',
+      dataIndex: '_id',
+      key: '_id',
+      align: 'center',
       sorter: (item1, item2) => item1.id.localeCompare(item2.id),
       filteredValue: [keyWord],
       onFilter: (value, record) => {
+        console.log(record);
         return (
           String(record.id).toLowerCase().includes(value.toLowerCase()) ||
           String(record.product.title).toLowerCase().includes(value.toLowerCase()) ||
@@ -36,11 +36,13 @@ const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
       },
       showOnResponse: true,
       showOnDesktop: true,
+      render: (text, record, index) => record._id.slice(0, 8),
     },
     {
       title: 'Ngày nhập hàng',
       dataIndex: 'date',
       key: 'date',
+      align: 'center',
       showOnResponse: true,
       showOnDesktop: true,
       sorter: (a, b) => a.date > b.date,
@@ -51,54 +53,57 @@ const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
       title: 'Số lượng',
       dataIndex: 'quantity',
       key: 'quantity',
+      align: 'center',
       showOnResponse: true,
       showOnDesktop: true,
       ellipsis: true,
       sorter: (a, b) => a.quantity - b.quantity,
       render: (text, record, index) => {
-        return <div>{record.quantity.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}</div>;
+        console.log(record);
+        // return <div>{record.quantity.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}</div>;
+        return <span>{record.products.length}</span>;
       },
     },
     {
       title: 'Tổng giá',
       dataIndex: 'price',
       key: 'price',
+      align: 'center',
       showOnResponse: true,
       showOnDesktop: true,
       ellipsis: true,
       sorter: (a, b) => a.price - b.price,
       render: (text, record, index) => {
-        return (
-          <div>
-            {record.price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}
-            <sup>đ</sup>
-          </div>
-        );
+        const totalPrice = record.products.reduce((accPrice, currentProduct) => {
+          const totalQuantity = currentProduct.sizes.reduce((accQuantity, currentSize) => {
+            return accQuantity + currentSize.quantity;
+          }, 0);
+
+          return accPrice + currentProduct.importPrice * totalQuantity;
+        }, 0);
+        return <div>{totalPrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}đ</div>;
       },
     },
 
     {
       title: 'Thao tác',
       key: 'action',
+      align: 'center',
       id: 'action',
       ellipsis: true,
       width: '10%',
       showOnResponse: true,
       showOnDesktop: true,
       fixed: 'right',
-      align: 'center',
       render: (text, record, index) => (
         <Space size="middle" key={index}>
-          <Button type="primary" icon={<EyeFilled />} onClick={() => handleEditProduct(record)}></Button>
+          <Button type="primary" icon={<EyeFilled />} onClick={() => handleEditReceipt(record)}></Button>
           <Popconfirm
             placement="top"
             title="Bạn có chắc muốn xóa sản phẩm này?"
             okText="Xác nhận"
             cancelText="Hủy"
-            // cancelButtonProps={{
-            //   className: 'text-gray-400 border-gray-400 hover:text-gray-500 hover:border-gray-500',
-            // }}
-            onConfirm={() => handleRemoveProduct(record)}
+            onConfirm={() => handleRemoveReceipt(record)}
           >
             <Button type="primary" icon={<DeleteFilled />} danger></Button>
           </Popconfirm>
@@ -107,35 +112,21 @@ const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
     },
   ];
 
-  const handleRemoveProduct = (record) => {};
+  const handleRemoveReceipt = (record) => {};
 
-  const handleEditProduct = (staff) => {};
-  // if (loading === true) {
-  //   return (
-  //     <div className="w-full flex items-center justify-center mb-12 h-4/5">
-  //       <Space size="middle ">
-  //         <Spin size="large" tip="Loading..." />
-  //       </Space>
-  //     </div>
-  //   );
-  // }
+  const handleEditReceipt = (receipt) => {};
+
   return (
-    <>
-      <TableTemplate
-        dataSource={data}
-        columns={columns}
-        pagination={{
-          onChange(current) {
-            setPage(current);
-          },
-          defaultPageSize: 6,
-          showSizeChanger: false,
-          pageSizeOptions: ['6'],
-        }}
-        rowKey={'id'}
-      />
-      {/* <ModalForm isModalOpen={isOpen} /> */}
-    </>
+    <TableTemplate
+      dataSource={data}
+      columns={columns}
+      pagination={{
+        defaultPageSize: 6,
+        showSizeChanger: false,
+        pageSizeOptions: ['6'],
+      }}
+      rowKey={'id'}
+    />
   );
 };
 

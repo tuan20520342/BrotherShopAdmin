@@ -1,4 +1,3 @@
-import MainLayout from '~/layouts/MainLayout';
 import TestPage from '~/pages/test';
 import NotFoundPage from '~/pages/NotFound';
 import StaffsPage from '~/pages/StaffsPage';
@@ -13,7 +12,6 @@ import WearhouseReceiptsPage from '~/pages/WarehouseReceiptsPage';
 import ProfilePage from '~/pages/ProfilePage';
 import AddWarehouseReceipt from '~/components/WarehouseReceipt/AddWarehouseReceipt';
 import EditProductPage from '~/pages/EditProductPage';
-import EditStaffForm from '~/components/Staffs/EditStaffForm';
 import EditStaffPage from '~/pages/EditStaffPage';
 import CustomerDetailsPage from '~/pages/CustomerDetailsPage';
 

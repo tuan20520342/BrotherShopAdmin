@@ -4,6 +4,7 @@ import * as StaffSaga from './sagaActions/StaffSaga';
 import * as ProductSaga from './sagaActions/ProductSaga';
 import * as AuthSaga from './sagaActions/AuthSaga';
 import * as CustomerSaga from './sagaActions/CustomerSaga';
+import * as ReceiptSaga from './sagaActions/ReceiptSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -25,5 +26,8 @@ export default function* rootSaga() {
     //Customer
     CustomerSaga.followActGetListCustomers(),
     CustomerSaga.followActGetCustomerById(),
+    //Receipt
+    ReceiptSaga.followActGetReceipts(),
+    ReceiptSaga.followActCreateReceipt(),
   ]);
 }

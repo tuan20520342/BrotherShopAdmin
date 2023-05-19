@@ -27,3 +27,7 @@ export const URL_PUT_STAFF = `${DOMAIN_NAME}/staffs/update`;
 //CUSTOMER
 export const URL_CUSTOMERS = `${DOMAIN_NAME}/customer`;
 export const URL_CUSTOMERS_ID = (id) => `${DOMAIN_NAME}/customer/${id}`;
+
+// RECEIPT
+export const URL_RECEIPTS = `${DOMAIN_NAME}/receipts`;
+export const URL_CREATE_RECEIPT = '/receipts/create';

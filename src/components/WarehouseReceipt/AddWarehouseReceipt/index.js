@@ -1,16 +1,18 @@
+/* eslint-disable no-template-curly-in-string */
 import React from 'react';
 import dayjs from 'dayjs';
 import { useState, useEffect } from 'react';
 import { Row, Col, Button, Form, Input, Select, DatePicker, Space } from 'antd';
 import Toolbar from '~/components/UI/Toolbar';
 import { useNavigate } from 'react-router-dom';
-import TableProducts from '~/components/Products/TableProducts';
 import ModalForm from '~/HOC/ModalForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { modalActions } from '~/redux/reducer/ModalReducer';
 import AddProductToReceipt from './AddProductToReceipt';
 import * as SagaActionTypes from '~/redux/constants/constant';
 import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
+import ProductsWarehouseTable from './ProductsWarehouseTable';
+
 const dateFormat = 'DD/MM/YYYY';
 
 const AddWarehouseReceipt = () => {
@@ -18,7 +20,7 @@ const AddWarehouseReceipt = () => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [keyWord, setKeyWord] = useState('');
-  let { loading } = useSelector((state) => state.productSlice);
+  const { loading } = useSelector((state) => state.productSlice);
 
   const [products, setProducts] = useState([]);
   const currentUser = useSelector((state) => state.authenticationSlice.currentUser);
@@ -44,6 +46,20 @@ const AddWarehouseReceipt = () => {
     setProducts(updatedProducts);
   };
 
+  const handleEditProduct = (editedProduct) => {
+    const updatedProducts = [...products];
+    const existingProductIndex = updatedProducts.findIndex((product) => product._id === editedProduct._id);
+
+    if (existingProductIndex !== -1) {
+      updatedProducts[existingProductIndex].importPrice = editedProduct.importPrice;
+      updatedProducts[existingProductIndex].sizes.forEach((size, index) => {
+        size.quantity = editedProduct.sizes[index].quantity;
+      });
+
+      setProducts(updatedProducts);
+    }
+  };
+
   const handleShowModalAddProduct = () => {
     dispatch(
       modalActions.showModal({
@@ -62,7 +78,14 @@ const AddWarehouseReceipt = () => {
   };
 
   const onFinish = (values) => {
-    console.log({ ...values, products });
+    const formattedProducts = products.map((product) => ({
+      productId: product._id,
+      sizes: product.sizes,
+      importPrice: product.importPrice,
+    }));
+    const newReceipt = { ...values, products: formattedProducts, staff: '645a1fd0efdf816c8c401920' };
+
+    dispatch({ type: SagaActionTypes.CREATE_RECEIPT_SAGA, newReceipt });
   };
 
   if (loading) {
@@ -113,16 +136,7 @@ const AddWarehouseReceipt = () => {
                 </Form.Item>
               </Col>
               <Col xs={24} sm={12} md={24} lg={12}>
-                <Form.Item
-                  name="staff"
-                  label="Nhân viên nhập hàng"
-
-                  // rules={[
-                  //   {
-                  //     required: true,
-                  //   },
-                  // ]}
-                >
+                <Form.Item name="staff" label="Nhân viên nhập hàng">
                   <Select
                     showSearch
                     allowClear
@@ -166,7 +180,7 @@ const AddWarehouseReceipt = () => {
           <Toolbar title={'Thêm sản phẩm'} setKeyWord={setKeyWord} handleAdd={handleShowModalAddProduct} />
         </Col>
         <Col span={24}>
-          <TableProducts keyWord={keyWord} data={products} />
+          <ProductsWarehouseTable keyWord={keyWord} data={products} onEditProduct={handleEditProduct} />
         </Col>
         <Col span={24}></Col>
       </Row>

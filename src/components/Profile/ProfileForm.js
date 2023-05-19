@@ -2,24 +2,7 @@ import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import ImgCrop from 'antd-img-crop';
 import { PlusOutlined } from '@ant-design/icons';
-import {
-  Form,
-  Input,
-  Button,
-  Radio,
-  Select,
-  Cascader,
-  DatePicker,
-  InputNumber,
-  TreeSelect,
-  Switch,
-  Checkbox,
-  Upload,
-  Space,
-  Modal,
-  Row,
-  Col,
-} from 'antd';
+import { Form, Input, Button, Select, DatePicker, Upload, Space, Modal, Row, Col } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 const { Option } = Select;
