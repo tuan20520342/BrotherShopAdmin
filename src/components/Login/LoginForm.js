@@ -27,7 +27,7 @@ const LoginForm = () => {
         const remainingMilliseconds = 60 * 60 * 1000;
         const expiryDate = new Date(new Date().getTime() + remainingMilliseconds);
         Cookies.set('token', token, { expires: expiryDate });
-        dispatch(authenticationAction.logIn({ currentUser: staff }));
+        Cookies.set('currentUser', staff._id, { expires: expiryDate });
         navigate('/', { replace: true });
         AlertCustom({ type: 'success', title: 'Đăng nhập thành công' });
       } else {

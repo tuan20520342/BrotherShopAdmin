@@ -9,7 +9,7 @@ import Cookies from 'js-cookie';
 import { authenticationAction } from '~/redux/reducer/AuthReducer';
 const { Text } = Typography;
 
-const DropDownAvatar = ({ visibleText }) => {
+const DropDownAvatar = ({ visibleText, user }) => {
   // const { staff } = useSelector((state) => state.staffsSlice);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const DropDownAvatar = ({ visibleText }) => {
       if (result.isConfirmed) {
         AlertCustom({ type: 'success', title: 'Đăng xuất thành công' });
         Cookies.remove('token');
-        dispatch(authenticationAction.logOut());
+        Cookies.remove('currentUser');
         navigate('/login');
       }
     });
@@ -51,7 +51,7 @@ const DropDownAvatar = ({ visibleText }) => {
     <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
       <Space style={{ cursor: 'pointer' }}>
         <Avatar className="bg-blue-300" icon={<UserOutlined />} />
-        {visibleText && <Text strong>Nguyễn Văn A</Text>}
+        {visibleText && <Text strong>{user ? user.name : 'John Doe'}</Text>}
       </Space>
     </Dropdown>
   );

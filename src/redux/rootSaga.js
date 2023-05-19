@@ -22,7 +22,9 @@ export default function* rootSaga() {
     //Product
     ProductSaga.followActGetListProducts(),
     ProductSaga.followActGetProductById(),
-    AuthSaga.followActLogin(),
+    //Authentication
+    AuthSaga.followGetCurrentUser(),
+    AuthSaga.followPutCurrentUser(),
     //Customer
     CustomerSaga.followActGetListCustomers(),
     CustomerSaga.followActGetCustomerById(),
