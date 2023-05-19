@@ -21,6 +21,8 @@ import {
   Col,
 } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import * as SagaActionTypes from '~/redux/constants/constant';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -48,11 +50,14 @@ const validateMessages = {
 
 const ProfileForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [enableModify, setEnableModify] = useState(false);
+  const [componentDisabled, setComponentDisabled] = useState(true);
+  const { currentUser } = useSelector((state) => state.authenticationSlice);
   const [form] = Form.useForm();
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
-  const [imageChange, setImageChange] = useState('');
   const [fileList, setFileList] = useState([
     {
       uid: '-1',
@@ -63,7 +68,6 @@ const ProfileForm = () => {
   ]);
   const handleCancel = () => setPreviewOpen(false);
   const handlePreview = async (file) => {
-    console.log(file);
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
     }
@@ -73,7 +77,6 @@ const ProfileForm = () => {
   };
   const handleChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
-    console.log(newFileList);
   };
   const uploadButton = (
     <div>
@@ -88,30 +91,64 @@ const ProfileForm = () => {
     </div>
   );
 
-  const onFinish = (values) => {
-    // let newStaff = {
-    //   fullname: values.staff_name,
-    //   birthday: values.staff_birth.toISOString(),
-    //   identityNumber: values.staff_cccd,
-    //   gender: values.staff_gender,
-    //   phoneNumber: values.staff_phone_number,
-    //   email: values.staff_email,
-    //   address: values.staff_address,
-    //   other: values.staff_other_information,
-    //   password: '12345678',
-    //   avatar: imageChange,
-    //   role: 'EMPLOYEE',
-    //   active: true,
-    // };
-    console.log(values);
+  // useEffect(() => {
+  //   if (isCreateStaffSucceeded) {
+  //     navigate('/staffs', { replace: true });
+  //   }
+  // }, [isCreateStaffSucceeded]);
+
+  const handleEnableModify = () => {
+    setEnableModify(true);
+    setComponentDisabled(false);
   };
+
+  const handleClose = () => {
+    navigate('/');
+  };
+
+  const handleFormCancel = () => {
+    setEnableModify(false);
+    setComponentDisabled(true);
+    onReset();
+  };
+
+  const onReset = () => {
+    form.resetFields();
+  };
+
+  const onFinish = (values) => {
+    let editUser = {
+      staffId: currentUser._id,
+      role: currentUser.role._id,
+      name: values.name,
+      address: values.address,
+      phone: values.phone,
+      gender: values.gender,
+      birthday: values.birthday.toDate(),
+      email: values.email,
+      status: currentUser.status,
+    };
+    dispatch({
+      type: SagaActionTypes.PUT_CURRENT_USER_SAGA,
+      editUser: editUser,
+    });
+  };
+
   return (
     <Form
       name="add_staff_form"
       form={form}
       onFinish={onFinish}
       initialValues={{
-        staff_other_information: '',
+        name: currentUser.name,
+        birthday: dayjs(currentUser.birthday),
+        cccd: '111111111111',
+        gender: currentUser.gender,
+        phone: currentUser.phone,
+        email: currentUser.email,
+        address: currentUser.address,
+        otherInformation: '',
+        // status: currentUser.status,
       }}
       validateMessages={validateMessages}
       style={{
@@ -131,7 +168,7 @@ const ProfileForm = () => {
       >
         <Col xs={24} sm={12} md={24} lg={12} key={1}>
           <Form.Item
-            name="staff_name"
+            name="name"
             label="Họ và tên"
             rules={[
               {
@@ -139,12 +176,12 @@ const ProfileForm = () => {
               },
             ]}
           >
-            <Input placeholder="Họ và tên" />
+            <Input placeholder="Họ và tên" disabled={componentDisabled} />
           </Form.Item>
         </Col>
         <Col xs={24} sm={12} md={24} lg={12} key={2}>
           <Form.Item
-            name="staff_birth"
+            name="birthday"
             label="Ngày sinh"
             rules={[
               {
@@ -156,12 +193,13 @@ const ProfileForm = () => {
               placeholder="Ngày sinh"
               format={dateFormat}
               disabledDate={(current) => current.isAfter(dayjs())}
+              disabled={componentDisabled}
             />
           </Form.Item>
         </Col>
         <Col xs={24} sm={12} md={24} lg={12} key={3}>
           <Form.Item
-            name="staff_cccd"
+            name="cccd"
             label="CCCD"
             rules={[
               {
@@ -171,12 +209,12 @@ const ProfileForm = () => {
               { required: true },
             ]}
           >
-            <Input placeholder="CCCD" />
+            <Input placeholder="CCCD" disabled={true} />
           </Form.Item>
         </Col>
         <Col xs={24} sm={12} md={24} lg={12} key={4}>
           <Form.Item
-            name="staff_gender"
+            name="gender"
             label="Giới tính"
             rules={[
               {
@@ -190,16 +228,17 @@ const ProfileForm = () => {
               style={{
                 width: '40%',
               }}
+              disabled={componentDisabled}
             >
-              <Option value="MALE">Nam</Option>
-              <Option value="FEMALE">Nữ</Option>
-              <Option value="OTHER">Khác</Option>
+              <Option value="Nam">Nam</Option>
+              <Option value="Nữ">Nữ</Option>
+              <Option value="Khác">Khác</Option>
             </Select>
           </Form.Item>
         </Col>
         <Col xs={24} sm={12} md={24} lg={12} key={5}>
           <Form.Item
-            name="staff_phone_number"
+            name="phone"
             label="Số Điện Thoại"
             rules={[
               {
@@ -209,22 +248,23 @@ const ProfileForm = () => {
               { required: true },
             ]}
           >
-            <Input placeholder="Số điện thoại" />
+            <Input placeholder="Số điện thoại" disabled={componentDisabled} />
           </Form.Item>
         </Col>
         <Col xs={24} sm={12} md={24} lg={12} key={6}>
-          <Form.Item name="staff_email" label="Email" rules={[{ type: 'email', required: true }]}>
-            <Input placeholder="Email" />
+          <Form.Item name="email" label="Email" rules={[{ type: 'email', required: true }]}>
+            <Input placeholder="Email" disabled={true} />
           </Form.Item>
         </Col>
         <Col xs={24} sm={12} md={24} lg={12} key={7}>
-          <Form.Item name="staff_address" label="Địa chỉ" rules={[{ required: true }]}>
-            <TextArea rows={2} placeholder="Địa chỉ" />
+          <Form.Item name="address" label="Địa chỉ" rules={[{ required: true }]}>
+            <TextArea rows={2} placeholder="Địa chỉ" disabled={componentDisabled} />
           </Form.Item>
         </Col>
-        <Col span={24} key={8}>
-          <Form.Item name="staff_other_information" label="Khác">
-            <TextArea rows={2} placeholder="Khác" />
+
+        <Col xs={24} key={8}>
+          <Form.Item name="otherInformation" label="Khác">
+            <TextArea rows={2} placeholder="Khác" disabled={componentDisabled} />
           </Form.Item>
         </Col>
         <Col span={24} key={9}>
@@ -236,6 +276,7 @@ const ProfileForm = () => {
                 fileList={fileList}
                 onPreview={handlePreview}
                 onChange={handleChange}
+                disabled={componentDisabled}
               >
                 {fileList.length >= 1 ? null : uploadButton}
               </Upload>
@@ -244,14 +285,25 @@ const ProfileForm = () => {
         </Col>
       </Row>
       <Row justify="end">
-        <Space>
-          <Button size="large" type="primary" htmlType="submit">
-            Chỉnh sửa
-          </Button>
-          <Button size="large" type="primary" danger>
-            Lưu
-          </Button>
-        </Space>
+        {enableModify === false ? (
+          <Space>
+            <Button type="primary" onClick={() => handleEnableModify()}>
+              Chỉnh sửa
+            </Button>
+            <Button type="primary" danger onClick={handleClose}>
+              Đóng
+            </Button>
+          </Space>
+        ) : (
+          <Space>
+            <Button type="primary" danger onClick={handleFormCancel}>
+              Hủy
+            </Button>
+            <Button type="primary" htmlType="submit">
+              Lưu
+            </Button>
+          </Space>
+        )}
       </Row>
       <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
         <img

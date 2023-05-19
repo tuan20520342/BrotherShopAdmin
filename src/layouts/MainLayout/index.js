@@ -17,23 +17,43 @@ import {
   MenuUnfoldOutlined,
 } from '@ant-design/icons';
 import { Breadcrumb, Layout, Menu, Row, theme, Col, Space, Typography } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MainLayoutSider from './MainLayoutSider';
 import MainLayoutDrawer from './MainLayoutDrawer';
 import DropDownAvatar from './DropDownAvatar';
+import { useDispatch, useSelector } from 'react-redux';
+import * as SagaActionTypes from '~/redux/constants/constant';
+import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
 const { Header, Content, Footer, Sider } = Layout;
 const { Text } = Typography;
 
 const MainLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
   const [collapsed, setCollapsed] = useState(false);
   const [drawerCollapsed, setDrawerCollapsed] = useState(false);
   const [visibleButton, setVisibleButton] = useState(false);
+  const { currentUser, loading } = useSelector((state) => state.authenticationSlice);
+
+  useEffect(() => {
+    dispatch({ type: SagaActionTypes.GET_CURRENT_USER_SAGA });
+  }, [dispatch]);
 
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
+  if (loading) {
+    return (
+      <Row style={{ minHeight: '100vh', backgroundColor: colorBgContainer }} justify="center">
+        <Col style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <LoadingSpin />;
+        </Col>
+      </Row>
+    );
+  }
+
   return (
     <Layout
       style={{
@@ -60,7 +80,7 @@ const MainLayout = () => {
               )}
             </Col>
             <Col>
-              <DropDownAvatar visibleText={!visibleButton} />
+              <DropDownAvatar visibleText={!visibleButton} user={currentUser} />
             </Col>
           </Row>
         </Header>
