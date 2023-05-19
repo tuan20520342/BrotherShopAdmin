@@ -6,6 +6,7 @@ import { modalActions } from '~/redux/reducer/ModalReducer';
 import { useDispatch } from 'react-redux';
 import EditCategoryForm from './EditCategoryForm';
 import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
+import * as SagaActionTypes from '~/redux/constants/constant';
 
 const TableCategories = ({ keyWord, data, loading }) => {
   const [page, setPage] = useState(1);
@@ -52,7 +53,7 @@ const TableCategories = ({ keyWord, data, loading }) => {
       key: 'types',
       ellipsis: true,
       sorter: (item1, item2) => item1.name.localeCompare(item2.name),
-      render: (types) => types.map((type) => type.type).join(', '),
+      render: (types) => (types.length > 0 ? types.map((type) => type.type).join(', ') : 'Không có loại nào'),
     },
     {
       title: 'Thao tác',
@@ -64,22 +65,29 @@ const TableCategories = ({ keyWord, data, loading }) => {
       align: 'center',
       render: (text, record, index) => (
         <Space size="middle" key={index}>
-          <Button type="primary" icon={<EyeFilled />} onClick={() => handleEditCategory(record)}></Button>
-          <Popconfirm
-            placement="top"
-            title="Bạn có chắc muốn xóa danh mục này?"
-            okText="Xác nhận"
-            cancelText="Hủy"
-            onConfirm={() => handleRemoveCategory(record)}
-          >
-            <Button type="primary" icon={<DeleteFilled />} danger></Button>
-          </Popconfirm>
+          <Button type="primary" icon={<EyeFilled />} onClick={() => handleEditCategory(record)} />
+
+          {record.products.length > 0 ? (
+            <Button type="primary" icon={<DeleteFilled />} danger disabled />
+          ) : (
+            <Popconfirm
+              placement="top"
+              title="Bạn có chắc muốn xóa danh mục này?"
+              okText="Xác nhận"
+              cancelText="Hủy"
+              onConfirm={() => handleRemoveCategory(record)}
+            >
+              <Button type="primary" icon={<DeleteFilled />} danger />
+            </Popconfirm>
+          )}
         </Space>
       ),
     },
   ];
 
-  const handleRemoveCategory = (record) => {};
+  const handleRemoveCategory = (record) => {
+    dispatch({ type: SagaActionTypes.REMOVE_CATEGORY_SAGA, removedCategory: { categoryId: record._id } });
+  };
 
   const handleEditCategory = (category) => {
     dispatch(
@@ -89,6 +97,7 @@ const TableCategories = ({ keyWord, data, loading }) => {
       }),
     );
   };
+
   if (loading) {
     return <LoadingSpin />;
   }

@@ -17,7 +17,7 @@ const CategoriesPage = () => {
 
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_CATEGORIES_SAGA });
-  }, []);
+  }, [dispatch]);
 
   const [keyWord, setKeyWord] = useState('');
 

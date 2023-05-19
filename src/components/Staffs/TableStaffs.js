@@ -87,7 +87,7 @@ const TableStaffs = ({ keyWord, data, loading }) => {
         <Space size="middle" key={index}>
           <Button type="primary" icon={<EyeFilled />} onClick={() => handleEditStaff(record)}></Button>
           {record.role.name === 'Chủ cửa hàng' || record.status === 'Đã nghỉ' ? (
-            <Button type="primary" icon={<DeleteFilled />} disabled></Button>
+            <Button type="primary" icon={<DeleteFilled />} disabled />
           ) : (
             <Popconfirm
               placement="top"
@@ -96,7 +96,7 @@ const TableStaffs = ({ keyWord, data, loading }) => {
               cancelText="Hủy"
               onConfirm={() => handleRemoveStaff(record)}
             >
-              <Button type="primary" icon={<DeleteFilled />} danger></Button>
+              <Button type="primary" icon={<DeleteFilled />} danger />
             </Popconfirm>
           )}
         </Space>
@@ -105,7 +105,6 @@ const TableStaffs = ({ keyWord, data, loading }) => {
   ];
 
   const handleRemoveStaff = (record) => {
-    console.log(record);
     dispatch({
       type: SagaActionTypes.DELETE_STAFF_SAGA,
       staffId: record._id,

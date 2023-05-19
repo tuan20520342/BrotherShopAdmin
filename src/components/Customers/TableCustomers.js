@@ -1,5 +1,5 @@
-import { Popconfirm, Space, Spin, Button } from 'antd';
-import { DeleteFilled, EyeFilled } from '@ant-design/icons';
+import { Space, Button } from 'antd';
+import { EyeFilled } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import TableTemplate from '~/components/UI/Table/TableTemplate';
@@ -47,12 +47,14 @@ const TableCustomers = ({ keyWord, data, loading }) => {
       key: 'name',
       sorter: (item1, item2) => item1.name.localeCompare(item2.name),
       ellipsis: true,
+      align: 'center',
     },
     {
       title: 'Ngày sinh',
       dataIndex: 'birthday',
       key: 'birthday',
       ellipsis: true,
+      align: 'center',
       sorter: (a, b) => dayjs(a.birthday).unix() - dayjs(b.birthday).unix(),
       render: (birthday) => `${dayjs(birthday).format('DD/MM/YYYY')}`,
     },
@@ -61,18 +63,21 @@ const TableCustomers = ({ keyWord, data, loading }) => {
       dataIndex: 'phone',
       key: 'phone',
       ellipsis: true,
+      align: 'center',
     },
     {
       title: 'Giới tính',
       dataIndex: 'gender',
       key: 'gender',
       ellipsis: true,
+      align: 'center',
     },
     {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
       ellipsis: true,
+      align: 'center',
     },
     {
       title: <div style={{ textAlign: 'center' }}>Số đơn hàng</div>,
@@ -81,7 +86,7 @@ const TableCustomers = ({ keyWord, data, loading }) => {
       ellipsis: true,
       sorter: (a, b) => a.orders.length > b.orders.length,
       render: (orders) => `${orders.length}`,
-      align: 'end',
+      align: 'center',
     },
     {
       title: 'Thao tác',

@@ -1,11 +1,11 @@
+/* eslint-disable no-template-curly-in-string */
 import React, { useState } from 'react';
 import { Form, Input, Button, Space, Row } from 'antd';
-import { useNavigate } from 'react-router-dom';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import * as SagaActionTypes from '~/redux/constants/constant';
 
-import ModalForm from '~/HOC/ModalForm';
 import { modalActions } from '~/redux/reducer/ModalReducer';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import './style/CategoryForm.css';
 
 const validateMessages = {
@@ -52,13 +52,16 @@ const formItemLayoutWithOutLabel = {
 };
 
 const EditCategoryForm = ({ category }) => {
-  const dispatch = useDispatch();
   const [enableModify, setEnableModify] = useState(false);
   const [componentDisabled, setComponentDisabled] = useState(true);
+
+  const dispatch = useDispatch();
+
   const handleEnableModify = () => {
     setEnableModify(true);
     setComponentDisabled(false);
   };
+
   const handleCancel = () => {
     setEnableModify(false);
     setComponentDisabled(true);
@@ -70,12 +73,24 @@ const EditCategoryForm = ({ category }) => {
   };
 
   const [form] = Form.useForm();
+
   const onFinish = (values) => {
     console.log(values);
+    const { category: updatedName, types } = values;
+
+    const updatedCategory = {
+      name: updatedName,
+      types,
+      categoryId: category._id,
+    };
+
+    dispatch({ type: SagaActionTypes.UPDATE_CATEGORY_SAGA, updatedCategory });
   };
+
   const handleClose = () => {
     dispatch(modalActions.hideModal());
   };
+
   return (
     <Form
       name="add_category_form"
@@ -99,18 +114,7 @@ const EditCategoryForm = ({ category }) => {
       >
         <Input placeholder="Tên danh mục" disabled={componentDisabled} />
       </Form.Item>
-      <Form.List
-        name="types"
-        rules={[
-          {
-            validator: async (_, types) => {
-              if (!types || types.length < 1) {
-                return Promise.reject(new Error('Cần ít nhất 1 loại'));
-              }
-            },
-          },
-        ]}
-      >
+      <Form.List name="types">
         {(fields, { add, remove }, { errors }) => (
           <>
             {fields.map((field, index) => (
@@ -161,19 +165,6 @@ const EditCategoryForm = ({ category }) => {
               >
                 Thêm loại danh mục
               </Button>
-              {/* <Button
-                type="dashed"
-                onClick={() => {
-                  add('The head item', 0);
-                }}
-                style={{
-                  width: '60%',
-                  marginTop: '20px',
-                }}
-                icon={<PlusOutlined />}
-              >
-                Add field at head
-              </Button> */}
               <Form.ErrorList errors={errors} />
             </Form.Item>
           </>
@@ -199,14 +190,6 @@ const EditCategoryForm = ({ category }) => {
             </Button>
           </Space>
         )}
-        {/* <Space>
-          <Button type="primary" htmlType="submit">
-            Xác nhận
-          </Button>
-          <Button type="primary" danger onClick={handleClose}>
-            Đóng
-          </Button>
-        </Space> */}
       </Row>
     </Form>
   );

@@ -9,6 +9,8 @@ export default function* rootSaga() {
   yield all([
     //Category
     CategorySaga.followActGetListCategories(),
+    CategorySaga.followActUpdateCategory(),
+    CategorySaga.followActRemoveCategory(),
     //Staff
     StaffSaga.followActPostStaff(),
     StaffSaga.followActGetListStaffs(),

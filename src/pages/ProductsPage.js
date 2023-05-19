@@ -15,9 +15,8 @@ const ProductsPage = () => {
 
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_PRODUCTS_SAGA });
-  }, []);
+  }, [dispatch]);
 
-  console.log(products);
   //     {
   //       id: 1,
   //       email: 'abc123@gmail.com',

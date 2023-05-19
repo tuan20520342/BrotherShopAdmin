@@ -1,28 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import dayjs from 'dayjs';
-import ImgCrop from 'antd-img-crop';
 import { PlusOutlined } from '@ant-design/icons';
-import {
-  Form,
-  Input,
-  Button,
-  Radio,
-  Select,
-  Cascader,
-  DatePicker,
-  InputNumber,
-  TreeSelect,
-  Switch,
-  Checkbox,
-  Upload,
-  Space,
-  Modal,
-  Row,
-  Col,
-} from 'antd';
+import { Form, Input, Button, Select, DatePicker, Modal, Row, Col } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import * as SagaActionTypes from '~/redux/constants/constant';
+import { useSelector } from 'react-redux';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -50,15 +31,11 @@ const validateMessages = {
 
 const CustomerDetailForm = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [enableModify, setEnableModify] = useState(false);
-  const [componentDisabled, setComponentDisabled] = useState(true);
   const { customerById } = useSelector((state) => state.customerSlice);
   const [form] = Form.useForm();
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
-  const [imageChange, setImageChange] = useState('');
   const [fileList, setFileList] = useState([
     {
       uid: '-1',
@@ -94,23 +71,8 @@ const CustomerDetailForm = () => {
     </div>
   );
 
-  const handleEnableModify = () => {
-    setEnableModify(true);
-    setComponentDisabled(false);
-  };
-
   const handleClose = () => {
     navigate('/customers');
-  };
-
-  const handleFormCancel = () => {
-    setEnableModify(false);
-    setComponentDisabled(true);
-    onReset();
-  };
-
-  const onReset = () => {
-    form.resetFields();
   };
 
   const onFinish = (values) => {
@@ -164,33 +126,17 @@ const CustomerDetailForm = () => {
         }}
       >
         <Col xs={24} sm={12} md={24} lg={12} key={1}>
-          <Form.Item
-            name="name"
-            label="Họ và tên"
-            rules={[
-              {
-                required: true,
-              },
-            ]}
-          >
-            <Input placeholder="Họ và tên" disabled={componentDisabled} />
+          <Form.Item name="name" label="Họ và tên">
+            <Input placeholder="Họ và tên" disabled={true} />
           </Form.Item>
         </Col>
         <Col xs={24} sm={12} md={24} lg={12} key={2}>
-          <Form.Item
-            name="birthday"
-            label="Ngày sinh"
-            rules={[
-              {
-                required: true,
-              },
-            ]}
-          >
+          <Form.Item name="birthday" label="Ngày sinh">
             <DatePicker
               placeholder="Ngày sinh"
               format={dateFormat}
               disabledDate={(current) => current.isAfter(dayjs())}
-              disabled={componentDisabled}
+              disabled={true}
             />
           </Form.Item>
         </Col>
@@ -203,29 +149,20 @@ const CustomerDetailForm = () => {
                 pattern: /^[\d]{12,12}$/,
                 message: 'CCCD không hợp lệ',
               },
-              { required: true },
             ]}
           >
             <Input placeholder="CCCD" disabled={true} />
           </Form.Item>
         </Col>
         <Col xs={24} sm={12} md={24} lg={12} key={4}>
-          <Form.Item
-            name="gender"
-            label="Giới tính"
-            rules={[
-              {
-                required: true,
-              },
-            ]}
-          >
+          <Form.Item name="gender" label="Giới tính">
             <Select
               placeholder="Giới tính"
               allowClear
               style={{
                 width: '40%',
               }}
-              disabled={componentDisabled}
+              disabled={true}
             >
               <Option value="Nam">Nam</Option>
               <Option value="Nữ">Nữ</Option>
@@ -242,14 +179,13 @@ const CustomerDetailForm = () => {
                 pattern: /^[\d]{10,10}$/,
                 message: 'Số Điện Thoại không hợp lệ',
               },
-              { required: true },
             ]}
           >
-            <Input placeholder="Số điện thoại" disabled={componentDisabled} />
+            <Input placeholder="Số điện thoại" disabled={true} />
           </Form.Item>
         </Col>
         <Col xs={24} sm={12} md={24} lg={12} key={6}>
-          <Form.Item name="email" label="Email" rules={[{ type: 'email', required: true }]}>
+          <Form.Item name="email" label="Email">
             <Input placeholder="Email" disabled={true} />
           </Form.Item>
         </Col>
@@ -261,7 +197,7 @@ const CustomerDetailForm = () => {
                   {fields.map((field, index) => (
                     <Form.Item key={field.key}>
                       <Form.Item {...field} noStyle>
-                        <TextArea rows={2} placeholder="Tên loại danh mục" disabled={componentDisabled} />
+                        <TextArea rows={2} placeholder="Tên loại danh mục" disabled={true} />
                       </Form.Item>
                     </Form.Item>
                   ))}
@@ -270,7 +206,7 @@ const CustomerDetailForm = () => {
             </Form.List>
           </Form.Item>
         </Col>
-        <Col span={24} key={9}>
+        {/* <Col span={24} key={9}>
           <Form.Item name="avatar" label="Ảnh nhân viên">
             <ImgCrop>
               <Upload
@@ -279,34 +215,18 @@ const CustomerDetailForm = () => {
                 fileList={fileList}
                 onPreview={handlePreview}
                 onChange={handleChange}
-                disabled={componentDisabled}
+                disabled={true}
               >
                 {fileList.length >= 1 ? null : uploadButton}
               </Upload>
             </ImgCrop>
           </Form.Item>
-        </Col>
+        </Col> */}
       </Row>
       <Row justify="end">
-        {enableModify === false ? (
-          <Space>
-            <Button type="primary" onClick={() => handleEnableModify()}>
-              Chỉnh sửa
-            </Button>
-            <Button type="primary" danger onClick={handleClose}>
-              Đóng
-            </Button>
-          </Space>
-        ) : (
-          <Space>
-            <Button type="primary" danger onClick={handleFormCancel}>
-              Hủy
-            </Button>
-            <Button type="primary" htmlType="submit">
-              Lưu
-            </Button>
-          </Space>
-        )}
+        <Button type="primary" danger onClick={handleClose}>
+          Đóng
+        </Button>
       </Row>
       <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
         <img

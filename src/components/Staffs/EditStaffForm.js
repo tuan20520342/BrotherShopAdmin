@@ -1,25 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import ImgCrop from 'antd-img-crop';
 import { PlusOutlined } from '@ant-design/icons';
-import {
-  Form,
-  Input,
-  Button,
-  Radio,
-  Select,
-  Cascader,
-  DatePicker,
-  InputNumber,
-  TreeSelect,
-  Switch,
-  Checkbox,
-  Upload,
-  Space,
-  Modal,
-  Row,
-  Col,
-} from 'antd';
+import { Form, Input, Button, Select, DatePicker, Upload, Space, Modal, Row, Col } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import * as SagaActionTypes from '~/redux/constants/constant';
@@ -58,7 +41,6 @@ const EditStaffForm = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
-  const [imageChange, setImageChange] = useState('');
   const [fileList, setFileList] = useState([
     {
       uid: '-1',
@@ -69,7 +51,6 @@ const EditStaffForm = () => {
   ]);
   const handleCancel = () => setPreviewOpen(false);
   const handlePreview = async (file) => {
-    console.log(file);
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
     }
@@ -79,7 +60,6 @@ const EditStaffForm = () => {
   };
   const handleChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
-    console.log(newFileList);
   };
   const uploadButton = (
     <div>
@@ -129,6 +109,7 @@ const EditStaffForm = () => {
       gender: values.gender,
       birthday: values.birthday.toDate(),
       email: values.email,
+      status: values.status,
     };
     dispatch({
       type: SagaActionTypes.PUT_STAFF_SAGA,
@@ -150,6 +131,7 @@ const EditStaffForm = () => {
         email: staffById.email,
         address: staffById.address,
         otherInformation: '',
+        status: staffById.status,
       }}
       validateMessages={validateMessages}
       style={{
@@ -262,12 +244,35 @@ const EditStaffForm = () => {
             <TextArea rows={2} placeholder="Địa chỉ" disabled={componentDisabled} />
           </Form.Item>
         </Col>
-        <Col span={24} key={8}>
+        <Col xs={24} sm={12} md={24} lg={12} key={4}>
+          <Form.Item
+            name="status"
+            label="Tình trạng"
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <Select
+              placeholder="Tình trạng"
+              allowClear
+              style={{
+                width: '40%',
+              }}
+              disabled={componentDisabled}
+            >
+              <Option value="active">Đang làm</Option>
+              <Option value="nonactive">Đã nghỉ</Option>
+            </Select>
+          </Form.Item>
+        </Col>
+        <Col xs={24} key={8}>
           <Form.Item name="otherInformation" label="Khác">
             <TextArea rows={2} placeholder="Khác" disabled={componentDisabled} />
           </Form.Item>
         </Col>
-        <Col span={24} key={9}>
+        {/* <Col span={24} key={9}>
           <Form.Item name="avatar" label="Ảnh nhân viên">
             <ImgCrop>
               <Upload
@@ -282,7 +287,7 @@ const EditStaffForm = () => {
               </Upload>
             </ImgCrop>
           </Form.Item>
-        </Col>
+        </Col> */}
       </Row>
       <Row justify="end">
         {enableModify === false ? (

@@ -11,10 +11,12 @@ const { Title } = Typography;
 const EditProductPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_PRODUCT_BY_ID_SAGA, id: id });
-  }, []);
-  const { idLoading } = useSelector((state) => state.productSlice);
+  }, [dispatch, id]);
+
+  const { idLoading, productId } = useSelector((state) => state.productSlice);
 
   if (idLoading) {
     return <LoadingSpin />;
@@ -24,7 +26,7 @@ const EditProductPage = () => {
     <>
       <Row>
         <Col span={24}>
-          <Title level={2}>{`Sản phẩm: ${id}`}</Title>
+          <Title level={2}>{`Sản phẩm: ${productId.name}`}</Title>
         </Col>
         <Col span={24}>
           <EditProductForm />

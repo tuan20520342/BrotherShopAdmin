@@ -16,7 +16,7 @@ const StaffsPage = () => {
 
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_STAFFS_SAGA });
-  }, []);
+  }, [dispatch]);
 
   const handleAddStaff = () => {
     navigate('/add-staff');

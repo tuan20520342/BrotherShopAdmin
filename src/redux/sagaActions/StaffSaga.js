@@ -7,9 +7,8 @@ import AlertCustom from '~/components/UI/Notification/Alert';
 function* actPostStaff(action) {
   try {
     const { newStaff } = action;
-    console.log(newStaff);
+
     const res = yield call(() => StaffService.postStaff(newStaff));
-    console.log(res);
     if (res.status === 201) {
       AlertCustom({ type: 'success', title: 'Thêm nhân viên thành công' });
       yield put(staffActions.createStaffSucceeded());
@@ -17,7 +16,6 @@ function* actPostStaff(action) {
       AlertCustom({ type: 'error', title: 'Thêm nhân viên thất bại' });
     }
   } catch (err) {
-    console.log(err);
     AlertCustom({ type: 'error', title: err.message });
   }
 }
@@ -80,10 +78,10 @@ function* actPutStaff(action) {
     if (res.status === 200) {
       AlertCustom({
         type: 'success',
-        title: 'Chỉnh sửa đầu sách thành công',
+        title: 'Chỉnh sửa nhân viên thành công',
       });
     } else {
-      AlertCustom({ type: 'error', title: 'Chỉnh sửa đầu sách thất bại' });
+      AlertCustom({ type: 'error', title: 'Chỉnh sửa nhân viên thất bại' });
     }
     yield put({ type: SagaActionTypes.GET_STAFF_BY_ID_SAGA, id: editStaff.staffId });
   } catch (err) {
