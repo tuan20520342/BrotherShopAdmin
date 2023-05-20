@@ -3,6 +3,7 @@ import * as SagaActionTypes from '../constants/constant';
 import { staffActions } from '../reducer/StaffReducer';
 import { StaffService } from '~/services/api/StaffAPI';
 import AlertCustom from '~/components/UI/Notification/Alert';
+import Cookies from 'js-cookie';
 
 function* actPostStaff(action) {
   try {
@@ -82,6 +83,9 @@ function* actPutStaff(action) {
       });
     } else {
       AlertCustom({ type: 'error', title: 'Chỉnh sửa nhân viên thất bại' });
+    }
+    if (editStaff.staffId === Cookies.get('currentUser')) {
+      yield put({ type: SagaActionTypes.GET_CURRENT_USER_SAGA });
     }
     yield put({ type: SagaActionTypes.GET_STAFF_BY_ID_SAGA, id: editStaff.staffId });
   } catch (err) {
