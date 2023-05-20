@@ -1,3 +1,4 @@
+/* eslint-disable no-template-curly-in-string */
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import ImgCrop from 'antd-img-crop';
@@ -250,7 +251,7 @@ const ProfileForm = () => {
             <TextArea rows={2} placeholder="Khác" disabled={componentDisabled} />
           </Form.Item>
         </Col>
-        <Col span={24} key={9}>
+        {/* <Col span={24} key={9}>
           <Form.Item name="avatar" label="Ảnh nhân viên">
             <ImgCrop>
               <Upload
@@ -265,7 +266,7 @@ const ProfileForm = () => {
               </Upload>
             </ImgCrop>
           </Form.Item>
-        </Col>
+        </Col> */}
       </Row>
       <Row justify="end">
         {enableModify === false ? (

@@ -15,8 +15,6 @@ const WarehouseReceiptsPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  console.log(items);
-
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_RECEIPTS_SAGA });
   }, [dispatch]);
