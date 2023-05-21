@@ -17,7 +17,7 @@ function* actPostStaff(action) {
       AlertCustom({ type: 'error', title: 'Thêm nhân viên thất bại' });
     }
   } catch (err) {
-    AlertCustom({ type: 'error', title: err.message });
+    AlertCustom({ type: 'error', title: err?.response?.data.message });
   }
 }
 

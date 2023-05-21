@@ -75,13 +75,25 @@ const EditCategoryForm = ({ category }) => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
+    // console.log(values);
+    console.log(category);
+
     const { category: updatedName, types } = values;
+
+    const updatedTypes = types.map((item, index) => {
+      return {
+        type: item,
+        _id: category.types[index]?._id,
+      };
+    });
 
     const updatedCategory = {
       name: updatedName,
-      types,
+      types: updatedTypes,
       categoryId: category._id,
     };
+
+    console.log(updatedTypes);
 
     dispatch({ type: SagaActionTypes.UPDATE_CATEGORY_SAGA, updatedCategory });
   };

@@ -51,7 +51,7 @@ const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProduct
   const [form] = Form.useForm();
 
   const optionsProducts = products
-    .filter((item) => listProducts.findIndex((listItem) => listItem._id === item._id) === -1)
+    .filter((item) => listProducts?.findIndex((listItem) => listItem._id === item._id) === -1)
     .map(function (product) {
       return {
         value: product._id,
