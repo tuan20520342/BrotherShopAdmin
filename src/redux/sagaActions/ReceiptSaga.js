@@ -30,7 +30,7 @@ function* actCreateReceipt(action) {
 
     if (status === 201) {
       AlertCustom({ type: 'success', title: data.message });
-      yield put({ type: SagaActionTypes.GET_RECEIPTS_SAGA });
+      yield put(receiptActions.createReceiptSuccess());
     } else {
       AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
     }

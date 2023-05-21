@@ -2,6 +2,26 @@ import { Popconfirm, Space, Button } from 'antd';
 import dayjs from 'dayjs';
 import { DeleteFilled, EyeFilled } from '@ant-design/icons';
 import TableTemplate from '~/components/UI/Table/TableTemplate';
+import LoadingSpin from '../UI/LoadingSpin/LoadingSpin';
+
+const totalQuantity = (receipt) => {
+  return receipt.products.reduce((total, currentProduct) => {
+    const totalQuantity = currentProduct.sizes.reduce((accQuantity, currentSize) => {
+      return accQuantity + currentSize.quantity;
+    }, 0);
+    return total + totalQuantity;
+  }, 0);
+};
+
+const totalPrice = (receipt) => {
+  return receipt.products.reduce((accPrice, currentProduct) => {
+    const totalQuantity = currentProduct.sizes.reduce((accQuantity, currentSize) => {
+      return accQuantity + currentSize.quantity;
+    }, 0);
+
+    return accPrice + currentProduct.importPrice * totalQuantity;
+  }, 0);
+};
 
 const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
   const columns = [
@@ -19,24 +39,19 @@ const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
       dataIndex: '_id',
       key: '_id',
       align: 'center',
-      sorter: (item1, item2) => item1.id.localeCompare(item2.id),
+      sorter: (item1, item2) => item1._id.localeCompare(item2._id),
       filteredValue: [keyWord],
       onFilter: (value, record) => {
-        console.log(record);
         return (
-          String(record.id).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.product.title).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.cost).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.price).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.quantity).toLowerCase().includes(value.toLowerCase()) ||
-          record.state.find((item) => item.stateName.toLowerCase().includes(value.toLowerCase())) ||
-          String(dayjs(record.EXP).format('DD/MM/YYYY')).toLowerCase().includes(value.toLowerCase()) ||
-          String(dayjs(record.MFG).format('DD/MM/YYYY')).toLowerCase().includes(value.toLowerCase())
+          String(record._id).toLowerCase().includes(value.toLowerCase()) ||
+          String(totalPrice(record)).toLowerCase().includes(value.toLowerCase()) ||
+          String(totalQuantity(record)).toLowerCase().includes(value.toLowerCase()) ||
+          String(dayjs(record.date).format('DD/MM/YYYY')).toLowerCase().includes(value.toLowerCase())
         );
       },
       showOnResponse: true,
       showOnDesktop: true,
-      render: (text, record, index) => record._id.slice(0, 8),
+      render: (text, record, index) => record._id.slice(0, 8).toUpperCase(),
     },
     {
       title: 'Ngày nhập hàng',
@@ -45,23 +60,40 @@ const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
       align: 'center',
       showOnResponse: true,
       showOnDesktop: true,
-      sorter: (a, b) => a.date > b.date,
+      sorter: (a, b) => dayjs(a.date).unix() - dayjs(b.date).unix(),
       render: (date) => `${dayjs(date).format('DD/MM/YYYY')}`,
     },
 
     {
-      title: 'Số lượng',
-      dataIndex: 'quantity',
+      title: 'Số lượng mặt hàng',
+      dataIndex: 'products',
       key: 'quantity',
       align: 'center',
       showOnResponse: true,
       showOnDesktop: true,
       ellipsis: true,
-      sorter: (a, b) => a.quantity - b.quantity,
+      sorter: (a, b) => a.products.length - b.products.length,
       render: (text, record, index) => {
-        console.log(record);
-        // return <div>{record.quantity.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}</div>;
         return <span>{record.products.length}</span>;
+      },
+    },
+    {
+      title: 'Số lượng',
+      dataIndex: 'products',
+      key: 'totalquantity',
+      align: 'center',
+      showOnResponse: true,
+      showOnDesktop: true,
+      ellipsis: true,
+      sorter: (a, b) => totalQuantity(a) - totalQuantity(b),
+      render: (text, record, index) => {
+        return (
+          <div>
+            {totalQuantity(record)
+              .toString()
+              .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}
+          </div>
+        );
       },
     },
     {
@@ -72,16 +104,16 @@ const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
       showOnResponse: true,
       showOnDesktop: true,
       ellipsis: true,
-      sorter: (a, b) => a.price - b.price,
+      sorter: (a, b) => totalPrice(a) - totalPrice(b),
       render: (text, record, index) => {
-        const totalPrice = record.products.reduce((accPrice, currentProduct) => {
-          const totalQuantity = currentProduct.sizes.reduce((accQuantity, currentSize) => {
-            return accQuantity + currentSize.quantity;
-          }, 0);
-
-          return accPrice + currentProduct.importPrice * totalQuantity;
-        }, 0);
-        return <div>{totalPrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}đ</div>;
+        return (
+          <div>
+            {totalPrice(record)
+              .toString()
+              .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}{' '}
+            đ
+          </div>
+        );
       },
     },
 
@@ -98,7 +130,7 @@ const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
       render: (text, record, index) => (
         <Space size="middle" key={index}>
           <Button type="primary" icon={<EyeFilled />} onClick={() => handleEditReceipt(record)}></Button>
-          <Popconfirm
+          {/* <Popconfirm
             placement="top"
             title="Bạn có chắc muốn xóa sản phẩm này?"
             okText="Xác nhận"
@@ -106,7 +138,7 @@ const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
             onConfirm={() => handleRemoveReceipt(record)}
           >
             <Button type="primary" icon={<DeleteFilled />} danger></Button>
-          </Popconfirm>
+          </Popconfirm> */}
         </Space>
       ),
     },
@@ -115,6 +147,10 @@ const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
   const handleRemoveReceipt = (record) => {};
 
   const handleEditReceipt = (receipt) => {};
+
+  if (loading) {
+    return <LoadingSpin />;
+  }
 
   return (
     <TableTemplate
@@ -125,7 +161,7 @@ const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
         showSizeChanger: false,
         pageSizeOptions: ['6'],
       }}
-      rowKey={'id'}
+      rowKey={'_id'}
     />
   );
 };

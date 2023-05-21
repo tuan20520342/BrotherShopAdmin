@@ -5,7 +5,7 @@ import AddProductToReceipt from './AddProductToReceipt';
 import { modalActions } from '~/redux/reducer/ModalReducer';
 import { useDispatch } from 'react-redux';
 
-const ProductsWarehouseTable = ({ keyWord, data, onEditProduct }) => {
+const ProductsWarehouseTable = ({ keyWord, data, onEditProduct, onRemoveProduct }) => {
   const dispatch = useDispatch();
 
   const columns = [
@@ -37,7 +37,6 @@ const ProductsWarehouseTable = ({ keyWord, data, onEditProduct }) => {
         return (
           String(record._id).toLowerCase().includes(value.toLowerCase()) ||
           String(record.name).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.oldPrice).toLowerCase().includes(value.toLowerCase()) ||
           String(record.price).toLowerCase().includes(value.toLowerCase()) ||
           String(record.sizes.reduce((acc, size) => acc + size.quantity, 0))
             .toLowerCase()
@@ -88,7 +87,7 @@ const ProductsWarehouseTable = ({ keyWord, data, onEditProduct }) => {
           <Button type="primary" icon={<EyeFilled />} onClick={() => handleEditProduct(record)}></Button>
           <Popconfirm
             placement="top"
-            title="Bạn có chắc muốn xóa sản phẩm này?"
+            title="Bạn có chắc muốn xóa sản phẩm này ra khỏi phiếu nhập?"
             okText="Xác nhận"
             cancelText="Hủy"
             onConfirm={() => handleRemoveProduct(record)}
@@ -100,7 +99,9 @@ const ProductsWarehouseTable = ({ keyWord, data, onEditProduct }) => {
     },
   ];
 
-  const handleRemoveProduct = (record) => {};
+  const handleRemoveProduct = (product) => {
+    onRemoveProduct(product);
+  };
 
   const handleEditProduct = (product) => {
     dispatch(

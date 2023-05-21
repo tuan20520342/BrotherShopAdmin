@@ -12,6 +12,8 @@ import AddProductToReceipt from './AddProductToReceipt';
 import * as SagaActionTypes from '~/redux/constants/constant';
 import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
 import ProductsWarehouseTable from './ProductsWarehouseTable';
+import Cookies from 'js-cookie';
+import AlertCustom from '~/components/UI/Notification/Alert';
 
 const dateFormat = 'DD/MM/YYYY';
 
@@ -24,6 +26,8 @@ const AddWarehouseReceipt = () => {
 
   const [products, setProducts] = useState([]);
   const currentUser = useSelector((state) => state.authenticationSlice.currentUser);
+
+  const isCreateReceiptSucceeded = useSelector((state) => state.receiptSlice.isCreateReceiptSucceeded);
 
   const validateMessages = {
     required: 'Cần nhập ${label}!',
@@ -40,6 +44,12 @@ const AddWarehouseReceipt = () => {
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_PRODUCTS_SAGA });
   }, [dispatch]);
+
+  useEffect(() => {
+    if (isCreateReceiptSucceeded) {
+      navigate('/warehouse-receipt', { replace: true });
+    }
+  }, [isCreateReceiptSucceeded]);
 
   const handleAddProduct = (newProduct) => {
     const updatedProducts = [...products, newProduct];
@@ -60,11 +70,17 @@ const AddWarehouseReceipt = () => {
     }
   };
 
+  const handleRemoveProduct = (removeProduct) => {
+    const updatedProducts = [...products];
+    const filteredProducts = updatedProducts.filter((item) => item._id !== removeProduct._id);
+    setProducts(filteredProducts);
+  };
+
   const handleShowModalAddProduct = () => {
     dispatch(
       modalActions.showModal({
         title: 'Thêm sản phẩm',
-        ComponentContent: <AddProductToReceipt onAddProduct={handleAddProduct} />,
+        ComponentContent: <AddProductToReceipt onAddProduct={handleAddProduct} listProducts={products} />,
       }),
     );
   };
@@ -78,14 +94,18 @@ const AddWarehouseReceipt = () => {
   };
 
   const onFinish = (values) => {
-    const formattedProducts = products.map((product) => ({
-      productId: product._id,
-      sizes: product.sizes,
-      importPrice: product.importPrice,
-    }));
-    const newReceipt = { ...values, products: formattedProducts, staff: '645a1fd0efdf816c8c401920' };
+    if (products.length === 0) {
+      AlertCustom({ type: 'error', title: 'Cần ít nhất một sản phẩm' });
+    } else {
+      const formattedProducts = products.map((product) => ({
+        productId: product._id,
+        sizes: product.sizes,
+        importPrice: product.importPrice,
+      }));
+      const newReceipt = { ...values, products: formattedProducts, staff: currentUser._id };
 
-    dispatch({ type: SagaActionTypes.CREATE_RECEIPT_SAGA, newReceipt });
+      dispatch({ type: SagaActionTypes.CREATE_RECEIPT_SAGA, newReceipt });
+    }
   };
 
   if (loading) {
@@ -100,7 +120,9 @@ const AddWarehouseReceipt = () => {
             name="add_reciept_form"
             form={form}
             onFinish={onFinish}
-            initialValues={{}}
+            initialValues={{
+              staff: currentUser.name,
+            }}
             validateMessages={validateMessages}
             style={{
               background: 'white',
@@ -137,13 +159,13 @@ const AddWarehouseReceipt = () => {
               </Col>
               <Col xs={24} sm={12} md={24} lg={12}>
                 <Form.Item name="staff" label="Nhân viên nhập hàng">
-                  <Select
+                  <Input
                     showSearch
-                    allowClear
                     placeholder="Nhân viên"
-                    value={currentUser.name}
+                    // value={currentUser.name}
                     // filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
                     // onChange={onChange}
+                    disabled
                   />
                 </Form.Item>
               </Col>
@@ -180,7 +202,12 @@ const AddWarehouseReceipt = () => {
           <Toolbar title={'Thêm sản phẩm'} setKeyWord={setKeyWord} handleAdd={handleShowModalAddProduct} />
         </Col>
         <Col span={24}>
-          <ProductsWarehouseTable keyWord={keyWord} data={products} onEditProduct={handleEditProduct} />
+          <ProductsWarehouseTable
+            keyWord={keyWord}
+            data={products}
+            onEditProduct={handleEditProduct}
+            onRemoveProduct={handleRemoveProduct}
+          />
         </Col>
         <Col span={24}></Col>
       </Row>

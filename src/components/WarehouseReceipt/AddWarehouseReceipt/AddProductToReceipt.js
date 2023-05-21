@@ -44,18 +44,20 @@ const sizeLayout = {
   },
 };
 
-const AddProductToReceipt = ({ onAddProduct, onEditProduct, product }) => {
+const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProducts }) => {
   const { products } = useSelector((state) => state.productSlice);
   const dispatch = useDispatch();
   const [productById, setProductById] = useState('');
   const [form] = Form.useForm();
 
-  const optionsProducts = products.map(function (product) {
-    return {
-      value: product._id,
-      label: `${product._id.substring(0, 6).toUpperCase()} - ${product.name}`,
-    };
-  });
+  const optionsProducts = products
+    .filter((item) => listProducts.findIndex((listItem) => listItem._id === item._id) === -1)
+    .map(function (product) {
+      return {
+        value: product._id,
+        label: `${product._id.substring(0, 6).toUpperCase()} - ${product.name}`,
+      };
+    });
 
   const onChange = (value) => {
     if (value !== undefined && products !== null) {
@@ -135,6 +137,7 @@ const AddProductToReceipt = ({ onAddProduct, onEditProduct, product }) => {
           options={optionsProducts}
           filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
           onChange={onChange}
+          disabled={product}
         ></Select>
       </Form.Item>
       <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.productId !== currentValues.productId}>
