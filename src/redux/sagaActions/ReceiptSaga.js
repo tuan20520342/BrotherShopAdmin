@@ -21,6 +21,22 @@ function* actGetReceipts() {
   }
 }
 
+function* actGetReceiptById(action) {
+  try {
+    const { id } = action;
+    yield put(receiptActions.getReceiptByIdInLoading());
+    const res = yield call(() => ReceiptService.getReceiptById(id));
+    const { status, data } = res;
+    if (status === 200) {
+      yield put(receiptActions.getReceiptByIdSuccess({ receiptById: data.receipt }));
+    } else {
+      console.log('Không lấy được phiếu nhập kho');
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 function* actCreateReceipt(action) {
   try {
     const { newReceipt } = action;
@@ -45,4 +61,8 @@ export function* followActGetReceipts() {
 
 export function* followActCreateReceipt() {
   yield takeLatest(SagaActionTypes.CREATE_RECEIPT_SAGA, actCreateReceipt);
+}
+
+export function* followActGetReceiptById() {
+  yield takeLatest(SagaActionTypes.GET_RECEIPT_BY_ID_SAGA, actGetReceiptById);
 }

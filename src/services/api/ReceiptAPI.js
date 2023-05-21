@@ -9,4 +9,10 @@ export const ReceiptService = {
   createReceipt: (data) => {
     return baseRequest.post(UrlApi.URL_CREATE_RECEIPT, data);
   },
+  getReceiptById: (id) => {
+    return axios.get(UrlApi.URL_RECEIPTS_ID(id));
+  },
+  updateReceipt: (data) => {
+    return baseRequest.put(UrlApi.URL_PUT_RECEIPT, data);
+  },
 };

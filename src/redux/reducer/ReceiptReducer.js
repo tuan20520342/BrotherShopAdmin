@@ -3,7 +3,9 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   loading: false,
   isCreateReceiptSucceeded: false,
+  idLoading: false,
   items: [],
+  receiptById: {},
 };
 
 const receiptSlice = createSlice({
@@ -20,6 +22,13 @@ const receiptSlice = createSlice({
     },
     createReceiptSuccess: (state, action) => {
       state.isCreateReceiptSucceeded = true;
+    },
+    getReceiptByIdInLoading: (state, action) => {
+      state.idLoading = true;
+    },
+    getReceiptByIdSuccess: (state, action) => {
+      state.receiptById = action.payload.receiptById;
+      state.idLoading = false;
     },
   },
 });

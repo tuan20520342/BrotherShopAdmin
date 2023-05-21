@@ -8,12 +8,13 @@ import AddProductForm from '~/components/Products/AddProductForm';
 import OrdersPage from '~/pages/OrdersPage';
 import CustomersPage from '~/pages/CustomersPage';
 import CategoriesPage from '~/pages/CategoriesPage';
-import WearhouseReceiptsPage from '~/pages/WarehouseReceiptsPage';
+import WarehouseReceiptsPage from '~/pages/WarehouseReceiptsPage';
 import ProfilePage from '~/pages/ProfilePage';
 import AddWarehouseReceipt from '~/components/WarehouseReceipt/AddWarehouseReceipt';
 import EditProductPage from '~/pages/EditProductPage';
 import EditStaffPage from '~/pages/EditStaffPage';
 import CustomerDetailsPage from '~/pages/CustomerDetailsPage';
+import WarehouseReceiptDetailsPage from '~/pages/WarehouseReceiptDetailsPage';
 
 const CommonRoutes = [
   {
@@ -50,7 +51,11 @@ const CommonRoutes = [
   },
   {
     path: '/warehouse-receipt',
-    element: <WearhouseReceiptsPage />,
+    element: <WarehouseReceiptsPage />,
+  },
+  {
+    path: '/warehouse-receipt/:id',
+    element: <WarehouseReceiptDetailsPage />,
   },
   {
     path: '/orders',
