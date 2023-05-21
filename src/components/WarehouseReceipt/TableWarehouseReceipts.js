@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import { DeleteFilled, EyeFilled } from '@ant-design/icons';
 import TableTemplate from '~/components/UI/Table/TableTemplate';
 import LoadingSpin from '../UI/LoadingSpin/LoadingSpin';
+import { useNavigate } from 'react-router-dom';
 
 const totalQuantity = (receipt) => {
   return receipt.products.reduce((total, currentProduct) => {
@@ -24,6 +25,8 @@ const totalPrice = (receipt) => {
 };
 
 const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
+  const navigate = useNavigate();
+
   const columns = [
     {
       title: 'STT',
@@ -146,7 +149,9 @@ const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
 
   const handleRemoveReceipt = (record) => {};
 
-  const handleEditReceipt = (receipt) => {};
+  const handleEditReceipt = (receipt) => {
+    navigate(`/warehouse-receipt/${receipt._id}`);
+  };
 
   if (loading) {
     return <LoadingSpin />;

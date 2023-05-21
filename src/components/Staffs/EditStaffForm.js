@@ -225,7 +225,7 @@ const EditStaffForm = () => {
             label="Số Điện Thoại"
             rules={[
               {
-                pattern: /^[\d]{10,10}$/,
+                pattern: /(84|0[3|5|7|8|9])+([0-9]{8})\b/g,
                 message: 'Số Điện Thoại không hợp lệ',
               },
               { required: true },
