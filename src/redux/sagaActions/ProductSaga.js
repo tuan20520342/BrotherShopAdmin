@@ -1,7 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import * as SagaActionTypes from '../constants/constant';
 import { productActions } from '../reducer/ProductReducer';
-import { modalActions } from '../reducer/ModalReducer';
 import { ProductService } from '~/services/api/ProductAPI';
 import AlertCustom from '~/components/UI/Notification/Alert';
 
@@ -10,17 +9,15 @@ function* actGetListProducts() {
     yield put(productActions.getProductsLoading());
 
     const res = yield call(() => ProductService.getProductsList());
-    console.log(res);
     const { status, data } = res;
+
     if (status === 200) {
       yield put(productActions.getProductsSuccess({ products: data.products }));
     } else {
-      //yield put(authActions.requestLogFailed());
-      console.log('an l r');
+      AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
     }
   } catch (err) {
-    //yield put(authActions.requestLogFailed());
-    console.log('an l r');
+    AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
   }
 }
 
@@ -30,17 +27,32 @@ function* actGetProductById(action) {
     yield put(productActions.getProductByIdInLoading());
 
     const res = yield call(() => ProductService.getProductById(id));
-    console.log(res);
     const { status, data } = res;
     if (status === 200) {
       yield put(productActions.getProductByIdSuccess({ productId: data.product }));
     } else {
-      //yield put(authActions.requestLogFailed());
-      console.log('an l r');
+      AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
     }
   } catch (err) {
-    //yield put(authActions.requestLogFailed());
-    console.log('an l r');
+    AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
+  }
+}
+
+function* actCreateProduct(action) {
+  try {
+    const { newProduct } = action;
+
+    const res = yield call(() => ProductService.createProduct(newProduct));
+    const { status, data } = res;
+
+    if (status === 201) {
+      yield put({ type: SagaActionTypes.GET_PRODUCTS_SAGA });
+      AlertCustom({ type: 'success', title: data.message });
+    } else {
+      AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
+    }
+  } catch (err) {
+    AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
   }
 }
 
@@ -50,4 +62,8 @@ export function* followActGetListProducts() {
 
 export function* followActGetProductById() {
   yield takeLatest(SagaActionTypes.GET_PRODUCT_BY_ID_SAGA, actGetProductById);
+}
+
+export function* followActCreateProduct() {
+  yield takeLatest(SagaActionTypes.CREATE_PRODUCT_SAGA, actCreateProduct);
 }

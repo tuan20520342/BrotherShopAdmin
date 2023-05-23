@@ -1,37 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import dayjs from 'dayjs';
+/* eslint-disable no-template-curly-in-string */
+import React, { useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import ImgCrop from 'antd-img-crop';
-import {
-  Form,
-  Input,
-  Button,
-  Radio,
-  Select,
-  Cascader,
-  DatePicker,
-  InputNumber,
-  TreeSelect,
-  Switch,
-  Checkbox,
-  Upload,
-  Space,
-  Modal,
-  Row,
-  Col,
-  Typography,
-} from 'antd';
-import { useNavigate, useParams } from 'react-router-dom';
-import * as SagaActionTypes from '~/redux/constants/constant';
-import { modalActions } from '~/redux/reducer/ModalReducer';
-import { useDispatch, useSelector } from 'react-redux';
-import TableCategories from '../Categories/TableCategories';
+import { Form, Input, Button, Select, InputNumber, Upload, Space, Modal, Row, Col, Typography } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import TableProductSizes from './TableProductSizes';
 const { Title } = Typography;
 
-const { Option } = Select;
 const { TextArea } = Input;
-const dateFormat = 'DD/MM/YYYY';
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -55,14 +32,12 @@ const validateMessages = {
 
 const EditProductForm = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  let { productId } = useSelector((state) => state.productSlice);
+  const { productId } = useSelector((state) => state.productSlice);
 
   const [form] = Form.useForm();
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
-  const [imageChange, setImageChange] = useState('');
   const [mainFileList, setMainFileList] = useState([
     {
       uid: '-1',

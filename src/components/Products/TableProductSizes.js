@@ -1,7 +1,3 @@
-import { Popconfirm, Space, Spin, Button, Tag, Image } from 'antd';
-import dayjs from 'dayjs';
-import { DeleteFilled, EyeFilled } from '@ant-design/icons';
-import { useState } from 'react';
 import TableTemplate from '~/components/UI/Table/TableTemplate';
 
 const TableProductSizes = ({ data }) => {
@@ -10,6 +6,7 @@ const TableProductSizes = ({ data }) => {
       title: 'Sizes',
       dataIndex: 'name',
       key: 'name',
+      align: 'center',
       showOnResponse: true,
       showOnDesktop: true,
     },
@@ -17,6 +14,7 @@ const TableProductSizes = ({ data }) => {
       title: 'Số lượng',
       dataIndex: 'quantity',
       key: 'quantity',
+      align: 'center',
       showOnResponse: true,
       showOnDesktop: true,
       ellipsis: true,
@@ -27,6 +25,7 @@ const TableProductSizes = ({ data }) => {
       title: 'Đã bán',
       dataIndex: 'sold',
       key: 'sold',
+      align: 'center',
       showOnResponse: true,
       showOnDesktop: true,
       ellipsis: true,
@@ -36,19 +35,16 @@ const TableProductSizes = ({ data }) => {
   ];
 
   return (
-    <>
-      <TableTemplate
-        dataSource={data}
-        columns={columns}
-        pagination={{
-          showSizeChanger: false,
-          hideOnSinglePage: true,
-        }}
-        rowKey={'name'}
-        style={{ filter: 'none' }}
-      />
-      {/* <ModalForm isModalOpen={isOpen} /> */}
-    </>
+    <TableTemplate
+      dataSource={data}
+      columns={columns}
+      pagination={{
+        showSizeChanger: false,
+        hideOnSinglePage: true,
+      }}
+      rowKey={'name'}
+      style={{ filter: 'none' }}
+    />
   );
 };
 
