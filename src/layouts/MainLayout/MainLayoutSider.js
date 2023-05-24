@@ -1,25 +1,15 @@
 import React, { useState } from 'react';
-import { Layout, Menu, Popconfirm, Row } from 'antd';
+import { Menu, Row } from 'antd';
 import {
   UserOutlined,
   TeamOutlined,
-  SettingOutlined,
-  SolutionOutlined,
-  ExportOutlined,
   DashboardOutlined,
-  ShopOutlined,
-  LineChartOutlined,
-  BookOutlined,
-  RetweetOutlined,
-  ExpandOutlined,
-  AppstoreAddOutlined,
-  MoneyCollectOutlined,
   ShoppingCartOutlined,
   AppstoreOutlined,
   SkinOutlined,
   SnippetsOutlined,
 } from '@ant-design/icons';
-import { useHistory, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Sider from 'antd/es/layout/Sider';
 
 const MainLayoutSider = ({ collapsed, setCollapsed, setVisibleButton }) => {

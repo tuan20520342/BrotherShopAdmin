@@ -4,10 +4,11 @@ import { PlusOutlined } from '@ant-design/icons';
 import ImgCrop from 'antd-img-crop';
 import { Form, Input, Button, Select, InputNumber, Upload, Space, Modal, Row, Col, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import TableProductSizes from './TableProductSizes';
-const { Title } = Typography;
+import { useSelector } from 'react-redux';
 
+const { Title } = Typography;
+const { Option } = Select;
 const { TextArea } = Input;
 
 const getBase64 = (file) =>
@@ -30,9 +31,8 @@ const validateMessages = {
   },
 };
 
-const EditProductForm = () => {
+const EditProductForm = ({ product }) => {
   const navigate = useNavigate();
-  const { productId } = useSelector((state) => state.productSlice);
 
   const [form] = Form.useForm();
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -41,23 +41,34 @@ const EditProductForm = () => {
   const [mainFileList, setMainFileList] = useState([
     {
       uid: '-1',
-      name: 'Main Image',
+      name: 'Hình ảnh chính',
       status: 'done',
-      url: `https://res.cloudinary.com/ddajkcbs2/image/upload/${productId.images.mainImg}`,
+      url: `https://res.cloudinary.com/ddajkcbs2/image/upload/${product.images.mainImg}`,
     },
   ]);
-  const [fileList, setFileList] = useState([
+  const [subFileList, setFileList] = useState([
     {
       uid: '-1',
-      name: 'Sub Image',
+      name: 'Hình ảnh minh họa',
       status: 'done',
-      url: `https://res.cloudinary.com/ddajkcbs2/image/upload/${productId.images.subImg}`,
+      url: `https://res.cloudinary.com/ddajkcbs2/image/upload/${product.images.subImg}`,
     },
   ]);
 
+  const { categories } = useSelector((state) => state.categorySlice);
+
+  const types = [];
+  categories.forEach((element) => {
+    if (element.types.length > 0) {
+      types.push(...element.types);
+    } else {
+      types.push(element);
+    }
+  });
+
   const handleCancel = () => setPreviewOpen(false);
+
   const handlePreview = async (file) => {
-    console.log(file);
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
     }
@@ -65,9 +76,11 @@ const EditProductForm = () => {
     setPreviewOpen(true);
     setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
   };
+
   const handleChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
   };
+
   const handleMainChange = ({ fileList: newFileList }) => {
     setMainFileList(newFileList);
   };
@@ -88,7 +101,9 @@ const EditProductForm = () => {
     navigate('/products');
   };
 
-  const onFinish = (values) => {};
+  const onFinish = (values) => {
+    console.log(values);
+  };
 
   return (
     <Form
@@ -96,10 +111,10 @@ const EditProductForm = () => {
       form={form}
       onFinish={onFinish}
       initialValues={{
-        name: productId.name,
-        description: productId.description,
-        price: productId.price,
-        oldPrice: productId.oldPrice,
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        oldPrice: product.oldPrice,
       }}
       validateMessages={validateMessages}
       layout="vertical"
@@ -160,26 +175,6 @@ const EditProductForm = () => {
                 <Title level={4}>Giá sản phẩm</Title>
               </Col>
 
-              {/* <Col xs={24} sm={12} md={24} lg={12}>
-                <Form.Item
-                  name="cost"
-                  label="Giá nhập"
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
-                >
-                  <InputNumber
-                    className="rounded"
-                    min={0}
-                    addonAfter={<div>VNĐ</div>}
-                    placeholder="Giá nhập"
-                    formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                    parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
-                  />
-                </Form.Item>
-              </Col> */}
               <Col span={12}>
                 <Form.Item
                   name="oldPrice"
@@ -259,7 +254,13 @@ const EditProductForm = () => {
                     allowClear
                     // options={options}
                     filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
-                  ></Select>
+                  >
+                    {types.map((type) => (
+                      <Option key={type._id} value={JSON.stringify(type)} label={type?.type || type?.name}>
+                        <Typography>{type?.type || type?.name}</Typography>
+                      </Option>
+                    ))}
+                  </Select>
                 </Form.Item>
               </Col>
             </Row>
@@ -285,7 +286,7 @@ const EditProductForm = () => {
                 <Title level={4}>Số lượng sản phẩm</Title>
               </Col>
               <Col span={24}>
-                <TableProductSizes data={productId.sizes} />
+                <TableProductSizes data={product.sizes} />
               </Col>
             </Row>
           </div>
@@ -326,12 +327,10 @@ const EditProductForm = () => {
                     <Upload
                       action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                       listType="picture-card"
-                      fileList={fileList}
+                      fileList={subFileList}
                       onPreview={handlePreview}
                       onChange={handleChange}
-                    >
-                      {fileList.length >= 3 ? null : uploadButton}
-                    </Upload>
+                    />
                   </ImgCrop>
                 </Form.Item>
               </Col>

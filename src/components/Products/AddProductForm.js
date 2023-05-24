@@ -4,7 +4,6 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Form, Input, Button, Select, InputNumber, Upload, Space, Modal, Row, Col, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
 import * as SagaActionTypes from '~/redux/constants/constant';
 import CustomImgCrop from './CustomImgCrop';
 
@@ -48,6 +47,10 @@ const getFolder = (type) => {
     default:
       break;
   }
+};
+
+const createFolder = (uploadFolder, isMainImg) => {
+  return `brothershop/products/${isMainImg ? 'mainImg' : 'subImg'}/${uploadFolder}`;
 };
 
 const validateMessages = {
@@ -120,47 +123,29 @@ const AddProductForm = () => {
     navigate('/products');
   };
 
-  const uploadImages = async (file, isMainImg) => {
-    const formData = new FormData();
-
-    formData.append('file', file);
-    formData.append('upload_preset', 'os8e1vxz');
+  const onFinish = async (values) => {
+    const mainFileImg = await getBase64(mainFileList[0].originFileObj);
+    const subFileImg = await getBase64(subFileList[0].originFileObj);
 
     const parsedCategory = JSON.parse(selectedCategory);
-
     const uploadFolder = getFolder(parsedCategory?.type || parsedCategory?.name);
-    formData.append('folder', `brothershop/products/${isMainImg ? 'mainImg' : 'subImg'}/${uploadFolder}`);
+    const mainImgFolder = createFolder(uploadFolder, true);
+    const subImgFolder = createFolder(uploadFolder, false);
 
-    const res = await axios.post('https://api.cloudinary.com/v1_1/ddajkcbs2/image/upload', formData);
-    return res.data;
-  };
+    const { name, description, price } = values;
 
-  const onFinish = async (values) => {
-    const mainFileImg = mainFileList[0].originFileObj;
-    const subFileImg = subFileList[0].originFileObj;
+    const newProduct = {
+      name,
+      description,
+      price,
+      categoryId: parsedCategory._id,
+      mainImg: mainFileImg,
+      subImg: subFileImg,
+      mainFolder: mainImgFolder,
+      subFolder: subImgFolder,
+    };
 
-    const [mainImgData, subImgData] = await Promise.all([
-      uploadImages(mainFileImg, true),
-      uploadImages(subFileImg, false),
-    ]);
-
-    const mainImgPublicId = mainImgData.public_id;
-    const subImgPuclicId = subImgData.public_id;
-
-    if (mainImgPublicId && subImgPuclicId) {
-      const { name, description, price, categories } = values;
-      const parsedCategory = JSON.parse(categories);
-      const newProduct = {
-        name,
-        description,
-        price,
-        categoryId: parsedCategory._id,
-        mainImg: mainImgPublicId,
-        subImg: subImgPuclicId,
-      };
-
-      dispatch({ type: SagaActionTypes.CREATE_PRODUCT_SAGA, newProduct });
-    }
+    dispatch({ type: SagaActionTypes.CREATE_PRODUCT_SAGA, newProduct });
   };
 
   return (
@@ -291,7 +276,7 @@ const AddProductForm = () => {
                     onChange={(value) => setSelectedCategory(value)}
                   >
                     {types.map((type) => (
-                      <Option value={JSON.stringify(type)} label={type?.type || type?.name}>
+                      <Option key={type._id} value={JSON.stringify(type)} label={type?.type || type?.name}>
                         <Typography>{type?.type || type?.name}</Typography>
                       </Option>
                     ))}

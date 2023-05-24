@@ -2,7 +2,7 @@
 import React from 'react';
 import dayjs from 'dayjs';
 import { useState, useEffect } from 'react';
-import { Row, Col, Button, Form, Input, Select, DatePicker, Space } from 'antd';
+import { Row, Col, Button, Form, Input, DatePicker, Space } from 'antd';
 import Toolbar from '~/components/UI/Toolbar';
 import { useNavigate } from 'react-router-dom';
 import ModalForm from '~/HOC/ModalForm';
@@ -12,7 +12,6 @@ import AddProductToReceipt from './AddProductToReceipt';
 import * as SagaActionTypes from '~/redux/constants/constant';
 import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
 import ProductsWarehouseTable from './ProductsWarehouseTable';
-import Cookies from 'js-cookie';
 import AlertCustom from '~/components/UI/Notification/Alert';
 
 const dateFormat = 'DD/MM/YYYY';
@@ -49,7 +48,7 @@ const AddWarehouseReceipt = () => {
     if (isCreateReceiptSucceeded) {
       navigate('/warehouse-receipt', { replace: true });
     }
-  }, [isCreateReceiptSucceeded]);
+  }, [isCreateReceiptSucceeded, navigate]);
 
   const handleAddProduct = (newProduct) => {
     const updatedProducts = [...products, newProduct];

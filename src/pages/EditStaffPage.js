@@ -21,16 +21,14 @@ const EditStaffPage = () => {
   }
 
   return (
-    <>
-      <Row>
-        <Col span={24}>
-          <Title level={2}>{`Nhân viên: ${staffById.name}`}</Title>
-        </Col>
-        <Col span={24}>
-          <EditStaffForm />
-        </Col>
-      </Row>
-    </>
+    <Row>
+      <Col span={24}>
+        <Title level={2}>{`Nhân viên: ${staffById.name}`}</Title>
+      </Col>
+      <Col span={24}>
+        <EditStaffForm />
+      </Col>
+    </Row>
   );
 };
 

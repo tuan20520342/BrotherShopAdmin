@@ -18,27 +18,25 @@ const CustomersPage = () => {
   }, [dispatch]);
 
   return (
-    <>
-      <Row>
-        <Col span={24}>
-          <Title level={2}>Danh sách khách hàng</Title>
-        </Col>
-        <Col span={24} style={{ marginBottom: '4px', textAlign: 'end' }}>
-          <Search
-            style={{ width: 'fit-content' }}
-            name="search"
-            placeholder="Tìm kiếm..."
-            allowClear
-            onChange={(e) => {
-              setKeyWord(e.target.value);
-            }}
-          />
-        </Col>
-        <Col span={24}>
-          <TableCustomers keyWord={keyWord} data={customers} loading={loading} />
-        </Col>
-      </Row>
-    </>
+    <Row>
+      <Col span={24}>
+        <Title level={2}>Danh sách khách hàng</Title>
+      </Col>
+      <Col span={24} style={{ marginBottom: '4px', textAlign: 'end' }}>
+        <Search
+          style={{ width: 'fit-content' }}
+          name="search"
+          placeholder="Tìm kiếm..."
+          allowClear
+          onChange={(e) => {
+            setKeyWord(e.target.value);
+          }}
+        />
+      </Col>
+      <Col span={24}>
+        <TableCustomers keyWord={keyWord} data={customers} loading={loading} />
+      </Col>
+    </Row>
   );
 };
 

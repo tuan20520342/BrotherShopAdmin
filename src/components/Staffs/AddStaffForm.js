@@ -1,25 +1,9 @@
+/* eslint-disable no-template-curly-in-string */
 import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import ImgCrop from 'antd-img-crop';
 import { PlusOutlined } from '@ant-design/icons';
-import {
-  Form,
-  Input,
-  Button,
-  Radio,
-  Select,
-  Cascader,
-  DatePicker,
-  InputNumber,
-  TreeSelect,
-  Switch,
-  Checkbox,
-  Upload,
-  Space,
-  Modal,
-  Row,
-  Col,
-} from 'antd';
+import { Form, Input, Button, Select, DatePicker, Upload, Space, Modal, Row, Col } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import * as SagaActionTypes from '~/redux/constants/constant';
@@ -56,7 +40,6 @@ const AddStaffForm = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
-  const [imageChange, setImageChange] = useState('');
   const [fileList, setFileList] = useState([
     {
       uid: '-1',
@@ -96,7 +79,7 @@ const AddStaffForm = () => {
     if (isCreateStaffSucceeded) {
       navigate('/staffs', { replace: true });
     }
-  }, [isCreateStaffSucceeded]);
+  }, [isCreateStaffSucceeded, navigate]);
 
   const handleClose = () => {
     navigate('/staffs');

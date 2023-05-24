@@ -1,6 +1,6 @@
-import { Popconfirm, Space, Button } from 'antd';
+import { Space, Button } from 'antd';
 import dayjs from 'dayjs';
-import { DeleteFilled, EyeFilled } from '@ant-design/icons';
+import { EyeFilled } from '@ant-design/icons';
 import TableTemplate from '~/components/UI/Table/TableTemplate';
 import LoadingSpin from '../UI/LoadingSpin/LoadingSpin';
 import { useNavigate } from 'react-router-dom';
@@ -132,22 +132,11 @@ const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
       fixed: 'right',
       render: (text, record, index) => (
         <Space size="middle" key={index}>
-          <Button type="primary" icon={<EyeFilled />} onClick={() => handleEditReceipt(record)}></Button>
-          {/* <Popconfirm
-            placement="top"
-            title="Bạn có chắc muốn xóa sản phẩm này?"
-            okText="Xác nhận"
-            cancelText="Hủy"
-            onConfirm={() => handleRemoveReceipt(record)}
-          >
-            <Button type="primary" icon={<DeleteFilled />} danger></Button>
-          </Popconfirm> */}
+          <Button type="primary" icon={<EyeFilled />} onClick={() => handleEditReceipt(record)} />
         </Space>
       ),
     },
   ];
-
-  const handleRemoveReceipt = (record) => {};
 
   const handleEditReceipt = (receipt) => {
     navigate(`/warehouse-receipt/${receipt._id}`);

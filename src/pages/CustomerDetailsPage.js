@@ -23,16 +23,14 @@ const CustomerDetailsPage = () => {
   }
 
   return (
-    <>
-      <Row>
-        <Col span={24}>
-          <Title level={2}>{`Khách hàng: ${customerById.name}`}</Title>
-        </Col>
-        <Col span={24}>
-          <CustomerDetailForm />
-        </Col>
-      </Row>
-    </>
+    <Row>
+      <Col span={24}>
+        <Title level={2}>{`Khách hàng: ${customerById.name}`}</Title>
+      </Col>
+      <Col span={24}>
+        <CustomerDetailForm />
+      </Col>
+    </Row>
   );
 };
 

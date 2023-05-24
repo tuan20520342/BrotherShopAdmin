@@ -1,18 +1,15 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import Cookies from 'js-cookie';
-import { Button, Checkbox, Form, Input, Typography, Row } from 'antd';
+import { Button, Form, Input, Typography, Row } from 'antd';
 import './styles/LoginForm.css';
-import { useDispatch, useSelector } from 'react-redux';
-import * as SagaActionTypes from '~/redux/constants/constant';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 import AlertCustom from '~/components/UI/Notification/Alert';
 import { AuthenticationService } from '~/services/api/AuthAPI';
-import { authenticationAction } from '~/redux/reducer/AuthReducer';
 const { Title } = Typography;
+
 const LoginForm = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+
   const onFinish = async (values) => {
     const { email, password } = values;
     const user = {
@@ -82,7 +79,7 @@ const LoginForm = () => {
             placeholder="Password"
           />
         </Form.Item>
-        <a className="login-form-forgot" href="">
+        <a className="login-form-forgot" href="/forget-password">
           Quên mật khẩu?
         </a>
         <Button size="large" type="primary" htmlType="submit" className="login-form-button">

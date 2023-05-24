@@ -57,7 +57,6 @@ const AddCategoryForm = () => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    console.log(values);
     const { category, types } = values;
 
     const newCategory = {
@@ -150,19 +149,6 @@ const AddCategoryForm = () => {
               >
                 Thêm loại danh mục
               </Button>
-              {/* <Button
-                type="dashed"
-                onClick={() => {
-                  add('The head item', 0);
-                }}
-                style={{
-                  width: '60%',
-                  marginTop: '20px',
-                }}
-                icon={<PlusOutlined />}
-              >
-                Add field at head
-              </Button> */}
               <Form.ErrorList errors={errors} />
             </Form.Item>
           </>

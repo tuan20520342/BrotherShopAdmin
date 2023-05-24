@@ -1,4 +1,3 @@
-import React from 'react';
 import Swal from 'sweetalert2';
 
 const AlertCustom = ({ type, title }) => {
@@ -12,6 +11,7 @@ const AlertCustom = ({ type, title }) => {
       timerProgressBar: true,
     });
   }
+
   if (type === 'error') {
     Swal.fire({
       width: '400',
@@ -22,6 +22,7 @@ const AlertCustom = ({ type, title }) => {
       timerProgressBar: true,
     });
   }
+
   if (type === 'loginToContinue') {
     Swal.fire({
       width: '400',
@@ -32,7 +33,6 @@ const AlertCustom = ({ type, title }) => {
       timerProgressBar: true,
     });
   }
-  return <div>Alert</div>;
 };
 
 export default AlertCustom;

@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import * as SagaActionTypes from '~/redux/constants/constant';
 import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
-import CustomerDetailForm from '~/components/Customers/CustomerDetailForm';
 
 const { Title } = Typography;
 

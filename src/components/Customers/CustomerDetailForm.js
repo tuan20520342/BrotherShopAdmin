@@ -1,21 +1,13 @@
-import React, { useState } from 'react';
+/* eslint-disable no-template-curly-in-string */
+import React from 'react';
 import dayjs from 'dayjs';
-import { PlusOutlined } from '@ant-design/icons';
-import { Form, Input, Button, Select, DatePicker, Modal, Row, Col } from 'antd';
+import { Form, Input, Button, Select, DatePicker, Row, Col } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const { Option } = Select;
 const { TextArea } = Input;
 const dateFormat = 'DD/MM/YYYY';
-
-const getBase64 = (file) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
-  });
 
 const validateMessages = {
   required: 'Cần nhập ${label}!',
@@ -33,64 +25,12 @@ const CustomerDetailForm = () => {
   const navigate = useNavigate();
   const { customerById } = useSelector((state) => state.customerSlice);
   const [form] = Form.useForm();
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState('');
-  const [previewTitle, setPreviewTitle] = useState('');
-  const [fileList, setFileList] = useState([
-    {
-      uid: '-1',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
-  ]);
-  const handleCancel = () => setPreviewOpen(false);
-  const handlePreview = async (file) => {
-    console.log(file);
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj);
-    }
-    setPreviewImage(file.url || file.preview);
-    setPreviewOpen(true);
-    setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
-  };
-  const handleChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
-    console.log(newFileList);
-  };
-  const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
-        Upload
-      </div>
-    </div>
-  );
 
   const handleClose = () => {
     navigate('/customers');
   };
 
-  const onFinish = (values) => {
-    // let editStaff = {
-    //   staffId: customerById._id,
-    //   role: customerById.role._id,
-    //   name: values.name,
-    //   address: values.address,
-    //   phone: values.phone,
-    //   gender: values.gender,
-    //   birthday: values.birthday.toDate(),
-    //   email: values.email,
-    // };
-    // dispatch({
-    //   type: SagaActionTypes.PUT_STAFF_SAGA,
-    //   editStaff: editStaff,
-    // });
-  };
+  const onFinish = (values) => {};
 
   return (
     <Form
@@ -206,37 +146,12 @@ const CustomerDetailForm = () => {
             </Form.List>
           </Form.Item>
         </Col>
-        {/* <Col span={24} key={9}>
-          <Form.Item name="avatar" label="Ảnh nhân viên">
-            <ImgCrop>
-              <Upload
-                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                listType="picture-card"
-                fileList={fileList}
-                onPreview={handlePreview}
-                onChange={handleChange}
-                disabled={true}
-              >
-                {fileList.length >= 1 ? null : uploadButton}
-              </Upload>
-            </ImgCrop>
-          </Form.Item>
-        </Col> */}
       </Row>
       <Row justify="end">
         <Button type="primary" danger onClick={handleClose}>
           Đóng
         </Button>
       </Row>
-      <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
-        <img
-          alt="example"
-          style={{
-            width: '100%',
-          }}
-          src={previewImage}
-        />
-      </Modal>
     </Form>
   );
 };

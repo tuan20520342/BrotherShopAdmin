@@ -1,7 +1,5 @@
 import LoginPage from '~/pages/LoginPage';
 import AuthLayout from '../layouts/AuthLayout';
-// import Login from "~/pages/Login";
-// import Register from "~/pages/Register";
 import TestPage from '../pages/test';
 
 const AuthenticationRoutes = {

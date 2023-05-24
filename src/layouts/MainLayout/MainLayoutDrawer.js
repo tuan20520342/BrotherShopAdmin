@@ -1,23 +1,7 @@
 import React from 'react';
-import { Drawer, Menu, Popconfirm, Row } from 'antd';
-import {
-  UserOutlined,
-  TeamOutlined,
-  SettingOutlined,
-  SolutionOutlined,
-  ExportOutlined,
-  DashboardOutlined,
-  ShopOutlined,
-  LineChartOutlined,
-  BookOutlined,
-  RetweetOutlined,
-  ExpandOutlined,
-  AppstoreAddOutlined,
-  EnterOutlined,
-  RollbackOutlined,
-  FileOutlined,
-} from '@ant-design/icons';
-import { useLocation, useHistory, useNavigate } from 'react-router-dom';
+import { Drawer, Menu, Row } from 'antd';
+import { TeamOutlined, DashboardOutlined, FileOutlined } from '@ant-design/icons';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './styles/customdrawer.css';
 
 const MainLayoutDrawer = ({ setCollapsed, collapsed }) => {

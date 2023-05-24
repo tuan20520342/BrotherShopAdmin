@@ -14,13 +14,11 @@ const LoginPage = () => {
   }, [state]);
 
   return (
-    <>
-      <Row style={{ minHeight: '100vh', backgroundColor: '#d0ebff' }} justify="center">
-        <Col style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-          <LoginForm />
-        </Col>
-      </Row>
-    </>
+    <Row style={{ minHeight: '100vh', backgroundColor: '#d0ebff' }} justify="center">
+      <Col style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <LoginForm />
+      </Col>
+    </Row>
   );
 };
 

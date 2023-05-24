@@ -23,16 +23,14 @@ const EditProductPage = () => {
   }
 
   return (
-    <>
-      <Row>
-        <Col span={24}>
-          <Title level={2}>{`Sản phẩm: ${productId.name}`}</Title>
-        </Col>
-        <Col span={24}>
-          <EditProductForm />
-        </Col>
-      </Row>
-    </>
+    <Row>
+      <Col span={24}>
+        <Title level={2}>{`Sản phẩm: ${productId.name}`}</Title>
+      </Col>
+      <Col span={24}>
+        <EditProductForm product={productId} />
+      </Col>
+    </Row>
   );
 };
 

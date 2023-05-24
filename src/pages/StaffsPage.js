@@ -23,19 +23,17 @@ const StaffsPage = () => {
   };
 
   return (
-    <>
-      <Row>
-        <Col span={24}>
-          <Title level={2}>Danh sách nhân viên</Title>
-        </Col>
-        <Col span={24}>
-          <Toolbar title={'Thêm nhân viên'} setKeyWord={setKeyWord} handleAdd={handleAddStaff} />
-        </Col>
-        <Col span={24}>
-          <TableStaffs keyWord={keyWord} data={staffs} loading={loading} />
-        </Col>
-      </Row>
-    </>
+    <Row>
+      <Col span={24}>
+        <Title level={2}>Danh sách nhân viên</Title>
+      </Col>
+      <Col span={24}>
+        <Toolbar title={'Thêm nhân viên'} setKeyWord={setKeyWord} handleAdd={handleAddStaff} />
+      </Col>
+      <Col span={24}>
+        <TableStaffs keyWord={keyWord} data={staffs} loading={loading} />
+      </Col>
+    </Row>
   );
 };
 
