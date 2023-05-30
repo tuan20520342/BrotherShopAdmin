@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   loading: false,
   idLoading: false,
+  editLoading: null,
   products: [],
   productId: {
     name: '',
@@ -33,6 +34,12 @@ const productSlice = createSlice({
     getProductByIdSuccess: (state, action) => {
       state.productId = action.payload.productId;
       state.idLoading = false;
+    },
+    editProductLoading: (state, action) => {
+      state.editLoading = true;
+    },
+    editProductComplete: (state, action) => {
+      state.editLoading = false;
     },
   },
 });

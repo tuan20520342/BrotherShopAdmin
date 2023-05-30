@@ -1,9 +1,5 @@
 export const DOMAIN_NAME = 'http://localhost:3001';
 
-//LOAI DOC GIA
-// export const URL_TYPE_READER = `${DOMAIN_NAME}/loaidocgia`;
-// export const URL_TYPE_READER_BY_ID = (id) => `${DOMAIN_NAME}/loaidocgia/${id}`;
-
 //AUTHENTICATION
 export const URL_AUTH_LOGIN = `${DOMAIN_NAME}/auth/staffs/login`;
 
@@ -11,6 +7,7 @@ export const URL_AUTH_LOGIN = `${DOMAIN_NAME}/auth/staffs/login`;
 export const URL_PRODUCTS = `${DOMAIN_NAME}/products`;
 export const URL_PRODUCTS_ID = (id) => `${DOMAIN_NAME}/products/${id}`;
 export const URL_CREATE_PRODUCT = '/products/create';
+export const URL_UPDATE_PRODUCT = (id) => `/products/${id}`;
 
 //CATEGORIES
 export const URL_CATEGORIES = `${DOMAIN_NAME}/categories`;

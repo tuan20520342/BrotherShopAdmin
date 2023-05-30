@@ -56,6 +56,27 @@ function* actCreateProduct(action) {
   }
 }
 
+function* actUpdateProduct(action) {
+  try {
+    yield put(productActions.editProductLoading());
+
+    const { updatedProduct } = action;
+    const res = yield call(() => ProductService.updateProduct(updatedProduct));
+    const { status, data } = res;
+
+    if (status === 200) {
+      yield put({ type: SagaActionTypes.GET_PRODUCTS_SAGA });
+      AlertCustom({ type: 'success', title: data.message });
+    } else {
+      AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
+    }
+  } catch (err) {
+    AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
+  } finally {
+    yield put(productActions.editProductComplete());
+  }
+}
+
 export function* followActGetListProducts() {
   yield takeLatest(SagaActionTypes.GET_PRODUCTS_SAGA, actGetListProducts);
 }
@@ -66,4 +87,8 @@ export function* followActGetProductById() {
 
 export function* followActCreateProduct() {
   yield takeLatest(SagaActionTypes.CREATE_PRODUCT_SAGA, actCreateProduct);
+}
+
+export function* followActUpdateProduct() {
+  yield takeLatest(SagaActionTypes.UPDATE_PRODUCT_SAGA, actUpdateProduct);
 }

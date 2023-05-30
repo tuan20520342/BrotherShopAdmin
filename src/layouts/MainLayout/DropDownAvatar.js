@@ -46,7 +46,7 @@ const DropDownAvatar = ({ visibleText, user }) => {
     </Menu>
   );
   return (
-    <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
+    <Dropdown menu={menu} trigger={['click']} placement="bottomRight">
       <Space style={{ cursor: 'pointer' }}>
         <Avatar className="bg-blue-300" icon={<UserOutlined />} />
         {visibleText && <Text strong>{user ? user.name : 'John Doe'}</Text>}

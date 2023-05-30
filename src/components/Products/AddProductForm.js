@@ -349,26 +349,16 @@ const AddProductForm = () => {
               </Col>
             </Row>
 
-            <div
-              style={{
-                background: 'white',
-                borderRadius: '6px',
-                marginBottom: '16px',
-                paddingBottom: '20px',
-                filter: 'drop-shadow(0 1px 1px rgb(0 0 0 / 0.05))',
-              }}
-            >
-              <Row>
-                <Space>
-                  <Button size="large" type="primary" htmlType="submit">
-                    Xác nhận
-                  </Button>
-                  <Button size="large" type="primary" danger onClick={handleClose}>
-                    Đóng
-                  </Button>
-                </Space>
-              </Row>
-            </div>
+            <Row style={{ paddingBottom: '20px' }}>
+              <Space>
+                <Button size="large" type="primary" htmlType="submit">
+                  Xác nhận
+                </Button>
+                <Button size="large" type="primary" danger onClick={handleClose}>
+                  Đóng
+                </Button>
+              </Space>
+            </Row>
           </div>
         </Col>
       </Row>

@@ -11,6 +11,33 @@ const MainLayoutDrawer = ({ setCollapsed, collapsed }) => {
     setCollapsed(false);
   };
 
+  const routes = [
+    {
+      key: '1',
+      icon: <DashboardOutlined />,
+      navigateTo: '/',
+      title: 'Trang chủ',
+    },
+    {
+      key: '2',
+      icon: <TeamOutlined />,
+      navigateTo: '/staffs',
+      title: 'Nhân viên',
+    },
+    {
+      key: '3',
+      icon: <FileOutlined />,
+      navigateTo: '/products',
+      title: 'Sản phẩm',
+    },
+    {
+      key: '4',
+      icon: <FileOutlined />,
+      navigateTo: '/orders',
+      title: 'Đơn hàng',
+    },
+  ];
+
   return (
     <Drawer
       className="custom-drawer"
@@ -44,42 +71,17 @@ const MainLayoutDrawer = ({ setCollapsed, collapsed }) => {
             : '-1',
         ]}
       >
-        <Menu.Item
-          key="1"
-          icon={<DashboardOutlined />}
-          onClick={() => {
-            navigate('/');
-          }}
-        >
-          Trang chủ
-        </Menu.Item>
-        <Menu.Item
-          key="2"
-          icon={<TeamOutlined />}
-          onClick={() => {
-            navigate('/staffs');
-          }}
-        >
-          Nhân viên
-        </Menu.Item>
-        <Menu.Item
-          key="3"
-          icon={<FileOutlined />}
-          onClick={() => {
-            navigate('/products');
-          }}
-        >
-          Sản phẩm
-        </Menu.Item>
-        <Menu.Item
-          key="4"
-          icon={<FileOutlined />}
-          onClick={() => {
-            navigate('/orders');
-          }}
-        >
-          Đơn hàng
-        </Menu.Item>
+        {routes.map((route) => (
+          <Menu.Item
+            key={route.key}
+            icon={route.icon}
+            onClick={() => {
+              navigate(route.navigateTo);
+            }}
+          >
+            {route.title}
+          </Menu.Item>
+        ))}
       </Menu>
     </Drawer>
   );
