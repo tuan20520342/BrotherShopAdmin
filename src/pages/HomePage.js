@@ -1,7 +1,6 @@
-import { Card, Col, Dropdown, Row } from 'antd';
+import { Card, Col, Row } from 'antd';
 import SellDataColumnChart from '~/components/Dashboard/Charts/SellDataAreaChart';
 
-import { EllipsisOutlined } from '@ant-design/icons';
 import CategoryDataPieChart from '~/components/Dashboard/Charts/CategoryDataPieChart';
 import TrendOfCategoryLineChart from '~/components/Dashboard/Charts/TrendOfCategoryLineChart';
 import BestSellerProducts from '~/components/Dashboard/BestSellerProducts';
@@ -9,51 +8,13 @@ import SoldQuantityProductsColumnChart from '~/components/Dashboard/Charts/SoldQ
 import StatCardList from '~/components/Dashboard/StatCardList';
 
 const HomePage = () => {
-  const items = [
-    {
-      label: '7 ngày qua',
-      key: '1',
-      onClick: () => {
-        getRevenueSevenDaysAgo();
-      },
-    },
-    {
-      label: '1 tháng qua',
-      key: '2',
-      onClick: () => {},
-    },
-    {
-      label: '6 tháng qua',
-      key: '3',
-      onClick: () => {},
-    },
-    {
-      label: '1 năm qua',
-      key: '4',
-      onClick: () => {},
-    },
-  ];
-
-  const getRevenueSevenDaysAgo = () => {};
-
   return (
     <div>
       <Row gutter={[16, 12]}>
         <StatCardList />
       </Row>
 
-      <Card
-        title="Doanh thu bán hàng"
-        extra={
-          <Dropdown menu={{ items }} placement="bottom">
-            <EllipsisOutlined style={{ fontSize: '20px' }} />
-          </Dropdown>
-        }
-        bodyStyle={{ padding: '1rem' }}
-        style={{ marginTop: '30px' }}
-      >
-        <SellDataColumnChart />
-      </Card>
+      <SellDataColumnChart />
 
       <Row gutter={[16, 16]}>
         <Col xs={24} sm={12}>

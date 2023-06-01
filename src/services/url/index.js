@@ -36,3 +36,4 @@ export const URL_PUT_RECEIPT = `${DOMAIN_NAME}/receipts/update`;
 
 // DASHBOARD
 export const URL_GET_STAT_CARD_DATA = '/dashboard/stat-card';
+export const URL_GET_REVENUE_SEVEN_DAYS_AGO = '/dashboard/revenue';

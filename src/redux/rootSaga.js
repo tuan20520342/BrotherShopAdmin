@@ -39,5 +39,6 @@ export default function* rootSaga() {
     ReceiptSaga.followActGetReceiptById(),
     // Dashboard
     DashboardSaga.followGetStatCardData(),
+    DashboardSaga.followGetRevenueSevenDaysAgo(),
   ]);
 }
