@@ -4,7 +4,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Form, Input, Button, Select, InputNumber, Upload, Space, Modal, Row, Col, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import * as SagaActionTypes from '~/redux/constants/constant';
+import * as SagaActionTypes from '~/redux/constants';
 import CustomImgCrop from './CustomImgCrop';
 
 const { Title } = Typography;

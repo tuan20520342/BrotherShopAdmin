@@ -4,7 +4,7 @@ import { Typography, Row, Col } from 'antd';
 import Toolbar from '~/components/UI/Toolbar';
 import { useNavigate } from 'react-router-dom';
 import TableProducts from '~/components/Products/TableProducts';
-import * as SagaActionTypes from '~/redux/constants/constant';
+import * as SagaActionTypes from '~/redux/constants';
 import { useDispatch, useSelector } from 'react-redux';
 const { Title } = Typography;
 

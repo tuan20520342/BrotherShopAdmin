@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import * as SagaActionTypes from '../constants/constant';
+import * as SagaActionTypes from '../constants';
 import AlertCustom from '~/components/UI/Notification/Alert';
 import { StaffService } from '~/services/api/StaffAPI';
 import { authenticationAction } from '../reducer/AuthReducer';
@@ -18,7 +18,6 @@ function* actGetCurrentUser() {
       AlertCustom({ type: 'error', title: 'Đã có lỗi' });
     }
   } catch (err) {
-    console.log(err);
     AlertCustom({ type: 'error', title: 'Đã có lỗi' });
   }
 }
@@ -27,7 +26,7 @@ function* actPutCurrentUser(action) {
   const { editUser } = action;
   try {
     let res = yield call(() => StaffService.putStaff(editUser));
-    console.log(res);
+
     if (res.status === 200) {
       AlertCustom({
         type: 'success',
@@ -38,7 +37,6 @@ function* actPutCurrentUser(action) {
     }
     yield put({ type: SagaActionTypes.GET_CURRENT_USER_SAGA });
   } catch (err) {
-    console.log(err);
     AlertCustom({ type: 'error', title: err.response.data });
     yield put({ type: SagaActionTypes.GET_CURRENT_USER_SAGA });
   }

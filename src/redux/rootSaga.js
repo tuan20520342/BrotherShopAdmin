@@ -5,6 +5,7 @@ import * as ProductSaga from './sagaActions/ProductSaga';
 import * as AuthSaga from './sagaActions/AuthSaga';
 import * as CustomerSaga from './sagaActions/CustomerSaga';
 import * as ReceiptSaga from './sagaActions/ReceiptSaga';
+import * as DashboardSaga from './sagaActions/DashboardSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -24,6 +25,8 @@ export default function* rootSaga() {
     ProductSaga.followActGetProductById(),
     ProductSaga.followActCreateProduct(),
     ProductSaga.followActUpdateProduct(),
+    ProductSaga.followActStopSellingProduct(),
+    ProductSaga.followActResellProduct(),
     //Authentication
     AuthSaga.followGetCurrentUser(),
     AuthSaga.followPutCurrentUser(),
@@ -34,5 +37,7 @@ export default function* rootSaga() {
     ReceiptSaga.followActGetReceipts(),
     ReceiptSaga.followActCreateReceipt(),
     ReceiptSaga.followActGetReceiptById(),
+    // Dashboard
+    DashboardSaga.followGetStatCardData(),
   ]);
 }

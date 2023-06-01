@@ -8,6 +8,7 @@ import productSlice from './reducer/ProductReducer';
 import authenticationSlice from './reducer/AuthReducer';
 import customerSlice from './reducer/CustomerReducer';
 import receiptSlice from './reducer/ReceiptReducer';
+import dashboardSlice from './reducer/DashboardReducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -19,6 +20,7 @@ const rootReducer = {
   authenticationSlice,
   customerSlice,
   receiptSlice,
+  dashboardSlice,
 };
 
 export const store = configureStore({

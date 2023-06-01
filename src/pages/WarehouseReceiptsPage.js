@@ -5,7 +5,7 @@ import Toolbar from '~/components/UI/Toolbar';
 import { useNavigate } from 'react-router-dom';
 import TableWarehouseReceipts from '~/components/WarehouseReceipt/TableWarehouseReceipts';
 import { useDispatch, useSelector } from 'react-redux';
-import * as SagaActionTypes from '~/redux/constants/constant';
+import * as SagaActionTypes from '~/redux/constants';
 const { Title } = Typography;
 
 const WarehouseReceiptsPage = () => {

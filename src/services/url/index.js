@@ -8,6 +8,8 @@ export const URL_PRODUCTS = `${DOMAIN_NAME}/products`;
 export const URL_PRODUCTS_ID = (id) => `${DOMAIN_NAME}/products/${id}`;
 export const URL_CREATE_PRODUCT = '/products/create';
 export const URL_UPDATE_PRODUCT = (id) => `/products/${id}`;
+export const URL_STOP_SELLING_PRODUCT = (id) => `/products/${id}`;
+export const URL_RESELL_PRODUCT = (id) => `/products/resell/${id}`;
 
 //CATEGORIES
 export const URL_CATEGORIES = `${DOMAIN_NAME}/categories`;
@@ -31,3 +33,6 @@ export const URL_RECEIPTS = `${DOMAIN_NAME}/receipts`;
 export const URL_CREATE_RECEIPT = '/receipts/create';
 export const URL_RECEIPTS_ID = (id) => `${DOMAIN_NAME}/receipts/${id}`;
 export const URL_PUT_RECEIPT = `${DOMAIN_NAME}/receipts/update`;
+
+// DASHBOARD
+export const URL_GET_STAT_CARD_DATA = '/dashboard/stat-card';

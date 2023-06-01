@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import { Form, Input, Button, Select, DatePicker, Space, Row, Col } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import * as SagaActionTypes from '~/redux/constants/constant';
+import * as SagaActionTypes from '~/redux/constants';
 
 const { Option } = Select;
 const { TextArea } = Input;

@@ -3,7 +3,7 @@ import { DeleteFilled, EyeFilled } from '@ant-design/icons';
 import TableTemplate from '~/components/UI/Table/TableTemplate';
 import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
 import { useDispatch } from 'react-redux';
-import * as SagaActionTypes from '~/redux/constants/constant';
+import * as SagaActionTypes from '~/redux/constants';
 import { useNavigate } from 'react-router-dom';
 
 const TableStaffs = ({ keyWord, data, loading }) => {
