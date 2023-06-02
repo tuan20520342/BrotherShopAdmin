@@ -2,7 +2,7 @@ import { Button, Col, Row } from 'antd';
 import Search from 'antd/lib/input/Search';
 import { PlusOutlined } from '@ant-design/icons';
 
-const Toolbar = ({ title, handleAdd, setKeyWord }) => {
+const Toolbar = ({ title, handleAdd, setKeyWord, buttonDisability }) => {
   return (
     <Row style={{ display: 'flex', flexWrap: 'wrap-reverse' }} gutter={8} justify="end">
       <Col style={{ marginBottom: '4px' }}>
@@ -16,7 +16,7 @@ const Toolbar = ({ title, handleAdd, setKeyWord }) => {
         />
       </Col>
       <Col style={{ marginBottom: '4px' }}>
-        <Button type="primary" onClick={handleAdd} icon={<PlusOutlined />}>
+        <Button type="primary" onClick={handleAdd} icon={<PlusOutlined />} disabled={buttonDisability ?? false}>
           {title}
         </Button>
       </Col>

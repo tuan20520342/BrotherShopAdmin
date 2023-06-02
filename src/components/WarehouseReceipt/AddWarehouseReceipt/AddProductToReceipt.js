@@ -45,10 +45,12 @@ const sizeLayout = {
   },
 };
 
-const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProducts }) => {
+const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProducts, editDisability }) => {
   const { products } = useSelector((state) => state.productSlice);
   const dispatch = useDispatch();
   const [productById, setProductById] = useState('');
+  const [disabled, setDisabled] = useState(product ? true : false);
+
   const [form] = Form.useForm();
 
   const optionsProducts = products
@@ -71,6 +73,19 @@ const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProduct
         price: productById.price,
       });
     }
+  };
+
+  const handleEnableModify = () => {
+    setDisabled(false);
+  };
+
+  const handleFormCancel = () => {
+    setDisabled(true);
+    onReset();
+  };
+
+  const onReset = () => {
+    form.resetFields();
   };
 
   const onFinish = (values) => {
@@ -187,6 +202,7 @@ const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProduct
           placeholder="Giá nhập"
           formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
           parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
+          disabled={disabled}
         />
       </Form.Item>
       <Form.Item
@@ -211,6 +227,7 @@ const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProduct
               placeholder="Số lượng"
               formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
               parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
+              disabled={disabled}
             />
           </Form.Item>
           <Form.Item name="M" label="M" {...sizeLayout}>
@@ -220,6 +237,7 @@ const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProduct
               placeholder="Số lượng"
               formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
               parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
+              disabled={disabled}
             />
           </Form.Item>
           <Form.Item name="L" label="L" {...sizeLayout}>
@@ -229,6 +247,7 @@ const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProduct
               placeholder="Số lượng"
               formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
               parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
+              disabled={disabled}
             />
           </Form.Item>
           <Form.Item name="XL" label="XL" {...sizeLayout}>
@@ -238,19 +257,44 @@ const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProduct
               placeholder="Số lượng"
               formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
               parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
+              disabled={disabled}
             />
           </Form.Item>
         </Form.Item>
       </Form.Item>
       <Row justify="end">
-        <Space>
-          <Button type="primary" htmlType="submit">
-            Xác nhận
-          </Button>
-          <Button type="primary" danger onClick={handleClose}>
-            Đóng
-          </Button>
-        </Space>
+        {product ? (
+          disabled ? (
+            <Space>
+              {!editDisability && (
+                <Button type="primary" onClick={() => handleEnableModify()}>
+                  Chỉnh sửa
+                </Button>
+              )}
+              <Button type="primary" danger onClick={handleClose}>
+                Đóng
+              </Button>
+            </Space>
+          ) : (
+            <Space>
+              <Button type="primary" danger onClick={handleFormCancel}>
+                Hủy
+              </Button>
+              <Button type="primary" htmlType="submit">
+                Lưu
+              </Button>
+            </Space>
+          )
+        ) : (
+          <Space>
+            <Button type="primary" htmlType="submit">
+              Xác nhận
+            </Button>
+            <Button type="primary" danger onClick={handleClose}>
+              Đóng
+            </Button>
+          </Space>
+        )}
       </Row>
     </Form>
   );

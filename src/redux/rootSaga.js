@@ -34,5 +34,6 @@ export default function* rootSaga() {
     ReceiptSaga.followActGetReceipts(),
     ReceiptSaga.followActCreateReceipt(),
     ReceiptSaga.followActGetReceiptById(),
+    ReceiptSaga.followActUpdateReceipt(),
   ]);
 }

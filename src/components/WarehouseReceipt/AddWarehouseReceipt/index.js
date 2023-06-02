@@ -16,14 +16,32 @@ import AlertCustom from '~/components/UI/Notification/Alert';
 
 const dateFormat = 'DD/MM/YYYY';
 
-const AddWarehouseReceipt = () => {
+const AddWarehouseReceipt = ({ receiptById }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [keyWord, setKeyWord] = useState('');
   const { loading } = useSelector((state) => state.productSlice);
+  const [disabled, setDisabled] = useState(receiptById ? true : false);
 
-  const [products, setProducts] = useState([]);
+  const productInReceiptById = receiptById?.products?.map((product) => {
+    const {
+      productId: { images, _id, name, price },
+      importPrice,
+      sizes,
+    } = product;
+    const mappedProduct = {
+      images,
+      _id,
+      name,
+      price,
+      importPrice,
+      sizes: sizes.map((sizes) => ({ name: sizes.name, quantity: sizes.quantity })),
+    };
+    return mappedProduct;
+  });
+
+  const [products, setProducts] = useState(productInReceiptById ?? []);
   const currentUser = useSelector((state) => state.authenticationSlice.currentUser);
 
   const isCreateReceiptSucceeded = useSelector((state) => state.receiptSlice.isCreateReceiptSucceeded);
@@ -84,6 +102,20 @@ const AddWarehouseReceipt = () => {
     );
   };
 
+  const handleEnableModify = () => {
+    setDisabled(false);
+  };
+
+  const handleFormCancel = () => {
+    setDisabled(true);
+    onReset();
+    setProducts(productInReceiptById);
+  };
+
+  const onReset = () => {
+    form.resetFields();
+  };
+
   const handleClose = () => {
     navigate('/warehouse-receipt');
   };
@@ -95,7 +127,7 @@ const AddWarehouseReceipt = () => {
   const onFinish = (values) => {
     if (products.length === 0) {
       AlertCustom({ type: 'error', title: 'Cần ít nhất một sản phẩm' });
-    } else {
+    } else if (!receiptById) {
       const formattedProducts = products.map((product) => ({
         productId: product._id,
         sizes: product.sizes,
@@ -104,9 +136,23 @@ const AddWarehouseReceipt = () => {
       const newReceipt = { ...values, products: formattedProducts, staff: currentUser._id };
 
       dispatch({ type: SagaActionTypes.CREATE_RECEIPT_SAGA, newReceipt });
+    } else {
+      const { staff, ...rest } = values;
+      const formattedProducts = products.map((product) => ({
+        productId: product._id,
+        sizes: product.sizes,
+        importPrice: product.importPrice,
+      }));
+      const updateReceipt = {
+        ...rest,
+        products: formattedProducts,
+        receiptId: receiptById._id,
+        staff: receiptById.staff._id,
+      };
+
+      dispatch({ type: SagaActionTypes.UPDATE_RECEIPT_SAGA, updateReceipt });
     }
   };
-
   if (loading) {
     return <LoadingSpin />;
   }
@@ -120,7 +166,10 @@ const AddWarehouseReceipt = () => {
             form={form}
             onFinish={onFinish}
             initialValues={{
-              staff: currentUser.name,
+              staff: receiptById ? receiptById?.staff?.name : currentUser.name,
+              date: receiptById ? dayjs(receiptById?.date) : '',
+              supplier: receiptById ? receiptById?.supplier : '',
+              deliver: receiptById ? receiptById?.deliver : '',
             }}
             validateMessages={validateMessages}
             style={{
@@ -153,13 +202,13 @@ const AddWarehouseReceipt = () => {
                     placeholder="Ngày nhập hàng"
                     format={dateFormat}
                     disabledDate={(current) => current.isAfter(dayjs())}
+                    disabled={disabled}
                   />
                 </Form.Item>
               </Col>
               <Col xs={24} sm={12} md={24} lg={12}>
                 <Form.Item name="staff" label="Nhân viên nhập hàng">
                   <Input
-                    showSearch
                     placeholder="Nhân viên"
                     // value={currentUser.name}
                     // filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
@@ -178,7 +227,7 @@ const AddWarehouseReceipt = () => {
                     },
                   ]}
                 >
-                  <Input placeholder="Nhà cung cấp" />
+                  <Input placeholder="Nhà cung cấp" disabled={disabled} />
                 </Form.Item>
               </Col>
               <Col xs={24} sm={12} md={24} lg={12}>
@@ -191,14 +240,19 @@ const AddWarehouseReceipt = () => {
                     },
                   ]}
                 >
-                  <Input placeholder="Người giao hàng" />
+                  <Input placeholder="Người giao hàng" disabled={disabled} />
                 </Form.Item>
               </Col>
             </Row>
           </Form>
         </Col>
         <Col span={24}>
-          <Toolbar title={'Thêm sản phẩm'} setKeyWord={setKeyWord} handleAdd={handleShowModalAddProduct} />
+          <Toolbar
+            title={'Thêm sản phẩm'}
+            setKeyWord={setKeyWord}
+            handleAdd={handleShowModalAddProduct}
+            buttonDisability={disabled}
+          />
         </Col>
         <Col span={24}>
           <ProductsWarehouseTable
@@ -206,19 +260,42 @@ const AddWarehouseReceipt = () => {
             data={products}
             onEditProduct={handleEditProduct}
             onRemoveProduct={handleRemoveProduct}
+            editDisability={disabled}
           />
         </Col>
         <Col span={24}></Col>
       </Row>
       <Row justify="end" style={{ marginTop: '8px' }}>
-        <Space>
-          <Button size="large" type="primary" onClick={handleSubmit}>
-            Lưu
-          </Button>
-          <Button size="large" type="primary" danger onClick={handleClose}>
-            Hủy
-          </Button>
-        </Space>
+        {receiptById ? (
+          disabled ? (
+            <Space>
+              <Button size="large" type="primary" onClick={() => handleEnableModify()}>
+                Chỉnh sửa
+              </Button>
+              <Button size="large" type="primary" danger onClick={handleClose}>
+                Đóng
+              </Button>
+            </Space>
+          ) : (
+            <Space>
+              <Button size="large" type="primary" danger onClick={handleFormCancel}>
+                Hủy
+              </Button>
+              <Button size="large" type="primary" onClick={handleSubmit}>
+                Lưu
+              </Button>
+            </Space>
+          )
+        ) : (
+          <Space>
+            <Button size="large" type="primary" onClick={handleSubmit}>
+              Xác nhận
+            </Button>
+            <Button size="large" type="primary" danger onClick={handleClose}>
+              Đóng
+            </Button>
+          </Space>
+        )}
       </Row>
       <ModalForm />
     </>
