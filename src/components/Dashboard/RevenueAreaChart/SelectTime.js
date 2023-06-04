@@ -74,7 +74,7 @@ function SelectTime({ onTimeChange }) {
               required
             />
             <Button type="text" icon={<PlusOutlined />} onClick={addItem}>
-              Add item
+              Thêm thời gian
             </Button>
           </Space>
         </>

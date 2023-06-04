@@ -41,6 +41,10 @@ const productSlice = createSlice({
     editProductComplete: (state, action) => {
       state.editLoading = false;
     },
+    addProduct: (state, action) => {
+      const newProduct = action.payload.product;
+      state.products.push(newProduct);
+    },
   },
 });
 

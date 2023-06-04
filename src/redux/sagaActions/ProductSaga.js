@@ -46,7 +46,7 @@ function* actCreateProduct(action) {
     const { status, data } = res;
 
     if (status === 201) {
-      yield put({ type: SagaActionTypes.GET_PRODUCTS_SAGA });
+      // yield put({ type: SagaActionTypes.GET_PRODUCTS_SAGA });
       AlertCustom({ type: 'success', title: data.message });
     } else {
       AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });

@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import TableProducts from '~/components/Products/TableProducts';
 import * as SagaActionTypes from '~/redux/constants';
 import { useDispatch, useSelector } from 'react-redux';
+import openSocket from 'socket.io-client';
+import { productActions } from '~/redux/reducer/ProductReducer';
 const { Title } = Typography;
 
 const ProductsPage = () => {
@@ -15,6 +17,12 @@ const ProductsPage = () => {
 
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_PRODUCTS_SAGA });
+    const socket = openSocket('http://localhost:3001');
+    socket.on('products', (data) => {
+      if (data.action === 'create') {
+        dispatch(productActions.addProduct({ product: data.product }));
+      }
+    });
   }, [dispatch]);
 
   const [keyWord, setKeyWord] = useState('');
