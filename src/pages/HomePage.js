@@ -1,11 +1,11 @@
-import { Card, Col, Row } from 'antd';
-import SellDataColumnChart from '~/components/Dashboard/Charts/SellDataAreaChart';
+import { Col, Row } from 'antd';
+import RevenueColumnChart from '~/components/Dashboard/RevenueAreaChart';
 
-import CategoryDataPieChart from '~/components/Dashboard/Charts/CategoryDataPieChart';
-import TrendOfCategoryLineChart from '~/components/Dashboard/Charts/TrendOfCategoryLineChart';
+import CategoryDataPieChart from '~/components/Dashboard/CategoryDataPieChart';
+import TrendOfCategoryLineChart from '~/components/Dashboard/TrendOfCategoryLineChart';
 import BestSellerProducts from '~/components/Dashboard/BestSellerProducts';
-import SoldQuantityProductsColumnChart from '~/components/Dashboard/Charts/SoldQuantityProductsColumnChart';
-import StatCardList from '~/components/Dashboard/StatCardList';
+import SoldQuantityProductsColumnChart from '~/components/Dashboard/SoldQuantityProductsColumnChart';
+import StatCardList from '~/components/Dashboard/StatCards';
 
 const HomePage = () => {
   return (
@@ -14,28 +14,20 @@ const HomePage = () => {
         <StatCardList />
       </Row>
 
-      <SellDataColumnChart />
+      <RevenueColumnChart />
 
       <Row gutter={[16, 16]}>
         <Col xs={24} sm={12}>
-          <Card title="Top sản phẩm bán chạy" style={{ marginTop: '30px' }}>
-            <BestSellerProducts />
-          </Card>
+          <BestSellerProducts />
         </Col>
         <Col xs={24} sm={12}>
-          <Card title="Sản phẩm đã bán theo danh mục" style={{ marginTop: '30px' }}>
-            <CategoryDataPieChart />
-          </Card>
+          <CategoryDataPieChart />
         </Col>
       </Row>
 
-      <Card title="Xu hướng mua hàng theo danh mục" style={{ marginTop: '30px' }}>
-        <TrendOfCategoryLineChart />
-      </Card>
+      <TrendOfCategoryLineChart />
 
-      <Card title="Sản phẩm đã bán" style={{ marginTop: '30px' }}>
-        <SoldQuantityProductsColumnChart />
-      </Card>
+      <SoldQuantityProductsColumnChart />
     </div>
   );
 };
