@@ -10,3 +10,9 @@ export const validateMessages = {
     range: '${label} phải trong khoảng từ ${min} đến ${max}',
   },
 };
+
+export const productStates = {
+  ACTIVE: 'Đang bán',
+  PAUSE: 'Ngừng bán',
+  OUT_OF_STOCK: 'Hết hàng',
+};

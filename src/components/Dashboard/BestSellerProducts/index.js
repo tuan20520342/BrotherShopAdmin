@@ -36,7 +36,7 @@ function BestSellerProducts() {
       <List
         itemLayout="horizontal"
         dataSource={products}
-        renderItem={(item, index) => (
+        renderItem={(item) => (
           <List.Item>
             <List.Item.Meta
               avatar={<Avatar src={`${process.env.REACT_APP_CLOUDINARY_URL}/${item.images.mainImg}`} />}

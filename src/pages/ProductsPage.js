@@ -14,13 +14,25 @@ const ProductsPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { products, loading } = useSelector((state) => state.productSlice);
+  console.log(products);
 
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_PRODUCTS_SAGA });
-    const socket = openSocket('http://localhost:3001');
+
+    const socket = openSocket(process.env.REACT_APP_DEV_BE_URL);
     socket.on('products', (data) => {
-      if (data.action === 'create') {
+      const { action } = data;
+
+      if (action === 'create') {
         dispatch(productActions.addProduct({ product: data.product }));
+      }
+
+      if (action === 'edit') {
+        dispatch(productActions.editProduct({ updatedProduct: data.updatedProduct }));
+      }
+
+      if (action === 'delete') {
+        dispatch(productActions.deleteProduct({ productId: data.productId }));
       }
     });
   }, [dispatch]);
@@ -32,19 +44,17 @@ const ProductsPage = () => {
   };
 
   return (
-    <>
-      <Row>
-        <Col span={24}>
-          <Title level={2}>Danh sách sản phẩm</Title>
-        </Col>
-        <Col span={24}>
-          <Toolbar title={'Thêm sản phẩm'} setKeyWord={setKeyWord} handleAdd={handleAddProduct} />
-        </Col>
-        <Col span={24}>
-          <TableProducts data={products} keyWord={keyWord} loading={loading} />
-        </Col>
-      </Row>
-    </>
+    <Row>
+      <Col span={24}>
+        <Title level={2}>Danh sách sản phẩm</Title>
+      </Col>
+      <Col span={24}>
+        <Toolbar title={'Thêm sản phẩm'} setKeyWord={setKeyWord} handleAdd={handleAddProduct} />
+      </Col>
+      <Col span={24}>
+        <TableProducts data={products} keyWord={keyWord} loading={loading} />
+      </Col>
+    </Row>
   );
 };
 

@@ -19,15 +19,7 @@ function ProductPrice() {
         </Col>
 
         <Col xs={24} sm={12}>
-          <Form.Item
-            name="oldPrice"
-            label="Giá gốc"
-            rules={[
-              {
-                required: true,
-              },
-            ]}
-          >
+          <Form.Item name="oldPrice" label="Giá gốc">
             <InputNumber
               className="rounded"
               min={0}

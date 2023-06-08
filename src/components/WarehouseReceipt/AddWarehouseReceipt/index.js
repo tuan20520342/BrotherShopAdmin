@@ -159,7 +159,7 @@ const AddWarehouseReceipt = () => {
               <Col xs={24} sm={12} md={24} lg={12}>
                 <Form.Item name="staff" label="Nhân viên nhập hàng">
                   <Input
-                    showSearch
+                    showsearch="true"
                     placeholder="Nhân viên"
                     // value={currentUser.name}
                     // filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
