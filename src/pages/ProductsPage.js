@@ -32,7 +32,11 @@ const ProductsPage = () => {
       }
 
       if (action === 'delete') {
-        dispatch(productActions.deleteProduct({ productId: data.productId }));
+        dispatch(productActions.stopSellingProduct({ productId: data.productId }));
+      }
+
+      if (action === 'resell') {
+        dispatch(productActions.resellProduct({ productId: data.productId }));
       }
     });
   }, [dispatch]);

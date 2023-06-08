@@ -51,10 +51,15 @@ const productSlice = createSlice({
       const existingProductIndex = state.products.findIndex((product) => product._id === updatedProduct._id.toString());
       state.products[existingProductIndex] = updatedProduct;
     },
-    deleteProduct: (state, action) => {
+    stopSellingProduct: (state, action) => {
       const { productId } = action.payload;
       const existingProductIndex = state.products.findIndex((product) => product._id === productId);
       state.products[existingProductIndex].state = productStates.PAUSE;
+    },
+    resellProduct: (state, action) => {
+      const { productId } = action.payload;
+      const existingProductIndex = state.products.findIndex((product) => product._id === productId);
+      state.products[existingProductIndex].state = productStates.ACTIVE;
     },
   },
 });
