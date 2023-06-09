@@ -5,6 +5,7 @@ import * as ProductSaga from './sagaActions/ProductSaga';
 import * as AuthSaga from './sagaActions/AuthSaga';
 import * as CustomerSaga from './sagaActions/CustomerSaga';
 import * as ReceiptSaga from './sagaActions/ReceiptSaga';
+import * as OrderSaga from './sagaActions/OrderSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -35,5 +36,8 @@ export default function* rootSaga() {
     ReceiptSaga.followActCreateReceipt(),
     ReceiptSaga.followActGetReceiptById(),
     ReceiptSaga.followActUpdateReceipt(),
+    //Order
+    OrderSaga.followActGetOrders(),
+    OrderSaga.followActGetOrderById(),
   ]);
 }

@@ -31,3 +31,7 @@ export const URL_RECEIPTS = `${DOMAIN_NAME}/receipts`;
 export const URL_CREATE_RECEIPT = '/receipts/create';
 export const URL_RECEIPTS_ID = (id) => `${DOMAIN_NAME}/receipts/${id}`;
 export const URL_PUT_RECEIPT = `${DOMAIN_NAME}/receipts/update`;
+
+// ORDER
+export const URL_ORDERS = `${DOMAIN_NAME}/orders`;
+export const URL_ORDERS_ID = (id) => `${DOMAIN_NAME}/orders/${id}`;
