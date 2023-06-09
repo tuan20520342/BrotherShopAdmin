@@ -25,7 +25,14 @@ const TableOrders = ({ keyWord, data, loading }) => {
       sorter: (item1, item2) => item1._id.localeCompare(item2._id),
       filteredValue: [keyWord],
       onFilter: (value, record) => {
-        return String(record._id).toLowerCase().includes(value.toLowerCase());
+        return (
+          String(record._id).toLowerCase().includes(value.toLowerCase()) ||
+          String(dayjs(record.createdAt).format('DD/MM/YYYY')).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.toName).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.toPhone).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.paymentMethod).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.shippingStatus).toLowerCase().includes(value.toLowerCase())
+        );
       },
       ellipsis: true,
 
@@ -106,8 +113,8 @@ const TableOrders = ({ keyWord, data, loading }) => {
     },
   ];
 
-  const handleEditOrder = (receipt) => {
-    // navigate(`/warehouse-receipt/${receipt._id}`);
+  const handleEditOrder = (order) => {
+    navigate(`/orders/${order._id}`);
   };
 
   const handleRemoveOrder = (record) => {};

@@ -15,6 +15,7 @@ import EditProductPage from '~/pages/EditProductPage';
 import EditStaffPage from '~/pages/EditStaffPage';
 import CustomerDetailsPage from '~/pages/CustomerDetailsPage';
 import WarehouseReceiptDetailsPage from '~/pages/WarehouseReceiptDetailsPage';
+import OrderDetailsPage from '~/pages/OrderDetailsPage';
 
 const CommonRoutes = [
   {
@@ -60,6 +61,10 @@ const CommonRoutes = [
   {
     path: '/orders',
     element: <OrdersPage />,
+  },
+  {
+    path: '/orders/:id',
+    element: <OrderDetailsPage />,
   },
   {
     path: '/customers',

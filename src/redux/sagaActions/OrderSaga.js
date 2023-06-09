@@ -25,11 +25,11 @@ function* actGetOrders() {
 function* actGetOrderById(action) {
   try {
     const { id } = action;
-    yield put(orderActions.getOrderByIdSuccess());
+    yield put(orderActions.getOrderByIdInLoading());
     const res = yield call(() => OrderService.getOrderById(id));
     const { status, data } = res;
     if (status === 200) {
-      yield put(orderActions.getOrderByIdSuccess({ receiptById: data.receipt }));
+      yield put(orderActions.getOrderByIdSuccess({ orderById: data.order }));
     } else {
       AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
     }

@@ -132,7 +132,7 @@ const MainLayoutSider = ({ collapsed, setCollapsed, setVisibleButton }) => {
               location.pathname === '/add-warehouse-receipt' ||
               location.pathname.includes('/warehouse-receipt')
             ? '6'
-            : location.pathname === '/orders'
+            : location.pathname === '/orders' || location.pathname.includes('/orders')
             ? '7'
             : '-1',
         ]}
