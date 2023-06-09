@@ -9,7 +9,7 @@ import ModalForm from '~/HOC/ModalForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { modalActions } from '~/redux/reducer/ModalReducer';
 import AddProductToReceipt from './AddProductToReceipt';
-import * as SagaActionTypes from '~/redux/constants/constant';
+import * as SagaActionTypes from '~/redux/constants';
 import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
 import ProductsWarehouseTable from './ProductsWarehouseTable';
 import AlertCustom from '~/components/UI/Notification/Alert';
