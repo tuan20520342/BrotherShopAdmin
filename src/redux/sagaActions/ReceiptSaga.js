@@ -2,7 +2,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { receiptActions } from '../reducer/ReceiptReducer';
 import { ReceiptService } from '~/services/api/ReceiptAPI';
 import AlertCustom from '~/components/UI/Notification/Alert';
-import * as SagaActionTypes from '~/redux/constants';
+import * as SagaActionTypes from '~/redux/constants/constant';
 
 function* actGetReceipts() {
   try {

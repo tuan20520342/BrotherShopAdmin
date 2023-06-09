@@ -4,9 +4,8 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Form, Input, Button, Select, InputNumber, Upload, Space, Modal, Row, Col, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import * as SagaActionTypes from '~/redux/constants';
+import * as SagaActionTypes from '~/redux/constants/constant';
 import CustomImgCrop from './CustomImgCrop';
-import Container from '../UI/Container/Container';
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -162,7 +161,15 @@ const AddProductForm = () => {
     >
       <Row gutter={[16, 16]}>
         <Col xs={24} sm={16} md={24} lg={16}>
-          <Container>
+          <div
+            style={{
+              background: 'white',
+              borderRadius: '6px',
+              marginBottom: '16px',
+              padding: '0 20px',
+              filter: 'drop-shadow(0 1px 1px rgb(0 0 0 / 0.05))',
+            }}
+          >
             <Row>
               <Col span={24}>
                 <Title level={4}>Thông tin sản phẩm</Title>
@@ -186,8 +193,16 @@ const AddProductForm = () => {
                 </Form.Item>
               </Col>
             </Row>
-          </Container>
-          <Container>
+          </div>
+          <div
+            style={{
+              background: 'white',
+              borderRadius: '6px',
+              marginBottom: '16px',
+              padding: '0 20px',
+              filter: 'drop-shadow(0 1px 1px rgb(0 0 0 / 0.05))',
+            }}
+          >
             <Row
               gutter={{
                 xs: 8,
@@ -221,8 +236,16 @@ const AddProductForm = () => {
                 </Form.Item>
               </Col>
             </Row>
-          </Container>
-          <Container>
+          </div>
+          <div
+            style={{
+              background: 'white',
+              borderRadius: '6px',
+              marginBottom: '16px',
+              padding: '0 20px',
+              filter: 'drop-shadow(0 1px 1px rgb(0 0 0 / 0.05))',
+            }}
+          >
             <Row
               gutter={{
                 xs: 8,
@@ -261,63 +284,67 @@ const AddProductForm = () => {
                 </Form.Item>
               </Col>
             </Row>
-          </Container>
+          </div>
         </Col>
         <Col xs={24} sm={8} md={24} lg={8}>
-          <Container>
+          <div
+            style={{
+              background: 'white',
+              borderRadius: '6px',
+              marginBottom: '16px',
+              padding: '0 20px',
+              filter: 'drop-shadow(0 1px 1px rgb(0 0 0 / 0.05))',
+            }}
+          >
             <Row>
               <Col span={24}>
                 <Title level={4}>Hình ảnh sản phẩm</Title>
               </Col>
               <Col span={24}>
                 <Form.Item name="mainImage" label="Ảnh chính">
-                  <>
-                    <CustomImgCrop>
-                      <Upload
-                        listType="picture-card"
-                        fileList={mainFileList}
-                        onPreview={handlePreview}
-                        onChange={handleMainChange}
-                        style={{ display: 'inline-block' }}
-                      >
-                        {mainFileList.length >= 1 ? null : uploadButton}
-                      </Upload>
-                    </CustomImgCrop>
-                    <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
-                      <img
-                        alt="example"
-                        style={{
-                          width: '100%',
-                        }}
-                        src={previewImage}
-                      />
-                    </Modal>
-                  </>
+                  <CustomImgCrop>
+                    <Upload
+                      listType="picture-card"
+                      fileList={mainFileList}
+                      onPreview={handlePreview}
+                      onChange={handleMainChange}
+                      style={{ display: 'inline-block' }}
+                    >
+                      {mainFileList.length >= 1 ? null : uploadButton}
+                    </Upload>
+                  </CustomImgCrop>
+                  <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
+                    <img
+                      alt="example"
+                      style={{
+                        width: '100%',
+                      }}
+                      src={previewImage}
+                    />
+                  </Modal>
                 </Form.Item>
               </Col>
               <Col span={24}>
                 <Form.Item name="images" label="Thêm ảnh mô tả">
-                  <>
-                    <CustomImgCrop>
-                      <Upload
-                        listType="picture-card"
-                        fileList={subFileList}
-                        onPreview={handlePreview}
-                        onChange={handleChange}
-                      >
-                        {subFileList.length >= 3 ? null : uploadButton}
-                      </Upload>
-                    </CustomImgCrop>
-                    <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
-                      <img
-                        alt="example"
-                        style={{
-                          width: '100%',
-                        }}
-                        src={previewImage}
-                      />
-                    </Modal>
-                  </>
+                  <CustomImgCrop>
+                    <Upload
+                      listType="picture-card"
+                      fileList={subFileList}
+                      onPreview={handlePreview}
+                      onChange={handleChange}
+                    >
+                      {subFileList.length >= 3 ? null : uploadButton}
+                    </Upload>
+                  </CustomImgCrop>
+                  <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
+                    <img
+                      alt="example"
+                      style={{
+                        width: '100%',
+                      }}
+                      src={previewImage}
+                    />
+                  </Modal>
                 </Form.Item>
               </Col>
             </Row>
@@ -332,7 +359,7 @@ const AddProductForm = () => {
                 </Button>
               </Space>
             </Row>
-          </Container>
+          </div>
         </Col>
       </Row>
     </Form>

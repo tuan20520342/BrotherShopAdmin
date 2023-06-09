@@ -5,9 +5,7 @@ import Toolbar from '~/components/UI/Toolbar';
 import { useNavigate } from 'react-router-dom';
 import TableWarehouseReceipts from '~/components/WarehouseReceipt/TableWarehouseReceipts';
 import { useDispatch, useSelector } from 'react-redux';
-import openSocket from 'socket.io-client';
-import * as SagaActionTypes from '~/redux/constants';
-import { receiptActions } from '~/redux/reducer/ReceiptReducer';
+import * as SagaActionTypes from '~/redux/constants/constant';
 const { Title } = Typography;
 
 const WarehouseReceiptsPage = () => {
@@ -19,15 +17,6 @@ const WarehouseReceiptsPage = () => {
 
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_RECEIPTS_SAGA });
-
-    const socket = openSocket(process.env.REACT_APP_DEV_BE_URL);
-    socket.on('receipts', (data) => {
-      const { action } = data;
-
-      if (action === 'create') {
-        dispatch(receiptActions.addReceipt({ newReceipt: data.newReceipt }));
-      }
-    });
   }, [dispatch]);
 
   const handleAddWearhouseReceipt = () => {

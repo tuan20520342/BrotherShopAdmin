@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { productStates } from '~/util/constants';
 
 const initialState = {
   loading: false,
@@ -41,25 +40,6 @@ const productSlice = createSlice({
     },
     editProductComplete: (state, action) => {
       state.editLoading = false;
-    },
-    addProduct: (state, action) => {
-      const newProduct = action.payload.product;
-      state.products.push(newProduct);
-    },
-    editProduct: (state, action) => {
-      const { updatedProduct } = action.payload;
-      const existingProductIndex = state.products.findIndex((product) => product._id === updatedProduct._id.toString());
-      state.products[existingProductIndex] = updatedProduct;
-    },
-    stopSellingProduct: (state, action) => {
-      const { productId } = action.payload;
-      const existingProductIndex = state.products.findIndex((product) => product._id === productId);
-      state.products[existingProductIndex].state = productStates.PAUSE;
-    },
-    resellProduct: (state, action) => {
-      const { productId } = action.payload;
-      const existingProductIndex = state.products.findIndex((product) => product._id === productId);
-      state.products[existingProductIndex].state = productStates.ACTIVE;
     },
   },
 });
