@@ -6,7 +6,7 @@ import AlertCustom from '~/components/UI/Notification/Alert';
 import { DashboardService } from '~/services/api/DashboardAPI';
 import SelectTime from './SelectTime';
 
-const RevenueColumnChart = () => {
+const RevenueAreaChart = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const RevenueColumnChart = () => {
   };
 
   const config = {
-    data,
+    data: data,
     xField: 'date',
     yField: 'revenue',
     xAxis: {
@@ -66,4 +66,4 @@ const RevenueColumnChart = () => {
   );
 };
 
-export default RevenueColumnChart;
+export default RevenueAreaChart;
