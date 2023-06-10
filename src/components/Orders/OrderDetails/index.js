@@ -117,8 +117,8 @@ const OrderDetails = () => {
         </Col>
       </Row>
       <Row justify="end">
-        <Text style={{ fontSize: 20 }} strong>{`Tổng tiền: ${orderById.totalProductsPrice
-          .toString()
+        <Text style={{ fontSize: 20 }} strong>{`Tổng tiền: ${orderById?.totalProductsPrice
+          ?.toString()
           .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')} VNĐ`}</Text>
       </Row>
     </Form>
