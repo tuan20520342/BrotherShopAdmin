@@ -14,4 +14,10 @@ export const ProductService = {
   updateProduct: (data) => {
     return baseRequest.put(UrlApi.URL_UPDATE_PRODUCT(data.id), data);
   },
+  stopSellingProduct: (productId) => {
+    return baseRequest.delete(UrlApi.URL_STOP_SELLING_PRODUCT(productId));
+  },
+  resellProduct: (productId) => {
+    return baseRequest.put(UrlApi.URL_RESELL_PRODUCT(productId));
+  },
 };

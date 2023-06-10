@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, Space, Row } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import * as SagaActionTypes from '~/redux/constants/constant';
+import * as SagaActionTypes from '~/redux/constants';
 
 import { modalActions } from '~/redux/reducer/ModalReducer';
 import { useDispatch } from 'react-redux';

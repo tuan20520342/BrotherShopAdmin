@@ -8,6 +8,8 @@ export const URL_PRODUCTS = `${DOMAIN_NAME}/products`;
 export const URL_PRODUCTS_ID = (id) => `${DOMAIN_NAME}/products/${id}`;
 export const URL_CREATE_PRODUCT = '/products/create';
 export const URL_UPDATE_PRODUCT = (id) => `/products/${id}`;
+export const URL_STOP_SELLING_PRODUCT = (id) => `/products/${id}`;
+export const URL_RESELL_PRODUCT = (id) => `/products/resell/${id}`;
 
 //CATEGORIES
 export const URL_CATEGORIES = `${DOMAIN_NAME}/categories`;
@@ -35,3 +37,11 @@ export const URL_PUT_RECEIPT = `${DOMAIN_NAME}/receipts/update`;
 // ORDER
 export const URL_ORDERS = `${DOMAIN_NAME}/orders`;
 export const URL_ORDERS_ID = (id) => `${DOMAIN_NAME}/orders/${id}`;
+
+// DASHBOARD
+export const URL_GET_STAT_CARD_DATA = '/dashboard/stat-card';
+export const URL_GET_REVENUE_SEVEN_DAYS_AGO = '/dashboard/revenue';
+export const URL_GET_BEST_SELLER_PRODUCTS = '/dashboard/best-seller';
+export const URL_GET_PERCENTAGE_CATEGORIES = '/dashboard/category/percentage';
+export const URL_GET_SOLD_QUANTITY_PRODUCTS = '/dashboard/sold-quantity';
+export const URL_GET_TREND_OF_CATEGORIES = '/dashboard/trend-of-categories';

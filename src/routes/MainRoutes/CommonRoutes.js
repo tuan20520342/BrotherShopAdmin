@@ -1,4 +1,4 @@
-import TestPage from '~/pages/test';
+import HomePage from '~/pages/HomePage';
 import NotFoundPage from '~/pages/NotFound';
 import StaffsPage from '~/pages/StaffsPage';
 import AddItemForm from '~/pages/AddItemForm';
@@ -20,7 +20,7 @@ import OrderDetailsPage from '~/pages/OrderDetailsPage';
 const CommonRoutes = [
   {
     path: '/',
-    element: <TestPage />,
+    element: <HomePage />,
   },
   {
     path: '/staffs',

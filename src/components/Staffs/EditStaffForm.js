@@ -4,23 +4,12 @@ import dayjs from 'dayjs';
 import { Form, Input, Button, Select, DatePicker, Space, Row, Col } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import * as SagaActionTypes from '~/redux/constants/constant';
+import * as SagaActionTypes from '~/redux/constants';
+import { validateMessages } from '~/util/constants';
 
 const { Option } = Select;
 const { TextArea } = Input;
 const dateFormat = 'DD/MM/YYYY';
-
-const validateMessages = {
-  required: 'Cần nhập ${label}!',
-  types: {
-    email: '${label} không hợp lệ!',
-    number: '',
-  },
-  number: {
-    min: '${label} phải ít nhất từ ${min} trở lên',
-    range: '${label} phải trong khoảng từ ${min} đến ${max}',
-  },
-};
 
 const EditStaffForm = () => {
   const navigate = useNavigate();
@@ -194,7 +183,7 @@ const EditStaffForm = () => {
             <TextArea rows={2} placeholder="Địa chỉ" disabled={componentDisabled} />
           </Form.Item>
         </Col>
-        <Col xs={24} sm={12} md={24} lg={12} key={4}>
+        <Col xs={24} sm={12} md={24} lg={12} key={8}>
           <Form.Item
             name="status"
             label="Tình trạng"
@@ -217,27 +206,11 @@ const EditStaffForm = () => {
             </Select>
           </Form.Item>
         </Col>
-        <Col xs={24} key={8}>
+        <Col xs={24} key={9}>
           <Form.Item name="otherInformation" label="Khác">
             <TextArea rows={2} placeholder="Khác" disabled={componentDisabled} />
           </Form.Item>
         </Col>
-        {/* <Col span={24} key={9}>
-          <Form.Item name="avatar" label="Ảnh nhân viên">
-            <ImgCrop>
-              <Upload
-                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                listType="picture-card"
-                fileList={fileList}
-                onPreview={handlePreview}
-                onChange={handleChange}
-                disabled={componentDisabled}
-              >
-                {fileList.length >= 1 ? null : uploadButton}
-              </Upload>
-            </ImgCrop>
-          </Form.Item>
-        </Col> */}
       </Row>
       <Row justify="end">
         {enableModify === false ? (

@@ -5,7 +5,7 @@ import { Typography, Row, Col } from 'antd';
 import Toolbar from '~/components/UI/Toolbar';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import * as SagaActionTypes from '~/redux/constants/constant';
+import * as SagaActionTypes from '~/redux/constants';
 const { Title } = Typography;
 
 const StaffsPage = () => {

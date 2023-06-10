@@ -30,6 +30,10 @@ const receiptSlice = createSlice({
       state.receiptById = action.payload.receiptById;
       state.idLoading = false;
     },
+    addReceipt: (state, action) => {
+      const { newReceipt } = action.payload;
+      state.items.push(newReceipt);
+    },
   },
 });
 
