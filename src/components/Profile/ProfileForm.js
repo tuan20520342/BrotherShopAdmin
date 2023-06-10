@@ -45,6 +45,10 @@ const ProfileForm = () => {
     onReset();
   };
 
+  const handleChangePassword = () => {
+    navigate('/profile/change-password');
+  };
+
   const onReset = () => {
     form.resetFields();
   };
@@ -200,23 +204,30 @@ const ProfileForm = () => {
             <TextArea rows={2} placeholder="Khác" disabled={componentDisabled} />
           </Form.Item>
         </Col>
+        <Col xs={24} key={9}>
+          <Form.Item name="pasword" label="Mật khẩu">
+            <Button type="dashed" onClick={() => handleChangePassword()}>
+              Thay đổi mật khẩu
+            </Button>
+          </Form.Item>
+        </Col>
       </Row>
       <Row justify="end">
         {enableModify === false ? (
           <Space>
-            <Button type="primary" onClick={() => handleEnableModify()}>
+            <Button size="large" type="primary" onClick={() => handleEnableModify()}>
               Chỉnh sửa
             </Button>
-            <Button type="primary" danger onClick={handleClose}>
+            <Button size="large" type="primary" danger onClick={handleClose}>
               Đóng
             </Button>
           </Space>
         ) : (
           <Space>
-            <Button type="primary" danger onClick={handleFormCancel}>
+            <Button size="large" type="primary" danger onClick={handleFormCancel}>
               Hủy
             </Button>
-            <Button type="primary" htmlType="submit">
+            <Button size="large" type="primary" htmlType="submit">
               Lưu
             </Button>
           </Space>

@@ -16,6 +16,7 @@ import EditStaffPage from '~/pages/EditStaffPage';
 import CustomerDetailsPage from '~/pages/CustomerDetailsPage';
 import WarehouseReceiptDetailsPage from '~/pages/WarehouseReceiptDetailsPage';
 import OrderDetailsPage from '~/pages/OrderDetailsPage';
+import ChangePasswordPage from '~/pages/ChangePasswordPage';
 
 const CommonRoutes = [
   {
@@ -85,6 +86,10 @@ const CommonRoutes = [
   {
     path: '/add-warehouse-receipt',
     element: <AddItemForm title={'Thêm phiếu nhập kho'} form={<AddWarehouseReceipt />} />,
+  },
+  {
+    path: '/profile/change-password',
+    element: <ChangePasswordPage />,
   },
 ];
 
