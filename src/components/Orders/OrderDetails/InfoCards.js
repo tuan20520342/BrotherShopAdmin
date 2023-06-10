@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Typography, Row, Col, Card, Avatar, Space } from 'antd';
+import React from 'react';
+import { Typography, Col, Card } from 'antd';
 import { UserOutlined, EnvironmentOutlined, CarOutlined, ShopOutlined } from '@ant-design/icons';
 
 const { Meta } = Card;

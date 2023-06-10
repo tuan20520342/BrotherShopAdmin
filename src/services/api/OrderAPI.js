@@ -1,6 +1,5 @@
 import axios from 'axios';
 import * as UrlApi from '../url';
-import baseRequest from './BaseRequest';
 
 export const OrderService = {
   getOrders: () => {

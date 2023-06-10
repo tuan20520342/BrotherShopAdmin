@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Typography, Row, Col } from 'antd';
 import Search from 'antd/lib/input/Search';
 import TableOrders from '~/components/Orders/TableOrders';
-import * as SagaActionTypes from '~/redux/constants/constant';
+import * as SagaActionTypes from '~/redux/constants';
 import { useDispatch, useSelector } from 'react-redux';
 
 const { Title } = Typography;

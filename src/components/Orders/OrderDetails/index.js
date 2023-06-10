@@ -1,4 +1,4 @@
-import { Form, Input, Button, Select, DatePicker, Upload, Space, Modal, Row, Col, Typography, Divider } from 'antd';
+import { Form, Button, Select, Space, Row, Col, Typography, Divider } from 'antd';
 import { CalendarOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 import dayjs from 'dayjs';
@@ -9,7 +9,7 @@ import Search from 'antd/lib/input/Search';
 import { useNavigate } from 'react-router-dom';
 
 const { Option } = Select;
-const { Title, Text } = Typography;
+const { Text } = Typography;
 const dateFormat = 'DD/MM/YYYY HH:mm';
 
 const OrderDetails = () => {

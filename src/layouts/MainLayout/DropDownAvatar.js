@@ -1,6 +1,6 @@
 import React from 'react';
-import { UserOutlined, ExportOutlined, SmileOutlined } from '@ant-design/icons';
-import { Dropdown, Space, Menu, Avatar, Typography } from 'antd';
+import { UserOutlined, ExportOutlined } from '@ant-design/icons';
+import { Dropdown, Space, Avatar, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import AlertCustom from '~/components/UI/Notification/Alert';

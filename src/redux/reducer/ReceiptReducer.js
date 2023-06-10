@@ -32,7 +32,11 @@ const receiptSlice = createSlice({
     },
     addReceipt: (state, action) => {
       const { newReceipt } = action.payload;
-      state.items.push(newReceipt);
+      const existingReceiptIndex = state.items.findIndex((item) => item._id === newReceipt._id.toString());
+
+      if (existingReceiptIndex === -1) {
+        state.items.push(newReceipt);
+      }
     },
   },
 });
