@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import * as SagaActionTypes from '../constants';
+import * as SagaActionTypes from '../constants/constant';
 import { categoryActions } from '../reducer/CategoryReducer';
 import { modalActions } from '../reducer/ModalReducer';
 import { CategoryService } from '~/services/api/CategoryAPI';

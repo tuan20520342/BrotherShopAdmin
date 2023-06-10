@@ -7,7 +7,7 @@ import ModalForm from '~/HOC/ModalForm';
 import { modalActions } from '~/redux/reducer/ModalReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import AddCategoryForm from '~/components/Categories/AddCategoryForm';
-import * as SagaActionTypes from '~/redux/constants';
+import * as SagaActionTypes from '~/redux/constants/constant';
 
 const { Title } = Typography;
 

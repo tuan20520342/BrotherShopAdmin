@@ -7,7 +7,7 @@ import MainLayoutSider from './MainLayoutSider';
 import MainLayoutDrawer from './MainLayoutDrawer';
 import DropDownAvatar from './DropDownAvatar';
 import { useDispatch, useSelector } from 'react-redux';
-import * as SagaActionTypes from '~/redux/constants';
+import * as SagaActionTypes from '~/redux/constants/constant';
 import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
 const { Header, Content } = Layout;
 

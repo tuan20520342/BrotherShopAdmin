@@ -1,4 +1,4 @@
-import HomePage from '~/pages/HomePage';
+import TestPage from '~/pages/test';
 import NotFoundPage from '~/pages/NotFound';
 import StaffsPage from '~/pages/StaffsPage';
 import AddItemForm from '~/pages/AddItemForm';
@@ -15,11 +15,12 @@ import EditProductPage from '~/pages/EditProductPage';
 import EditStaffPage from '~/pages/EditStaffPage';
 import CustomerDetailsPage from '~/pages/CustomerDetailsPage';
 import WarehouseReceiptDetailsPage from '~/pages/WarehouseReceiptDetailsPage';
+import OrderDetailsPage from '~/pages/OrderDetailsPage';
 
 const CommonRoutes = [
   {
     path: '/',
-    element: <HomePage />,
+    element: <TestPage />,
   },
   {
     path: '/staffs',
@@ -60,6 +61,10 @@ const CommonRoutes = [
   {
     path: '/orders',
     element: <OrdersPage />,
+  },
+  {
+    path: '/orders/:id',
+    element: <OrderDetailsPage />,
   },
   {
     path: '/customers',
