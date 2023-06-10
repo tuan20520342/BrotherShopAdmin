@@ -18,7 +18,6 @@ const OrderDetails = () => {
 
   const [form] = Form.useForm();
   const { orderById } = useSelector((state) => state.orderSlice);
-  console.log(orderById);
 
   const handleClose = () => {
     navigate(`/orders`);

@@ -2,7 +2,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { orderActions } from '../reducer/OrderReducer';
 import { OrderService } from '~/services/api/OrderAPI';
 import AlertCustom from '~/components/UI/Notification/Alert';
-import * as SagaActionTypes from '~/redux/constants/constant';
+import * as SagaActionTypes from '~/redux/constants';
 
 function* actGetOrders() {
   try {

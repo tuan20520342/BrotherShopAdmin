@@ -2,7 +2,6 @@ import { Image } from 'antd';
 import TableTemplate from '~/components/UI/Table/TableTemplate';
 
 const TableProductsInOrder = ({ keyWord, data }) => {
-  console.log(data);
   const columns = [
     {
       title: 'STT',

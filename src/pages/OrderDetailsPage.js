@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Typography, Row, Col, Card } from 'antd';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import * as SagaActionTypes from '~/redux/constants/constant';
+import * as SagaActionTypes from '~/redux/constants';
 import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
 import OrderDetails from '~/components/Orders/OrderDetails';
 
