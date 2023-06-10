@@ -6,7 +6,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Form, Input, Button, Select, DatePicker, Upload, Space, Modal, Row, Col } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import * as SagaActionTypes from '~/redux/constants';
+import * as SagaActionTypes from '~/redux/constants/constant';
 
 const { Option } = Select;
 const { TextArea } = Input;

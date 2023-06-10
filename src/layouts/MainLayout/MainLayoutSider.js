@@ -17,6 +17,72 @@ const MainLayoutSider = ({ collapsed, setCollapsed, setVisibleButton }) => {
   const navigate = useNavigate();
   const [hidden, setHidden] = useState(false);
 
+  const items = [
+    {
+      label: 'Trang chủ',
+      key: '1',
+      onClick: () => {
+        navigate('/');
+      },
+      icon: <DashboardOutlined />,
+      title: '',
+    },
+    {
+      label: 'Nhân viên',
+      key: '2',
+      onClick: () => {
+        navigate('/staffs');
+      },
+      icon: <UserOutlined />,
+      title: '',
+    },
+    {
+      label: 'Khách hàng',
+      key: '3',
+      onClick: () => {
+        navigate('/customers');
+      },
+      icon: <TeamOutlined />,
+      title: '',
+    },
+    {
+      label: 'Sản phẩm',
+      key: '4',
+      onClick: () => {
+        navigate('/products');
+      },
+      icon: <SkinOutlined />,
+      title: '',
+    },
+    {
+      label: 'Danh mục sản phẩm',
+      key: '5',
+      onClick: () => {
+        navigate('/categories');
+      },
+      icon: <AppstoreOutlined />,
+      title: '',
+    },
+    {
+      label: 'Phiếu nhập kho',
+      key: '6',
+      onClick: () => {
+        navigate('/warehouse-receipt');
+      },
+      icon: <SnippetsOutlined />,
+      title: '',
+    },
+    {
+      label: 'Đơn hàng',
+      key: '7',
+      onClick: () => {
+        navigate('/orders');
+      },
+      icon: <ShoppingCartOutlined />,
+      title: '',
+    },
+  ];
+
   return (
     <Sider
       collapsible
@@ -44,6 +110,7 @@ const MainLayoutSider = ({ collapsed, setCollapsed, setVisibleButton }) => {
       </Row>
       <Menu
         theme="dark"
+        items={items}
         defaultSelectedKeys={['1']}
         mode="inline"
         selectedKeys={[
@@ -65,82 +132,11 @@ const MainLayoutSider = ({ collapsed, setCollapsed, setVisibleButton }) => {
               location.pathname === '/add-warehouse-receipt' ||
               location.pathname.includes('/warehouse-receipt')
             ? '6'
-            : location.pathname === '/orders'
+            : location.pathname === '/orders' || location.pathname.includes('/orders')
             ? '7'
             : '-1',
         ]}
-      >
-        <Menu.Item
-          key="1"
-          icon={<DashboardOutlined />}
-          onClick={() => {
-            navigate('/');
-          }}
-          title=""
-        >
-          Trang chủ
-        </Menu.Item>
-        <Menu.Item
-          key="2"
-          icon={<UserOutlined />}
-          onClick={() => {
-            navigate('/staffs');
-          }}
-          title=""
-        >
-          Nhân viên
-        </Menu.Item>
-        <Menu.Item
-          key="3"
-          icon={<TeamOutlined />}
-          onClick={() => {
-            navigate('/customers');
-          }}
-          title=""
-        >
-          Khách hàng
-        </Menu.Item>
-        <Menu.Item
-          key="4"
-          icon={<SkinOutlined />}
-          onClick={() => {
-            navigate('/products');
-          }}
-          title=""
-        >
-          Sản phẩm
-        </Menu.Item>
-        <Menu.Item
-          key="5"
-          icon={<AppstoreOutlined />}
-          onClick={() => {
-            navigate('/categories');
-          }}
-          title=""
-        >
-          Danh mục sản phẩm
-        </Menu.Item>
-        <Menu.Item
-          key="6"
-          icon={<SnippetsOutlined />}
-          onClick={() => {
-            navigate('/warehouse-receipt');
-          }}
-          title=""
-        >
-          Phiếu nhập kho
-        </Menu.Item>
-        <Menu.Item
-          key="7"
-          icon={<ShoppingCartOutlined />}
-          onClick={() => {
-            navigate('/orders');
-          }}
-          title=""
-        >
-          Đơn hàng
-        </Menu.Item>
-      </Menu>
+      ></Menu>
     </Sider>
   );
 };

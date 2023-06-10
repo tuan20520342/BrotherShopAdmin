@@ -1,14 +1,11 @@
 import { Popconfirm, Space, Button, Image } from 'antd';
-import { DeleteFilled, EyeFilled, UndoOutlined } from '@ant-design/icons';
+import { DeleteFilled, EyeFilled } from '@ant-design/icons';
 import TableTemplate from '~/components/UI/Table/TableTemplate';
 import { useNavigate } from 'react-router-dom';
 import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
-import { useDispatch } from 'react-redux';
-import * as SagaActionTypes from '~/redux/constants';
 
 const TableProducts = ({ keyWord, data, loading }) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const columns = [
     {
@@ -116,49 +113,29 @@ const TableProducts = ({ keyWord, data, loading }) => {
       align: 'center',
       render: (text, record, index) => (
         <Space size="middle" key={index}>
-          <Button type="primary" icon={<EyeFilled />} onClick={() => handleEditProduct(record)} />
-          {record.state === 'Đang bán' ? (
-            <Popconfirm
-              placement="top"
-              title="Bạn có chắc muốn xóa sản phẩm này?"
-              okText="Xác nhận"
-              cancelText="Hủy"
-              onConfirm={() => handleRemoveProduct(record)}
-            >
-              <Button type="primary" icon={<DeleteFilled />} danger></Button>
-            </Popconfirm>
-          ) : (
-            <Popconfirm
-              placement="top"
-              title="Bạn muốn khôi phục sản phẩm này?"
-              okText="Xác nhận"
-              cancelText="Hủy"
-              onConfirm={() => handleResellProduct(record)}
-            >
-              <Button type="default" icon={<UndoOutlined />} />
-            </Popconfirm>
-          )}
+          <Button type="primary" icon={<EyeFilled />} onClick={() => handleEditProduct(record)}></Button>
+          <Popconfirm
+            placement="top"
+            title="Bạn có chắc muốn xóa sản phẩm này?"
+            okText="Xác nhận"
+            cancelText="Hủy"
+            onConfirm={() => handleRemoveProduct(record)}
+          >
+            <Button type="primary" icon={<DeleteFilled />} danger></Button>
+          </Popconfirm>
         </Space>
       ),
     },
   ];
 
-  const handleRemoveProduct = (product) => {
-    dispatch({ type: SagaActionTypes.STOP_SELLING_PRODUCT_SAGA, productId: product._id });
-  };
+  const handleRemoveProduct = (record) => {};
 
   const handleEditProduct = (product) => {
     navigate(`/products/${product._id}`);
   };
-
-  const handleResellProduct = (product) => {
-    dispatch({ type: SagaActionTypes.RESELL_PRODUCT_SAGA, productId: product._id });
-  };
-
   if (loading) {
     return <LoadingSpin />;
   }
-
   return (
     <TableTemplate
       dataSource={data}

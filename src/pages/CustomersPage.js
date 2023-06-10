@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Typography, Row, Col } from 'antd';
 import TableCustomers from '~/components/Customers/TableCustomers';
 import { useDispatch, useSelector } from 'react-redux';
-import * as SagaActionTypes from '~/redux/constants';
+import * as SagaActionTypes from '~/redux/constants/constant';
 
 const { Title } = Typography;
 
