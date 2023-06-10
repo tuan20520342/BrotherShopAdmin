@@ -6,15 +6,35 @@ import { useNavigate } from 'react-router-dom';
 import TableProducts from '~/components/Products/TableProducts';
 import * as SagaActionTypes from '~/redux/constants/constant';
 import { useDispatch, useSelector } from 'react-redux';
+import { productActions } from '~/redux/reducer/ProductReducer';
+import openSocket from 'socket.io-client';
 const { Title } = Typography;
 
 const ProductsPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { products, loading } = useSelector((state) => state.productSlice);
+  console.log(products);
 
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_PRODUCTS_SAGA });
+
+    const socket = openSocket(process.env.REACT_APP_DEV_BE_URL);
+    socket.on('products', (data) => {
+      const { action } = data;
+
+      if (action === 'create') {
+        dispatch(productActions.addProduct({ product: data.product }));
+      }
+
+      if (action === 'edit') {
+        dispatch(productActions.editProduct({ updatedProduct: data.updatedProduct }));
+      }
+
+      if (action === 'delete') {
+        dispatch(productActions.deleteProduct({ productId: data.productId }));
+      }
+    });
   }, [dispatch]);
 
   const [keyWord, setKeyWord] = useState('');
