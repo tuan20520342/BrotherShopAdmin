@@ -4,7 +4,7 @@ import { Form, Input, Button, Space, Row } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
 import { modalActions } from '~/redux/reducer/ModalReducer';
-import * as SagaActionTypes from '~/redux/constants';
+import * as SagaActionTypes from '~/redux/constants/constant';
 import { useDispatch } from 'react-redux';
 import './style/CategoryForm.css';
 

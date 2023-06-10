@@ -1,14 +1,15 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import * as SagaActionTypes from '../constants';
+import * as SagaActionTypes from '../constants/constant';
 import { customerActions } from '../reducer/CustomerReducer';
 import { CustomerService } from '~/services/api/CustomerAPI';
+import AlertCustom from '~/components/UI/Notification/Alert';
 
 function* actGetListCustomers() {
   try {
     yield put(customerActions.getCustomersInLoading());
     const res = yield call(() => CustomerService.getCustomersList());
     const { status, data } = res;
-
+    console.log(res);
     if (status === 200) {
       yield put(customerActions.getCustomersSuccess({ customers: data.customers }));
     } else {
@@ -22,7 +23,6 @@ function* actGetListCustomers() {
 function* actGetCustomerById(action) {
   try {
     const { id } = action;
-
     yield put(customerActions.getCustomerByIdInLoading());
     const res = yield call(() => CustomerService.getCustomerById(id));
     const { status, data } = res;

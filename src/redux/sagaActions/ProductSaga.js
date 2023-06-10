@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import * as SagaActionTypes from '../constants';
+import * as SagaActionTypes from '../constants/constant';
 import { productActions } from '../reducer/ProductReducer';
 import { ProductService } from '~/services/api/ProductAPI';
 import AlertCustom from '~/components/UI/Notification/Alert';
@@ -46,7 +46,7 @@ function* actCreateProduct(action) {
     const { status, data } = res;
 
     if (status === 201) {
-      // yield put({ type: SagaActionTypes.GET_PRODUCTS_SAGA });
+      yield put({ type: SagaActionTypes.GET_PRODUCTS_SAGA });
       AlertCustom({ type: 'success', title: data.message });
     } else {
       AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
@@ -77,40 +77,6 @@ function* actUpdateProduct(action) {
   }
 }
 
-function* actStopSellingProduct(action) {
-  try {
-    const { productId } = action;
-    const res = yield call(() => ProductService.stopSellingProduct(productId));
-    const { status, data } = res;
-
-    if (status === 200) {
-      yield put({ type: SagaActionTypes.GET_PRODUCTS_SAGA });
-      AlertCustom({ type: 'success', title: data.message });
-    } else {
-      AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
-    }
-  } catch (err) {
-    AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
-  }
-}
-
-function* actResellProduct(action) {
-  try {
-    const { productId } = action;
-    const res = yield call(() => ProductService.resellProduct(productId));
-    const { status, data } = res;
-
-    if (status === 200) {
-      yield put({ type: SagaActionTypes.GET_PRODUCTS_SAGA });
-      AlertCustom({ type: 'success', title: data.message });
-    } else {
-      AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
-    }
-  } catch (err) {
-    AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
-  }
-}
-
 export function* followActGetListProducts() {
   yield takeLatest(SagaActionTypes.GET_PRODUCTS_SAGA, actGetListProducts);
 }
@@ -125,12 +91,4 @@ export function* followActCreateProduct() {
 
 export function* followActUpdateProduct() {
   yield takeLatest(SagaActionTypes.UPDATE_PRODUCT_SAGA, actUpdateProduct);
-}
-
-export function* followActStopSellingProduct() {
-  yield takeLatest(SagaActionTypes.STOP_SELLING_PRODUCT_SAGA, actStopSellingProduct);
-}
-
-export function* followActResellProduct() {
-  yield takeLatest(SagaActionTypes.RESELL_PRODUCT_SAGA, actResellProduct);
 }

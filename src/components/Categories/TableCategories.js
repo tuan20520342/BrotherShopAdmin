@@ -5,7 +5,7 @@ import { modalActions } from '~/redux/reducer/ModalReducer';
 import { useDispatch } from 'react-redux';
 import EditCategoryForm from './EditCategoryForm';
 import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
-import * as SagaActionTypes from '~/redux/constants';
+import * as SagaActionTypes from '~/redux/constants/constant';
 
 const TableCategories = ({ keyWord, data, loading }) => {
   const dispatch = useDispatch();

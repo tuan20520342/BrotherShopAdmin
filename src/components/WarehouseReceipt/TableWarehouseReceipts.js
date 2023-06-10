@@ -34,6 +34,7 @@ const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
       width: '5%',
       key: '',
       align: 'center',
+      ellipsis: true,
       render: (text, record, index) => data.indexOf(record) + 1,
     },
 
@@ -52,8 +53,7 @@ const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
           String(dayjs(record.date).format('DD/MM/YYYY')).toLowerCase().includes(value.toLowerCase())
         );
       },
-      showOnResponse: true,
-      showOnDesktop: true,
+      ellipsis: true,
       render: (text, record, index) => record._id.slice(0, 8).toUpperCase(),
     },
     {
@@ -61,8 +61,7 @@ const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
       dataIndex: 'date',
       key: 'date',
       align: 'center',
-      showOnResponse: true,
-      showOnDesktop: true,
+      ellipsis: true,
       sorter: (a, b) => dayjs(a.date).unix() - dayjs(b.date).unix(),
       render: (date) => `${dayjs(date).format('DD/MM/YYYY')}`,
     },
@@ -72,8 +71,6 @@ const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
       dataIndex: 'products',
       key: 'quantity',
       align: 'center',
-      showOnResponse: true,
-      showOnDesktop: true,
       ellipsis: true,
       sorter: (a, b) => a.products.length - b.products.length,
       render: (text, record, index) => {
@@ -85,8 +82,6 @@ const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
       dataIndex: 'products',
       key: 'totalquantity',
       align: 'center',
-      showOnResponse: true,
-      showOnDesktop: true,
       ellipsis: true,
       sorter: (a, b) => totalQuantity(a) - totalQuantity(b),
       render: (text, record, index) => {
@@ -104,8 +99,6 @@ const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
       dataIndex: 'price',
       key: 'price',
       align: 'center',
-      showOnResponse: true,
-      showOnDesktop: true,
       ellipsis: true,
       sorter: (a, b) => totalPrice(a) - totalPrice(b),
       render: (text, record, index) => {
@@ -127,8 +120,6 @@ const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
       id: 'action',
       ellipsis: true,
       width: '10%',
-      showOnResponse: true,
-      showOnDesktop: true,
       fixed: 'right',
       render: (text, record, index) => (
         <Space size="middle" key={index}>

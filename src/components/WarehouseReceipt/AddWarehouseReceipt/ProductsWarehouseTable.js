@@ -5,7 +5,7 @@ import AddProductToReceipt from './AddProductToReceipt';
 import { modalActions } from '~/redux/reducer/ModalReducer';
 import { useDispatch } from 'react-redux';
 
-const ProductsWarehouseTable = ({ keyWord, data, onEditProduct, onRemoveProduct }) => {
+const ProductsWarehouseTable = ({ keyWord, data, onEditProduct, onRemoveProduct, editDisability }) => {
   const dispatch = useDispatch();
 
   const columns = [
@@ -91,8 +91,9 @@ const ProductsWarehouseTable = ({ keyWord, data, onEditProduct, onRemoveProduct 
             okText="Xác nhận"
             cancelText="Hủy"
             onConfirm={() => handleRemoveProduct(record)}
+            disabled={editDisability ?? false}
           >
-            <Button type="primary" icon={<DeleteFilled />} danger></Button>
+            <Button type="primary" icon={<DeleteFilled />} disabled={editDisability ?? false} danger></Button>
           </Popconfirm>
         </Space>
       ),
@@ -107,7 +108,9 @@ const ProductsWarehouseTable = ({ keyWord, data, onEditProduct, onRemoveProduct 
     dispatch(
       modalActions.showModal({
         title: 'Cập nhật sản phẩm',
-        ComponentContent: <AddProductToReceipt product={product} onEditProduct={onEditProduct} />,
+        ComponentContent: (
+          <AddProductToReceipt product={product} onEditProduct={onEditProduct} editDisability={editDisability} />
+        ),
       }),
     );
   };

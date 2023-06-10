@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import * as SagaActionTypes from '../constants';
+import * as SagaActionTypes from '../constants/constant';
 import { staffActions } from '../reducer/StaffReducer';
 import { StaffService } from '~/services/api/StaffAPI';
 import AlertCustom from '~/components/UI/Notification/Alert';
