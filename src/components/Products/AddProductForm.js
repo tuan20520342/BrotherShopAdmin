@@ -155,7 +155,7 @@ const AddProductForm = () => {
       form={form}
       onFinish={onFinish}
       initialValues={{
-        staff_other_information: '',
+        description: '',
       }}
       validateMessages={validateMessages}
       layout="vertical"

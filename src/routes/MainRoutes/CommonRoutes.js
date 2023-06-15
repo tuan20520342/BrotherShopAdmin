@@ -17,6 +17,7 @@ import CustomerDetailsPage from '~/pages/CustomerDetailsPage';
 import WarehouseReceiptDetailsPage from '~/pages/WarehouseReceiptDetailsPage';
 import OrderDetailsPage from '~/pages/OrderDetailsPage';
 import ChangePasswordPage from '~/pages/ChangePasswordPage';
+import PromosPage from '~/pages/PromosPage';
 
 const CommonRoutes = [
   {
@@ -74,6 +75,10 @@ const CommonRoutes = [
   {
     path: '/customers/:id',
     element: <CustomerDetailsPage />,
+  },
+  {
+    path: '/promos',
+    element: <PromosPage />,
   },
   {
     path: '*',

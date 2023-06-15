@@ -8,6 +8,7 @@ import {
   AppstoreOutlined,
   SkinOutlined,
   SnippetsOutlined,
+  PercentageOutlined,
 } from '@ant-design/icons';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Sider from 'antd/es/layout/Sider';
@@ -81,6 +82,15 @@ const MainLayoutSider = ({ collapsed, setCollapsed, setVisibleButton }) => {
       icon: <ShoppingCartOutlined />,
       title: '',
     },
+    {
+      label: 'Khuyến mãi',
+      key: '8',
+      onClick: () => {
+        navigate('/promos');
+      },
+      icon: <PercentageOutlined />,
+      title: '',
+    },
   ];
 
   return (
@@ -134,6 +144,8 @@ const MainLayoutSider = ({ collapsed, setCollapsed, setVisibleButton }) => {
             ? '6'
             : location.pathname === '/orders' || location.pathname.includes('/orders')
             ? '7'
+            : location.pathname === '/promos'
+            ? '8'
             : '-1',
         ]}
       ></Menu>
