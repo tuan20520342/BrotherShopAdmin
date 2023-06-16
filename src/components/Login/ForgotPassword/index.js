@@ -1,11 +1,24 @@
 import { UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Typography, Row } from 'antd';
 import '../styles/LoginForm.css';
-import AlertCustom from '~/components/UI/Notification/Alert';
+import * as SagaActionTypes from '~/redux/constants';
+import { useDispatch } from 'react-redux';
+
 const { Title, Paragraph } = Typography;
 
 const ForgotPasswordForm = () => {
-  const onFinish = async (values) => {};
+  const dispatch = useDispatch();
+
+  const onFinish = (values) => {
+    const data = {
+      email: values.email,
+      isCustomer: false,
+    };
+    dispatch({
+      type: SagaActionTypes.FORGOT_PASSWORD_SAGA,
+      data: data,
+    });
+  };
   return (
     <div id="components-form-login">
       <Row justify="center">

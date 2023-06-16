@@ -14,4 +14,12 @@ export const AuthenticationService = {
       },
     });
   },
+
+  forgotPassword: (data) => {
+    return axios.post(UrlApi.URL_FORGOT_PASSWORD, data);
+  },
+
+  resetPassword: (data) => {
+    return axios.post(UrlApi.URL_RESET_PASSWORD, data);
+  },
 };

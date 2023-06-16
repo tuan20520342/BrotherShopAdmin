@@ -2,6 +2,8 @@ export const DOMAIN_NAME = 'http://localhost:3001';
 
 //AUTHENTICATION
 export const URL_AUTH_LOGIN = `${DOMAIN_NAME}/auth/staffs/login`;
+export const URL_FORGOT_PASSWORD = `${DOMAIN_NAME}/auth/forgot-password`;
+export const URL_RESET_PASSWORD = `${DOMAIN_NAME}/auth/reset-password`;
 
 //PRODUCT
 export const URL_PRODUCTS = `${DOMAIN_NAME}/products`;

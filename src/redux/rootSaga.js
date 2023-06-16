@@ -30,6 +30,8 @@ export default function* rootSaga() {
     //Authentication
     AuthSaga.followGetCurrentUser(),
     AuthSaga.followPutCurrentUser(),
+    AuthSaga.followForgotPassword(),
+    AuthSaga.followResetPassword(),
     //Customer
     CustomerSaga.followActGetListCustomers(),
     CustomerSaga.followActGetCustomerById(),

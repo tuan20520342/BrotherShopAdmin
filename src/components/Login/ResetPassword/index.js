@@ -2,13 +2,25 @@ import { LockOutlined, UnlockOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Typography, Row } from 'antd';
 import '../styles/LoginForm.css';
 import { useNavigate } from 'react-router-dom';
-import AlertCustom from '~/components/UI/Notification/Alert';
+import * as SagaActionTypes from '~/redux/constants';
+import { useDispatch } from 'react-redux';
 const { Title } = Typography;
 
-const ResetPasswordForm = () => {
+const ResetPasswordForm = ({ token }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const onFinish = async (values) => {};
+  const onFinish = (values) => {
+    const data = {
+      token: token,
+      password: values.password,
+      confirmPassword: values.confirmPassword,
+    };
+    dispatch({
+      type: SagaActionTypes.RESET_PASSWORD_SAGA,
+      data: data,
+    });
+  };
   return (
     <div id="components-form-login">
       <Row justify="center">
@@ -30,8 +42,8 @@ const ResetPasswordForm = () => {
               message: 'Vui lòng nhập mật khẩu mới',
             },
             {
-              pattern: /^.{6,}$/,
-              message: 'Phải có ít nhất 6 ký tự',
+              pattern: /^.{8,}$/,
+              message: 'Phải có ít nhất 8 ký tự',
             },
           ]}
         >
@@ -57,8 +69,8 @@ const ResetPasswordForm = () => {
               },
             }),
             {
-              pattern: /^.{6,}$/,
-              message: 'Phải có ít nhất 6 ký tự',
+              pattern: /^.{8,}$/,
+              message: 'Phải có ít nhất 8 ký tự',
             },
           ]}
         >
