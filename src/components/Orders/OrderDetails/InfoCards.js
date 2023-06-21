@@ -8,7 +8,7 @@ const { Text, Paragraph } = Typography;
 const InfoCard = ({ order }) => {
   return (
     <>
-      <Col xs={24} sm={12} md={order.companyName ? 6 : 8}>
+      <Col xs={24} sm={12} md={order.companyName ? 12 : 8}>
         <Card style={{ height: '100%' }}>
           <Meta
             avatar={<UserOutlined style={{ fontSize: 24 }} />}
@@ -23,7 +23,7 @@ const InfoCard = ({ order }) => {
           />
         </Card>
       </Col>
-      <Col xs={24} sm={12} md={order.companyName ? 6 : 8}>
+      <Col xs={24} sm={12} md={order.companyName ? 12 : 8}>
         <Card style={{ height: '100%' }}>
           <Meta
             avatar={<CarOutlined style={{ fontSize: 24 }} />}
@@ -42,7 +42,7 @@ const InfoCard = ({ order }) => {
           ></Meta>
         </Card>
       </Col>
-      <Col xs={24} sm={12} md={order.companyName ? 6 : 8}>
+      <Col xs={24} sm={12} md={order.companyName ? 12 : 8}>
         <Card style={{ height: '100%' }}>
           <Meta
             avatar={<EnvironmentOutlined style={{ fontSize: 24 }} />}
@@ -63,7 +63,7 @@ const InfoCard = ({ order }) => {
         </Card>
       </Col>
       {order.companyName && (
-        <Col xs={24} sm={12} md={order.companyName ? 6 : 8}>
+        <Col xs={24} sm={12} md={order.companyName ? 12 : 8}>
           <Card style={{ height: '100%' }}>
             <Meta
               avatar={<ShopOutlined style={{ fontSize: 24 }} />}

@@ -37,6 +37,7 @@ export const URL_PUT_RECEIPT = `${DOMAIN_NAME}/receipts/update`;
 // ORDER
 export const URL_ORDERS = `${DOMAIN_NAME}/orders`;
 export const URL_ORDERS_ID = (id) => `${DOMAIN_NAME}/orders/${id}`;
+export const URL_UPDATE_ORDER_STATUS = (id) => `${DOMAIN_NAME}/orders/${id}/status`;
 
 // DASHBOARD
 export const URL_GET_STAT_CARD_DATA = '/dashboard/stat-card';

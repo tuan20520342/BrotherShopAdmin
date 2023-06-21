@@ -38,10 +38,35 @@ function* actGetOrderById(action) {
   }
 }
 
+function* actUpdateOrderStatus(action) {
+  try {
+    const { orderId, orderStatus } = action;
+
+    yield put(orderActions.editOrderStatusInLoading());
+    const res = yield call(() => OrderService.updateOrderStatus(orderId, orderStatus));
+    const { status, data } = res;
+
+    if (status === 200) {
+      yield put(orderActions.editOrderStatus({ orderId: data.orderId, orderStatus: data.orderStatus }));
+      AlertCustom({ type: 'success', title: data.message });
+    } else {
+      AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại zzz' });
+    }
+  } catch (error) {
+    AlertCustom({ type: 'error', title: error.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
+  } finally {
+    yield put(orderActions.editOrderStatusCompleted());
+  }
+}
+
 export function* followActGetOrders() {
   yield takeLatest(SagaActionTypes.GET_ORDERS_SAGA, actGetOrders);
 }
 
 export function* followActGetOrderById() {
   yield takeLatest(SagaActionTypes.GET_ORDER_BY_ID_SAGA, actGetOrderById);
+}
+
+export function* followActUpdateOrderStatus() {
+  yield takeLatest(SagaActionTypes.UPDATE_ORDER_STATUS, actUpdateOrderStatus);
 }

@@ -41,5 +41,6 @@ export default function* rootSaga() {
     //Order
     OrderSaga.followActGetOrders(),
     OrderSaga.followActGetOrderById(),
+    OrderSaga.followActUpdateOrderStatus(),
   ]);
 }

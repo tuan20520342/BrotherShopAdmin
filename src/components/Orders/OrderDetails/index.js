@@ -1,12 +1,14 @@
 import { Form, Button, Select, Space, Row, Col, Typography, Divider } from 'antd';
 import { CalendarOutlined } from '@ant-design/icons';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import dayjs from 'dayjs';
 import InfoCard from './InfoCards';
 import TableProductsInOrder from './TableProductsInOrder';
 import { useState } from 'react';
 import Search from 'antd/lib/input/Search';
 import { useNavigate } from 'react-router-dom';
+import * as SagaActionTypes from '~/redux/constants';
+import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
 
 const { Option } = Select;
 const { Text } = Typography;
@@ -17,17 +19,27 @@ const OrderDetails = () => {
   const navigate = useNavigate();
 
   const [form] = Form.useForm();
-  const { orderById } = useSelector((state) => state.orderSlice);
+  const { orderById, editLoading } = useSelector((state) => state.orderSlice);
+
+  const dispatch = useDispatch();
 
   const handleClose = () => {
     navigate(`/orders`);
   };
 
+  const onFinish = (values) => {
+    dispatch({ type: SagaActionTypes.UPDATE_ORDER_STATUS, orderId: orderById._id, orderStatus: values.shippingStatus });
+  };
+
+  if (editLoading) {
+    return <LoadingSpin />;
+  }
+
   return (
     <Form
       name="order_details"
       form={form}
-      // onFinish={onFinish}
+      onFinish={onFinish}
       initialValues={{
         shippingStatus: orderById.shippingStatus,
       }}
@@ -49,7 +61,7 @@ const OrderDetails = () => {
           }}
         >
           <CalendarOutlined style={{ fontSize: 24 }} />
-          <Text style={{ fontSize: 16 }} strong>
+          <Text style={{ fontSize: 16, marginLeft: '12px' }} strong>
             {dayjs(orderById?.createdAt).format(dateFormat).toString()}
           </Text>
         </Col>
