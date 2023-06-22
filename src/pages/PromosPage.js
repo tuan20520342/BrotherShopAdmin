@@ -17,6 +17,11 @@ const PromosPage = () => {
   const dispatch = useDispatch();
 
   const [keyWord, setKeyWord] = useState('');
+  const { promos, loading } = useSelector((state) => state.promotionSlice);
+
+  useEffect(() => {
+    dispatch({ type: SagaActionTypes.GET_PROMOS_SAGA });
+  }, [dispatch]);
 
   const handleAddPromo = () => {
     dispatch(
@@ -37,7 +42,7 @@ const PromosPage = () => {
           <Toolbar title={'Thêm khuyến mãi'} setKeyWord={setKeyWord} handleAdd={handleAddPromo} />
         </Col>
         <Col span={24}>
-          <TablePromos keyWord={keyWord} />
+          <TablePromos keyWord={keyWord} data={promos} loading={loading} />
         </Col>
       </Row>
       <ModalForm />

@@ -1,11 +1,12 @@
 /* eslint-disable no-template-curly-in-string */
-import React from 'react';
-import { Form, Input, Button, Space, Row, InputNumber, DatePicker, Select } from 'antd';
-
+import React, { useState } from 'react';
+import { Form, Input, Button, Space, Row, InputNumber, DatePicker } from 'antd';
+import dayjs from 'dayjs';
 import { modalActions } from '~/redux/reducer/ModalReducer';
 import * as SagaActionTypes from '~/redux/constants';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 const { RangePicker } = DatePicker;
+const { TextArea } = Input;
 
 const validateMessages = {
   required: 'Cần nhập ${label}!',
@@ -38,27 +39,50 @@ const formItemLayout = {
   },
 };
 
-const AddPromoForm = () => {
+const AddPromoForm = ({ promo }) => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
 
-  const { categories } = useSelector((state) => state.categorySlice);
-  const types = [];
-  categories.forEach((element) => {
-    if (element.types.length > 0) {
-      types.push(...element.types);
-    } else {
-      types.push(element);
-    }
-  });
-  console.log(types);
+  const [disabled, setDisabled] = useState(promo ? true : false);
 
-  const categoryOptions = types.map(function (type) {
-    return { value: JSON.stringify(type), label: type?.type || type?.name };
-  });
+  const handleEnableModify = () => {
+    setDisabled(false);
+  };
+
+  const handleFormCancel = () => {
+    setDisabled(true);
+    onReset();
+  };
+
+  const onReset = () => {
+    form.resetFields();
+  };
 
   const onFinish = (values) => {
-    console.log(values);
+    if (promo) {
+      const editPromo = {
+        id: promo?._id,
+        name: values.name,
+        description: values.description,
+        percentage: values.percentage,
+        startDate: values.expire[0],
+        endDate: values.expire[1],
+        amount: values.amount,
+        minPrice: values.minPrice,
+      };
+      dispatch({ type: SagaActionTypes.UPDATE_PROMO_SAGA, editPromo });
+    } else {
+      const newPromo = {
+        name: values.name,
+        description: values.description,
+        percentage: values.percentage,
+        startDate: values.expire[0],
+        endDate: values.expire[1],
+        amount: values.amount,
+        minPrice: values.minPrice,
+      };
+      dispatch({ type: SagaActionTypes.CREATE_PROMO_SAGA, newPromo });
+    }
   };
 
   const handleClose = () => {
@@ -70,12 +94,19 @@ const AddPromoForm = () => {
       name="add_promo_form"
       form={form}
       onFinish={onFinish}
-      initialValues={{}}
+      initialValues={{
+        name: promo ? promo?.name : '',
+        percentage: promo ? promo?.percentage : '',
+        minPrice: promo ? promo?.minPrice : '',
+        expire: promo ? [dayjs(promo?.startDate), dayjs(promo?.endDate)] : '',
+        amount: promo ? promo?.amount : '',
+        description: promo ? promo?.description : '',
+      }}
       validateMessages={validateMessages}
       {...formItemLayout}
     >
       <Form.Item
-        name="promo"
+        name="name"
         label="Tên khuyến mãi"
         rules={[
           {
@@ -83,21 +114,10 @@ const AddPromoForm = () => {
           },
         ]}
       >
-        <Input placeholder="Tên khuyến mãi" />
+        <Input placeholder="Tên khuyến mãi" disabled={disabled} />
       </Form.Item>
       <Form.Item
-        name="category"
-        label="Danh mục áp dụng"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      >
-        <Select showSearch placeholder="Danh mục" allowClear options={categoryOptions}></Select>
-      </Form.Item>
-      <Form.Item
-        name="discount"
+        name="percentage"
         label="Phần trăm ưu đãi"
         rules={[
           {
@@ -109,9 +129,28 @@ const AddPromoForm = () => {
           className="rounded"
           min={0}
           max={100}
-          addonAfter={<div>%</div>}
+          addonAfter={'%'}
           placeholder="Phần trăm ưu đãi"
+          disabled={disabled}
+        />
+      </Form.Item>
+      <Form.Item
+        name="minPrice"
+        label="Hóa đơn tối thiểu"
+        rules={[
+          {
+            required: true,
+          },
+        ]}
+      >
+        <InputNumber
+          className="rounded"
+          min={0}
+          addonAfter={'VNĐ'}
+          placeholder="Tối thiểu"
+          formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
           parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
+          disabled={disabled}
         />
       </Form.Item>
       <Form.Item
@@ -128,19 +167,71 @@ const AddPromoForm = () => {
           showTime={{
             format: 'HH:mm',
           }}
-          format="YYYY-MM-DD HH:mm"
+          format="DD-MM-YYYY HH:mm"
+          disabled={disabled}
         />
       </Form.Item>
-
+      <Form.Item
+        name="amount"
+        label="Số lượng"
+        rules={[
+          {
+            required: true,
+          },
+        ]}
+      >
+        <InputNumber
+          className="rounded"
+          style={{ width: '80%' }}
+          min={0}
+          placeholder="Số lượng"
+          formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+          parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
+          disabled={disabled}
+        />
+      </Form.Item>
+      <Form.Item
+        name="description"
+        rules={[
+          {
+            required: true,
+          },
+        ]}
+        label="Mô tả"
+      >
+        <TextArea rows={2} placeholder="Mô tả" disabled={disabled} />
+      </Form.Item>
       <Row justify="end">
-        <Space>
-          <Button type="primary" htmlType="submit">
-            Xác nhận
-          </Button>
-          <Button type="primary" danger onClick={handleClose}>
-            Đóng
-          </Button>
-        </Space>
+        {promo ? (
+          disabled ? (
+            <Space>
+              <Button type="primary" onClick={() => handleEnableModify()}>
+                Chỉnh sửa
+              </Button>
+              <Button type="primary" danger onClick={handleClose}>
+                Đóng
+              </Button>
+            </Space>
+          ) : (
+            <Space>
+              <Button type="primary" danger onClick={handleFormCancel}>
+                Hủy
+              </Button>
+              <Button type="primary" htmlType="submit">
+                Lưu
+              </Button>
+            </Space>
+          )
+        ) : (
+          <Space>
+            <Button type="primary" htmlType="submit">
+              Xác nhận
+            </Button>
+            <Button type="primary" danger onClick={handleClose}>
+              Đóng
+            </Button>
+          </Space>
+        )}
       </Row>
     </Form>
   );

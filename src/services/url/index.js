@@ -47,3 +47,10 @@ export const URL_GET_BEST_SELLER_PRODUCTS = '/dashboard/best-seller';
 export const URL_GET_PERCENTAGE_CATEGORIES = '/dashboard/category/percentage';
 export const URL_GET_SOLD_QUANTITY_PRODUCTS = '/dashboard/sold-quantity';
 export const URL_GET_TREND_OF_CATEGORIES = '/dashboard/trend-of-categories';
+
+// PROMOTION
+export const URL_GET_PROMOTIONS = `${DOMAIN_NAME}/promotions`;
+export const URL_PROMOTIONS_ID = (id) => `${DOMAIN_NAME}/promotions/${id}`;
+export const URL_CREATE_PROMOTION = `${DOMAIN_NAME}/promotions`;
+export const URL_EDIT_PROMOTION = (id) => `${DOMAIN_NAME}/promotions/${id}`;
+export const URL_DELETE_PROMOTION = (id) => `${DOMAIN_NAME}/promotions/${id}`;

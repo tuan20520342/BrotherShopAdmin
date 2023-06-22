@@ -62,7 +62,7 @@ function* actResetPassword(action) {
   try {
     const { data } = action;
     const res = yield call(() => AuthenticationService.resetPassword(data));
-    if (res.status === 200) {
+    if (res.status === 201) {
       AlertCustom({ type: 'success', title: res.data.message });
     } else {
       AlertCustom({ type: 'error', title: res.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
