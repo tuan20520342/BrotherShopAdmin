@@ -119,21 +119,6 @@ const EditStaffForm = () => {
             />
           </Form.Item>
         </Col>
-        <Col xs={24} sm={12} md={24} lg={12} key={3}>
-          <Form.Item
-            name="cccd"
-            label="CCCD"
-            rules={[
-              {
-                pattern: /^[\d]{12,12}$/,
-                message: 'CCCD không hợp lệ',
-              },
-              { required: true },
-            ]}
-          >
-            <Input placeholder="CCCD" disabled={true} />
-          </Form.Item>
-        </Col>
         <Col xs={24} sm={12} md={24} lg={12} key={4}>
           <Form.Item
             name="gender"
@@ -148,7 +133,7 @@ const EditStaffForm = () => {
               placeholder="Giới tính"
               allowClear
               style={{
-                width: '40%',
+                width: '60%',
               }}
               disabled={componentDisabled}
             >
@@ -179,11 +164,6 @@ const EditStaffForm = () => {
           </Form.Item>
         </Col>
         <Col xs={24} sm={12} md={24} lg={12} key={7}>
-          <Form.Item name="address" label="Địa chỉ" rules={[{ required: true }]}>
-            <TextArea rows={2} placeholder="Địa chỉ" disabled={componentDisabled} />
-          </Form.Item>
-        </Col>
-        <Col xs={24} sm={12} md={24} lg={12} key={8}>
           <Form.Item
             name="status"
             label="Tình trạng"
@@ -206,28 +186,28 @@ const EditStaffForm = () => {
             </Select>
           </Form.Item>
         </Col>
-        <Col xs={24} key={9}>
-          <Form.Item name="otherInformation" label="Khác">
-            <TextArea rows={2} placeholder="Khác" disabled={componentDisabled} />
+        <Col span={24} key={8}>
+          <Form.Item name="address" label="Địa chỉ" rules={[{ required: true }]}>
+            <TextArea rows={2} placeholder="Địa chỉ" disabled={componentDisabled} />
           </Form.Item>
         </Col>
       </Row>
       <Row justify="end">
         {enableModify === false ? (
           <Space>
-            <Button type="primary" onClick={() => handleEnableModify()}>
+            <Button type="primary" size="large" onClick={() => handleEnableModify()}>
               Chỉnh sửa
             </Button>
-            <Button type="primary" danger onClick={handleClose}>
+            <Button type="primary" size="large" danger onClick={handleClose}>
               Đóng
             </Button>
           </Space>
         ) : (
           <Space>
-            <Button type="primary" danger onClick={handleFormCancel}>
+            <Button type="primary" size="large" danger onClick={handleFormCancel}>
               Hủy
             </Button>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" size="large" htmlType="submit">
               Lưu
             </Button>
           </Space>

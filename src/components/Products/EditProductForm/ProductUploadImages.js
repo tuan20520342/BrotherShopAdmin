@@ -51,10 +51,16 @@ export default React.forwardRef(function ProductUploadImages({ product, loading 
   };
 
   const handleChange = ({ fileList: newFileList }) => {
+    if (newFileList.length > 0) {
+      newFileList[0].status = 'done';
+    }
     setFileList(newFileList);
   };
 
   const handleMainChange = ({ fileList: newFileList }) => {
+    if (newFileList.length > 0) {
+      newFileList[0].status = 'done';
+    }
     setMainFileList(newFileList);
   };
 
@@ -86,6 +92,7 @@ export default React.forwardRef(function ProductUploadImages({ product, loading 
                 onPreview={handlePreview}
                 onChange={handleMainChange}
                 style={{ display: 'inline-block' }}
+                customRequest={() => {}}
               >
                 {mainFileList.length >= 1 ? null : <UploadButton />}
               </Upload>
@@ -95,7 +102,13 @@ export default React.forwardRef(function ProductUploadImages({ product, loading 
         <Col span={24}>
           <Form.Item name="subImg" label="Thêm ảnh mô tả">
             <CustomImgCrop>
-              <Upload listType="picture-card" fileList={subFileList} onPreview={handlePreview} onChange={handleChange}>
+              <Upload
+                listType="picture-card"
+                fileList={subFileList}
+                onPreview={handlePreview}
+                onChange={handleChange}
+                customRequest={() => {}}
+              >
                 {subFileList.length === 1 ? null : <UploadButton />}
               </Upload>
             </CustomImgCrop>

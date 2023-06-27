@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as SagaActionTypes from '~/redux/constants';
 import CustomImgCrop from './CustomImgCrop';
 import Container from '../UI/Container/Container';
+import UploadButton from '../UI/Button/UploadButton';
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -100,25 +101,18 @@ const AddProductForm = () => {
   };
 
   const handleChange = ({ fileList: newFileList }) => {
+    if (newFileList.length > 0) {
+      newFileList[0].status = 'done';
+    }
     setSubFileList(newFileList);
   };
 
   const handleMainChange = ({ fileList: newFileList }) => {
+    if (newFileList.length > 0) {
+      newFileList[0].status = 'done';
+    }
     setMainFileList(newFileList);
   };
-
-  const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
-        Upload
-      </div>
-    </div>
-  );
 
   const handleClose = () => {
     navigate('/products');
@@ -279,8 +273,9 @@ const AddProductForm = () => {
                         onPreview={handlePreview}
                         onChange={handleMainChange}
                         style={{ display: 'inline-block' }}
+                        customRequest={() => {}}
                       >
-                        {mainFileList.length >= 1 ? null : uploadButton}
+                        {mainFileList.length >= 1 ? null : <UploadButton />}
                       </Upload>
                     </CustomImgCrop>
                     <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
@@ -304,8 +299,9 @@ const AddProductForm = () => {
                         fileList={subFileList}
                         onPreview={handlePreview}
                         onChange={handleChange}
+                        customRequest={() => {}}
                       >
-                        {subFileList.length >= 3 ? null : uploadButton}
+                        {subFileList.length >= 1 ? null : <UploadButton />}
                       </Upload>
                     </CustomImgCrop>
                     <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>

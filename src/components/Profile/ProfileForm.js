@@ -79,13 +79,10 @@ const ProfileForm = () => {
       initialValues={{
         name: currentUser.name,
         birthday: dayjs(currentUser.birthday),
-        cccd: '111111111111',
         gender: currentUser.gender,
         phone: currentUser.phone,
         email: currentUser.email,
         address: currentUser.address,
-        otherInformation: '',
-        // status: currentUser.status,
       }}
       validateMessages={validateMessages}
       style={{
@@ -134,21 +131,6 @@ const ProfileForm = () => {
             />
           </Form.Item>
         </Col>
-        <Col xs={24} sm={12} md={24} lg={12} key={3}>
-          <Form.Item
-            name="cccd"
-            label="CCCD"
-            rules={[
-              {
-                pattern: /^[\d]{12,12}$/,
-                message: 'CCCD không hợp lệ',
-              },
-              { required: true },
-            ]}
-          >
-            <Input placeholder="CCCD" disabled={true} />
-          </Form.Item>
-        </Col>
         <Col xs={24} sm={12} md={24} lg={12} key={4}>
           <Form.Item
             name="gender"
@@ -163,7 +145,7 @@ const ProfileForm = () => {
               placeholder="Giới tính"
               allowClear
               style={{
-                width: '40%',
+                width: '60%',
               }}
               disabled={componentDisabled}
             >
@@ -193,15 +175,9 @@ const ProfileForm = () => {
             <Input placeholder="Email" disabled={true} />
           </Form.Item>
         </Col>
-        <Col xs={24} sm={12} md={24} lg={12} key={7}>
+        <Col span={24} key={7}>
           <Form.Item name="address" label="Địa chỉ" rules={[{ required: true }]}>
             <TextArea rows={2} placeholder="Địa chỉ" disabled={componentDisabled} />
-          </Form.Item>
-        </Col>
-
-        <Col xs={24} key={8}>
-          <Form.Item name="otherInformation" label="Khác">
-            <TextArea rows={2} placeholder="Khác" disabled={componentDisabled} />
           </Form.Item>
         </Col>
         <Col xs={24} key={9}>
