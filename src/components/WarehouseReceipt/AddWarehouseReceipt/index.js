@@ -265,7 +265,7 @@ const AddWarehouseReceipt = ({ receiptById }) => {
         </Col>
         <Col span={24}></Col>
       </Row>
-      <Row justify="end" style={{ marginTop: '8px' }}>
+      <Row justify="end" style={{ marginTop: '8px', marginBottom: '8px' }}>
         {receiptById ? (
           disabled ? (
             <Space>

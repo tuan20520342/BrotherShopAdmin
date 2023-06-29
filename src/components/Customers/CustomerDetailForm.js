@@ -40,7 +40,6 @@ const CustomerDetailForm = () => {
       initialValues={{
         name: customerById.name,
         birthday: dayjs(customerById.birthday),
-        cccd: '111111111111',
         gender: customerById.gender,
         phone: customerById.phone,
         email: customerById.email,
@@ -80,27 +79,13 @@ const CustomerDetailForm = () => {
             />
           </Form.Item>
         </Col>
-        <Col xs={24} sm={12} md={24} lg={12} key={3}>
-          <Form.Item
-            name="cccd"
-            label="CCCD"
-            rules={[
-              {
-                pattern: /^[\d]{12,12}$/,
-                message: 'CCCD không hợp lệ',
-              },
-            ]}
-          >
-            <Input placeholder="CCCD" disabled={true} />
-          </Form.Item>
-        </Col>
         <Col xs={24} sm={12} md={24} lg={12} key={4}>
           <Form.Item name="gender" label="Giới tính">
             <Select
               placeholder="Giới tính"
               allowClear
               style={{
-                width: '40%',
+                width: '60%',
               }}
               disabled={true}
             >
@@ -148,7 +133,7 @@ const CustomerDetailForm = () => {
         </Col>
       </Row>
       <Row justify="end">
-        <Button type="primary" danger onClick={handleClose}>
+        <Button type="primary" size="large" danger onClick={handleClose}>
           Đóng
         </Button>
       </Row>

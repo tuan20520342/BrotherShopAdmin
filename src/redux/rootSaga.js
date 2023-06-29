@@ -6,6 +6,7 @@ import * as AuthSaga from './sagaActions/AuthSaga';
 import * as CustomerSaga from './sagaActions/CustomerSaga';
 import * as ReceiptSaga from './sagaActions/ReceiptSaga';
 import * as OrderSaga from './sagaActions/OrderSaga';
+import * as PromotionSaga from './sagaActions/PromotionSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -30,6 +31,8 @@ export default function* rootSaga() {
     //Authentication
     AuthSaga.followGetCurrentUser(),
     AuthSaga.followPutCurrentUser(),
+    AuthSaga.followForgotPassword(),
+    AuthSaga.followResetPassword(),
     //Customer
     CustomerSaga.followActGetListCustomers(),
     CustomerSaga.followActGetCustomerById(),
@@ -41,6 +44,11 @@ export default function* rootSaga() {
     //Order
     OrderSaga.followActGetOrders(),
     OrderSaga.followActGetOrderById(),
+    //Promotion
+    PromotionSaga.followActGetPromos(),
+    PromotionSaga.followActCreatePromo(),
+    PromotionSaga.followActRemovePromo(),
+    PromotionSaga.followActUpdatePromo(),
     OrderSaga.followActUpdateOrderStatus(),
   ]);
 }

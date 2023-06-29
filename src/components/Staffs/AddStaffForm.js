@@ -37,43 +37,6 @@ const AddStaffForm = () => {
   const dispatch = useDispatch();
   const { isCreateStaffSucceeded } = useSelector((state) => state.staffSlice);
   const [form] = Form.useForm();
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState('');
-  const [previewTitle, setPreviewTitle] = useState('');
-  const [fileList, setFileList] = useState([
-    {
-      uid: '-1',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
-  ]);
-  const handleCancel = () => setPreviewOpen(false);
-  const handlePreview = async (file) => {
-    console.log(file);
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj);
-    }
-    setPreviewImage(file.url || file.preview);
-    setPreviewOpen(true);
-    setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
-  };
-  const handleChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
-    console.log(newFileList);
-  };
-  const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
-        Upload
-      </div>
-    </div>
-  );
 
   useEffect(() => {
     if (isCreateStaffSucceeded) {
@@ -107,9 +70,6 @@ const AddStaffForm = () => {
       name="add_staff_form"
       form={form}
       onFinish={onFinish}
-      initialValues={{
-        staff_other_information: '',
-      }}
       validateMessages={validateMessages}
       style={{
         background: 'white',
@@ -156,21 +116,7 @@ const AddStaffForm = () => {
             />
           </Form.Item>
         </Col>
-        <Col xs={24} sm={12} md={24} lg={12} key={3}>
-          <Form.Item
-            name="staff_cccd"
-            label="CCCD"
-            rules={[
-              {
-                pattern: /^[\d]{12,12}$/,
-                message: 'CCCD không hợp lệ',
-              },
-              { required: true },
-            ]}
-          >
-            <Input placeholder="CCCD" />
-          </Form.Item>
-        </Col>
+
         <Col xs={24} sm={12} md={24} lg={12} key={4}>
           <Form.Item
             name="staff_gender"
@@ -185,7 +131,7 @@ const AddStaffForm = () => {
               placeholder="Giới tính"
               allowClear
               style={{
-                width: '40%',
+                width: '60%',
               }}
             >
               <Option value="Nam">Nam</Option>
@@ -214,29 +160,9 @@ const AddStaffForm = () => {
             <Input placeholder="Email" />
           </Form.Item>
         </Col>
-        <Col xs={24} sm={12} md={24} lg={12} key={7}>
+        <Col span={24} key={7}>
           <Form.Item name="staff_address" label="Địa chỉ" rules={[{ required: true }]}>
             <TextArea rows={2} placeholder="Địa chỉ" />
-          </Form.Item>
-        </Col>
-        <Col span={24} key={8}>
-          <Form.Item name="staff_other_information" label="Khác">
-            <TextArea rows={2} placeholder="Khác" />
-          </Form.Item>
-        </Col>
-        <Col span={24} key={9}>
-          <Form.Item name="avatar" label="Ảnh nhân viên">
-            <ImgCrop>
-              <Upload
-                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                listType="picture-card"
-                fileList={fileList}
-                onPreview={handlePreview}
-                onChange={handleChange}
-              >
-                {fileList.length >= 1 ? null : uploadButton}
-              </Upload>
-            </ImgCrop>
           </Form.Item>
         </Col>
       </Row>
@@ -250,15 +176,6 @@ const AddStaffForm = () => {
           </Button>
         </Space>
       </Row>
-      <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
-        <img
-          alt="example"
-          style={{
-            width: '100%',
-          }}
-          src={previewImage}
-        />
-      </Modal>
     </Form>
   );
 };

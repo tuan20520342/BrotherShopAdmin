@@ -10,4 +10,12 @@ export const AuthenticationService = {
       password: password,
     });
   },
+
+  forgotPassword: (data) => {
+    return axios.post(UrlApi.URL_FORGOT_PASSWORD, data);
+  },
+
+  resetPassword: (data) => {
+    return axios.post(UrlApi.URL_RESET_PASSWORD, data);
+  },
 };

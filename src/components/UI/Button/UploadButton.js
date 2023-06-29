@@ -9,7 +9,7 @@ function UploadButton() {
           marginTop: 8,
         }}
       >
-        Upload
+        Tải ảnh
       </div>
     </div>
   );
