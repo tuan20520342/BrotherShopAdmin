@@ -1,4 +1,4 @@
-export const DOMAIN_NAME = 'http://localhost:3001';
+export const DOMAIN_NAME = 'https://brother-shop-102.onrender.com';
 
 //AUTHENTICATION
 export const URL_AUTH_LOGIN = `${DOMAIN_NAME}/auth/staffs/login`;
