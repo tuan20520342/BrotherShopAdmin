@@ -18,7 +18,7 @@ const OrdersPage = () => {
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_ORDERS_SAGA });
 
-    const socket = openSocket(process.env.REACT_APP_DEV_BE_URL);
+    const socket = openSocket(process.env.REACT_APP_PROD_BE_URL);
     socket.on('orders', (data) => {
       const { action } = data;
 

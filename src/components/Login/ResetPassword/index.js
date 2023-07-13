@@ -1,26 +1,28 @@
 import { LockOutlined, UnlockOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Typography, Row } from 'antd';
 import '../styles/LoginForm.css';
-import { useNavigate } from 'react-router-dom';
 import * as SagaActionTypes from '~/redux/constants';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 const { Title } = Typography;
 
 const ResetPasswordForm = ({ token }) => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onFinish = (values) => {
     const data = {
       token: token,
       password: values.password,
       confirmPassword: values.confirmPassword,
+      callback: () => navigate('/login'),
     };
     dispatch({
       type: SagaActionTypes.RESET_PASSWORD_SAGA,
       data: data,
     });
   };
+
   return (
     <div id="components-form-login">
       <Row justify="center">

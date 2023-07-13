@@ -1,8 +1,7 @@
 import { LockOutlined, UnlockOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Typography, Row, Space } from 'antd';
+import { Button, Form, Input, Typography, Row } from 'antd';
 import '~/components/Login/styles/LoginForm.css';
 import { useNavigate } from 'react-router-dom';
-import AlertCustom from '~/components/UI/Notification/Alert';
 const { Title } = Typography;
 
 const ChangePasswordForm = () => {
@@ -12,7 +11,10 @@ const ChangePasswordForm = () => {
     navigate('/profile');
   };
 
-  const onFinish = async (values) => {};
+  const onFinish = async (values) => {
+    console.log(values);
+  };
+
   return (
     <div id="components-form-login">
       <Row justify="center">

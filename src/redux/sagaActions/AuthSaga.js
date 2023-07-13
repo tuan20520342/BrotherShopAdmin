@@ -61,9 +61,18 @@ function* actForgotPassword(action) {
 function* actResetPassword(action) {
   try {
     const { data } = action;
-    const res = yield call(() => AuthenticationService.resetPassword(data));
+    const resetPasswordData = {
+      token: data.token,
+      password: data.password,
+      confirmPassword: data.confirmPassword,
+    };
+
+    const res = yield call(() => AuthenticationService.resetPassword(resetPasswordData));
     if (res.status === 201) {
       AlertCustom({ type: 'success', title: res.data.message });
+      if (data.callback) {
+        data.callback();
+      }
     } else {
       AlertCustom({ type: 'error', title: res.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
     }

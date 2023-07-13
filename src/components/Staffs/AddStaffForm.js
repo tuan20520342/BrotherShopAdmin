@@ -1,9 +1,7 @@
 /* eslint-disable no-template-curly-in-string */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import dayjs from 'dayjs';
-import ImgCrop from 'antd-img-crop';
-import { PlusOutlined } from '@ant-design/icons';
-import { Form, Input, Button, Select, DatePicker, Upload, Space, Modal, Row, Col } from 'antd';
+import { Form, Input, Button, Select, DatePicker, Space, Row, Col } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import * as SagaActionTypes from '~/redux/constants';
@@ -11,14 +9,6 @@ import * as SagaActionTypes from '~/redux/constants';
 const { Option } = Select;
 const { TextArea } = Input;
 const dateFormat = 'DD/MM/YYYY';
-
-const getBase64 = (file) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
-  });
 
 const validateMessages = {
   required: 'Cần nhập ${label}!',

@@ -3,14 +3,12 @@ import dayjs from 'dayjs';
 import { EyeFilled, DeleteFilled } from '@ant-design/icons';
 import TableTemplate from '~/components/UI/Table/TableTemplate';
 import LoadingSpin from '../UI/LoadingSpin/LoadingSpin';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import * as SagaActionTypes from '~/redux/constants';
 import { modalActions } from '~/redux/reducer/ModalReducer';
 import AddPromoForm from './AddPromoForm';
 
 const TablePromos = ({ keyWord, data, loading }) => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const columns = [

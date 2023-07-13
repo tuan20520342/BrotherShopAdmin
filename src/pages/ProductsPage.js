@@ -18,7 +18,7 @@ const ProductsPage = () => {
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_PRODUCTS_SAGA });
 
-    const socket = openSocket(process.env.REACT_APP_DEV_BE_URL);
+    const socket = openSocket(process.env.REACT_APP_PROD_BE_URL);
     socket.on('products', (data) => {
       const { action } = data;
 
