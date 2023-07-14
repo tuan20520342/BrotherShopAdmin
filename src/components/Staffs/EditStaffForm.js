@@ -64,7 +64,6 @@ const EditStaffForm = () => {
       initialValues={{
         name: staffById.name,
         birthday: dayjs(staffById.birthday),
-        cccd: '111111111111',
         gender: staffById.gender,
         phone: staffById.phone,
         email: staffById.email,
@@ -79,6 +78,7 @@ const EditStaffForm = () => {
         borderRadius: '6px',
         filter: 'drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1))',
       }}
+      layout="vertical"
     >
       <Row
         gutter={{
@@ -101,7 +101,7 @@ const EditStaffForm = () => {
             <Input placeholder="Họ và tên" disabled={componentDisabled} />
           </Form.Item>
         </Col>
-        <Col xs={24} sm={12} md={24} lg={12} key={2}>
+        <Col xs={24} sm={12} md={12} lg={6} key={2}>
           <Form.Item
             name="birthday"
             label="Ngày sinh"
@@ -116,10 +116,11 @@ const EditStaffForm = () => {
               format={dateFormat}
               disabledDate={(current) => current.isAfter(dayjs())}
               disabled={componentDisabled}
+              style={{ width: '100%' }}
             />
           </Form.Item>
         </Col>
-        <Col xs={24} sm={12} md={24} lg={12} key={4}>
+        <Col xs={24} sm={12} md={12} lg={6} key={4}>
           <Form.Item
             name="gender"
             label="Giới tính"
@@ -129,21 +130,14 @@ const EditStaffForm = () => {
               },
             ]}
           >
-            <Select
-              placeholder="Giới tính"
-              allowClear
-              style={{
-                width: '60%',
-              }}
-              disabled={componentDisabled}
-            >
+            <Select placeholder="Giới tính" allowClear disabled={componentDisabled}>
               <Option value="Nam">Nam</Option>
               <Option value="Nữ">Nữ</Option>
               <Option value="Khác">Khác</Option>
             </Select>
           </Form.Item>
         </Col>
-        <Col xs={24} sm={12} md={24} lg={12} key={5}>
+        <Col xs={24} sm={12} md={12} lg={6} key={5}>
           <Form.Item
             name="phone"
             label="Số Điện Thoại"
@@ -158,12 +152,7 @@ const EditStaffForm = () => {
             <Input placeholder="Số điện thoại" disabled={componentDisabled} />
           </Form.Item>
         </Col>
-        <Col xs={24} sm={12} md={24} lg={12} key={6}>
-          <Form.Item name="email" label="Email" rules={[{ type: 'email', required: true }]}>
-            <Input placeholder="Email" disabled={true} />
-          </Form.Item>
-        </Col>
-        <Col xs={24} sm={12} md={24} lg={12} key={7}>
+        <Col xs={24} sm={12} md={12} lg={6} key={7}>
           <Form.Item
             name="status"
             label="Tình trạng"
@@ -173,19 +162,18 @@ const EditStaffForm = () => {
               },
             ]}
           >
-            <Select
-              placeholder="Tình trạng"
-              allowClear
-              style={{
-                width: '40%',
-              }}
-              disabled={componentDisabled}
-            >
+            <Select placeholder="Tình trạng" allowClear disabled={componentDisabled}>
               <Option value="active">Đang làm</Option>
               <Option value="nonactive">Đã nghỉ</Option>
             </Select>
           </Form.Item>
         </Col>
+        <Col xs={24} sm={12} md={24} lg={12} key={6}>
+          <Form.Item name="email" label="Email" rules={[{ type: 'email', required: true }]}>
+            <Input placeholder="Email" disabled={true} />
+          </Form.Item>
+        </Col>
+
         <Col span={24} key={8}>
           <Form.Item name="address" label="Địa chỉ" rules={[{ required: true }]}>
             <TextArea rows={2} placeholder="Địa chỉ" disabled={componentDisabled} />

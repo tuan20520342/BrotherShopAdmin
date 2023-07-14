@@ -91,6 +91,7 @@ const ProfileForm = () => {
         borderRadius: '6px',
         filter: 'drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1))',
       }}
+      layout="vertical"
     >
       <Row
         gutter={{
@@ -113,7 +114,7 @@ const ProfileForm = () => {
             <Input placeholder="Họ và tên" disabled={componentDisabled} />
           </Form.Item>
         </Col>
-        <Col xs={24} sm={12} md={24} lg={12} key={2}>
+        <Col xs={24} sm={12} md={12} lg={6} key={2}>
           <Form.Item
             name="birthday"
             label="Ngày sinh"
@@ -128,10 +129,11 @@ const ProfileForm = () => {
               format={dateFormat}
               disabledDate={(current) => current.isAfter(dayjs())}
               disabled={componentDisabled}
+              style={{ width: '100%' }}
             />
           </Form.Item>
         </Col>
-        <Col xs={24} sm={12} md={24} lg={12} key={4}>
+        <Col xs={24} sm={12} md={12} lg={6} key={4} offset={0}>
           <Form.Item
             name="gender"
             label="Giới tính"
@@ -141,14 +143,7 @@ const ProfileForm = () => {
               },
             ]}
           >
-            <Select
-              placeholder="Giới tính"
-              allowClear
-              style={{
-                width: '60%',
-              }}
-              disabled={componentDisabled}
-            >
+            <Select placeholder="Giới tính" allowClear disabled={componentDisabled}>
               <Option value="Nam">Nam</Option>
               <Option value="Nữ">Nữ</Option>
               <Option value="Khác">Khác</Option>
@@ -170,7 +165,7 @@ const ProfileForm = () => {
             <Input placeholder="Số điện thoại" disabled={componentDisabled} />
           </Form.Item>
         </Col>
-        <Col xs={24} sm={12} md={24} lg={12} key={6}>
+        <Col xs={24} sm={24} md={24} lg={12} key={6}>
           <Form.Item name="email" label="Email" rules={[{ type: 'email', required: true }]}>
             <Input placeholder="Email" disabled={true} />
           </Form.Item>
@@ -181,11 +176,9 @@ const ProfileForm = () => {
           </Form.Item>
         </Col>
         <Col xs={24} key={9}>
-          <Form.Item name="pasword" label="Mật khẩu">
-            <Button type="dashed" onClick={() => handleChangePassword()}>
-              Thay đổi mật khẩu
-            </Button>
-          </Form.Item>
+          <Button type="dashed" onClick={() => handleChangePassword()}>
+            Thay đổi mật khẩu
+          </Button>
         </Col>
       </Row>
       <Row justify="end">

@@ -179,6 +179,7 @@ const AddWarehouseReceipt = ({ receiptById }) => {
               filter: 'drop-shadow(0 1px 1px rgb(0 0 0 / 0.05))',
               marginBottom: '10px',
             }}
+            layout="vertical"
           >
             <Row
               gutter={{
@@ -188,7 +189,7 @@ const AddWarehouseReceipt = ({ receiptById }) => {
                 lg: 32,
               }}
             >
-              <Col xs={24} sm={12} md={24} lg={12}>
+              <Col xs={24} sm={24} md={24} lg={12}>
                 <Form.Item
                   name="date"
                   label="Ngày nhập hàng"
@@ -203,10 +204,11 @@ const AddWarehouseReceipt = ({ receiptById }) => {
                     format={dateFormat}
                     disabledDate={(current) => current.isAfter(dayjs())}
                     disabled={disabled}
+                    style={{ width: '100%' }}
                   />
                 </Form.Item>
               </Col>
-              <Col xs={24} sm={12} md={24} lg={12}>
+              <Col xs={24} sm={24} md={24} lg={12}>
                 <Form.Item name="staff" label="Nhân viên nhập hàng">
                   <Input
                     placeholder="Nhân viên"
@@ -217,7 +219,7 @@ const AddWarehouseReceipt = ({ receiptById }) => {
                   />
                 </Form.Item>
               </Col>
-              <Col xs={24} sm={12} md={24} lg={12}>
+              <Col xs={24} sm={24} md={24} lg={12}>
                 <Form.Item
                   name="supplier"
                   label="Nhà cung cấp"
@@ -230,7 +232,7 @@ const AddWarehouseReceipt = ({ receiptById }) => {
                   <Input placeholder="Nhà cung cấp" disabled={disabled} />
                 </Form.Item>
               </Col>
-              <Col xs={24} sm={12} md={24} lg={12}>
+              <Col xs={24} sm={24} md={24} lg={12}>
                 <Form.Item
                   name="deliver"
                   label="Người giao hàng"

@@ -46,7 +46,6 @@ const CustomerDetailForm = () => {
         address: customerById?.address?.map(
           (item) => `${item.name}, ${item.phone}, ${item.detail}, ${item.ward}, ${item.district}, ${item.city}`,
         ),
-        otherInformation: '',
       }}
       validateMessages={validateMessages}
       style={{
@@ -55,6 +54,7 @@ const CustomerDetailForm = () => {
         borderRadius: '6px',
         filter: 'drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1))',
       }}
+      layout="vertical"
     >
       <Row
         gutter={{
@@ -69,26 +69,20 @@ const CustomerDetailForm = () => {
             <Input placeholder="Họ và tên" disabled={true} />
           </Form.Item>
         </Col>
-        <Col xs={24} sm={12} md={24} lg={12} key={2}>
+        <Col xs={24} sm={12} md={12} lg={6} key={2}>
           <Form.Item name="birthday" label="Ngày sinh">
             <DatePicker
               placeholder="Ngày sinh"
               format={dateFormat}
               disabledDate={(current) => current.isAfter(dayjs())}
               disabled={true}
+              style={{ width: '100%' }}
             />
           </Form.Item>
         </Col>
-        <Col xs={24} sm={12} md={24} lg={12} key={4}>
+        <Col xs={24} sm={12} md={12} lg={6} key={4}>
           <Form.Item name="gender" label="Giới tính">
-            <Select
-              placeholder="Giới tính"
-              allowClear
-              style={{
-                width: '60%',
-              }}
-              disabled={true}
-            >
+            <Select placeholder="Giới tính" allowClear disabled={true}>
               <Option value="Nam">Nam</Option>
               <Option value="Nữ">Nữ</Option>
               <Option value="Khác">Khác</Option>
@@ -109,7 +103,7 @@ const CustomerDetailForm = () => {
             <Input placeholder="Số điện thoại" disabled={true} />
           </Form.Item>
         </Col>
-        <Col xs={24} sm={12} md={24} lg={12} key={6}>
+        <Col xs={24} sm={24} md={24} lg={12} key={6}>
           <Form.Item name="email" label="Email">
             <Input placeholder="Email" disabled={true} />
           </Form.Item>

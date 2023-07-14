@@ -40,7 +40,6 @@ const AddStaffForm = () => {
 
   const onFinish = (values) => {
     let newStaff = {
-      role: '643f6259007149b3f3d19340',
       name: values.staff_name,
       address: values.staff_address,
       phone: values.staff_phone_number,
@@ -52,7 +51,6 @@ const AddStaffForm = () => {
       type: SagaActionTypes.POST_STAFF_SAGA,
       newStaff: newStaff,
     });
-    console.log(newStaff);
   };
 
   return (
@@ -67,6 +65,7 @@ const AddStaffForm = () => {
         borderRadius: '6px',
         filter: 'drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1))',
       }}
+      layout="vertical"
     >
       <Row
         gutter={{
@@ -89,7 +88,7 @@ const AddStaffForm = () => {
             <Input placeholder="Họ và tên" />
           </Form.Item>
         </Col>
-        <Col xs={24} sm={12} md={24} lg={12} key={2}>
+        <Col xs={24} sm={12} md={12} lg={6} key={2}>
           <Form.Item
             name="staff_birth"
             label="Ngày sinh"
@@ -103,11 +102,12 @@ const AddStaffForm = () => {
               placeholder="Ngày sinh"
               format={dateFormat}
               disabledDate={(current) => current.isAfter(dayjs())}
+              style={{ width: '100%' }}
             />
           </Form.Item>
         </Col>
 
-        <Col xs={24} sm={12} md={24} lg={12} key={4}>
+        <Col xs={24} sm={12} md={12} lg={6} key={4}>
           <Form.Item
             name="staff_gender"
             label="Giới tính"
@@ -117,13 +117,7 @@ const AddStaffForm = () => {
               },
             ]}
           >
-            <Select
-              placeholder="Giới tính"
-              allowClear
-              style={{
-                width: '60%',
-              }}
-            >
+            <Select placeholder="Giới tính" allowClear>
               <Option value="Nam">Nam</Option>
               <Option value="Nữ">Nữ</Option>
               <Option value="Khác">Khác</Option>
@@ -145,7 +139,7 @@ const AddStaffForm = () => {
             <Input placeholder="Số điện thoại" />
           </Form.Item>
         </Col>
-        <Col xs={24} sm={12} md={24} lg={12} key={6}>
+        <Col xs={24} sm={24} md={24} lg={12} key={6}>
           <Form.Item name="staff_email" label="Email" rules={[{ type: 'email', required: true }]}>
             <Input placeholder="Email" />
           </Form.Item>
