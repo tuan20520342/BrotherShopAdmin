@@ -41,7 +41,6 @@ const EditStaffForm = () => {
   const onFinish = (values) => {
     let editStaff = {
       staffId: staffById._id,
-      role: staffById.role._id,
       name: values.name,
       address: values.address,
       phone: values.phone,

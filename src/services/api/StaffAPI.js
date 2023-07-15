@@ -1,13 +1,11 @@
-import axios from 'axios';
 import * as UrlApi from '../url';
 import baseRequest from './BaseRequest';
 
 export const StaffService = {
   postStaff: (staff) => {
-    let { role, name, address, email, phone, gender, birthday } = staff;
+    const { name, address, email, phone, gender, birthday } = staff;
 
     return baseRequest.post(UrlApi.URL_ADD_STAFF, {
-      role: role,
       name: name,
       address: address,
       phone: phone,
@@ -30,7 +28,7 @@ export const StaffService = {
 
   putStaff: (editStaff) => {
     const { role, name, address, email, phone, gender, birthday, staffId } = editStaff;
-    return axios.put(UrlApi.URL_PUT_STAFF, {
+    return baseRequest.put(UrlApi.URL_PUT_STAFF, {
       role: role,
       name: name,
       address: address,

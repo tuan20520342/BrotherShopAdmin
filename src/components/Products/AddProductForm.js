@@ -1,6 +1,5 @@
 /* eslint-disable no-template-curly-in-string */
 import React, { useState } from 'react';
-import { PlusOutlined } from '@ant-design/icons';
 import { Form, Input, Button, Select, InputNumber, Upload, Space, Modal, Row, Col, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
