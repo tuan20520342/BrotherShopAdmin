@@ -40,14 +40,14 @@ function* actGetOrderById(action) {
 
 function* actUpdateOrderStatus(action) {
   try {
-    const { orderId, orderStatus } = action;
+    const { orderId, shippingStatus, paymentStatus } = action;
 
     yield put(orderActions.editOrderStatusInLoading());
-    const res = yield call(() => OrderService.updateOrderStatus(orderId, orderStatus));
+    const res = yield call(() => OrderService.updateOrderStatus(orderId, shippingStatus, paymentStatus));
     const { status, data } = res;
 
     if (status === 200) {
-      yield put(orderActions.editOrderStatus({ orderId: data.orderId, orderStatus: data.orderStatus }));
+      yield put(orderActions.editOrderStatusCompleted());
       AlertCustom({ type: 'success', title: data.message });
     } else {
       AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại zzz' });

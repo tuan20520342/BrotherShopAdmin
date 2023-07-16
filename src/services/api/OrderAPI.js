@@ -8,9 +8,10 @@ export const OrderService = {
   getOrderById: (id) => {
     return baseRequest.get(UrlApi.URL_ORDERS_ID(id));
   },
-  updateOrderStatus: (id, status) => {
+  updateOrderStatus: (id, shippingStatus, paymentStatus) => {
     return baseRequest.put(UrlApi.URL_UPDATE_ORDER_STATUS(id), {
-      status: status,
+      shippingStatus: shippingStatus,
+      paymentStatus: paymentStatus,
     });
   },
 };

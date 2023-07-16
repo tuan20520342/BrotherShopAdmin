@@ -30,9 +30,10 @@ const orderSlice = createSlice({
       state.editLoading = true;
     },
     editOrderStatus: (state, action) => {
-      const { orderId, orderStatus } = action.payload;
+      const { orderId, orderShippingStatus, orderPaymentStatus } = action.payload;
       const existingOrderIndex = state.orders.findIndex((order) => order._id.toString() === orderId.toString());
-      state.orders[existingOrderIndex].shippingStatus = orderStatus;
+      state.orders[existingOrderIndex].shippingStatus = orderShippingStatus;
+      state.orders[existingOrderIndex].paymentStatus = orderPaymentStatus;
     },
     editOrderStatusCompleted: (state, action) => {
       state.editLoading = false;

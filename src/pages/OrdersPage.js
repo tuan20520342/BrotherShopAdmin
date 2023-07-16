@@ -23,7 +23,13 @@ const OrdersPage = () => {
       const { action } = data;
 
       if (action === 'edit') {
-        dispatch(orderActions.editOrderStatus({ orderId: data.orderId, orderStatus: data.orderStatus }));
+        dispatch(
+          orderActions.editOrderStatus({
+            orderId: data.orderId,
+            orderShippingStatus: data.orderShippingStatus,
+            orderPaymentStatus: data.orderPaymentStatus,
+          }),
+        );
       }
     });
   }, [dispatch]);

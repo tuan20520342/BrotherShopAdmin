@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Area } from '@ant-design/plots';
-
 import { Card, Typography } from 'antd';
 import AlertCustom from '~/components/UI/Notification/Alert';
 import { DashboardService } from '~/services/api/DashboardAPI';

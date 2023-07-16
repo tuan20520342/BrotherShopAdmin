@@ -23,16 +23,14 @@ const OrderDetailsPage = () => {
   }
 
   return (
-    <>
-      <Row>
-        <Col span={24}>
-          <Title level={2}>{`Đơn hàng: ${orderById?._id?.slice(0, 8).toUpperCase()}`}</Title>
-        </Col>
-        <Col span={24}>
-          <OrderDetails />
-        </Col>
-      </Row>
-    </>
+    <Row>
+      <Col span={24}>
+        <Title level={2}>{`Đơn hàng: ${orderById?._id?.slice(0, 8).toUpperCase()}`}</Title>
+      </Col>
+      <Col span={24}>
+        <OrderDetails />
+      </Col>
+    </Row>
   );
 };
 

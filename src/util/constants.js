@@ -16,3 +16,15 @@ export const productStates = Object.freeze({
   PAUSE: 'Ngừng bán',
   OUT_OF_STOCK: 'Hết hàng',
 });
+
+export const orderShippingStatuses = Object.freeze({
+  PREPARING: 'Đang chuẩn bị',
+  DELIVERING: 'Đang giao',
+  RECEIVED: 'Đã nhận',
+  CANCLED: 'Đã hủy',
+});
+
+export const orderPaymentStatuses = Object.freeze({
+  UNPAID: 'Chưa thanh toán',
+  PAID: 'Đã thanh toán',
+});
