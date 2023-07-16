@@ -5,6 +5,7 @@ import './styles/LoginForm.css';
 import { useNavigate } from 'react-router-dom';
 import AlertCustom from '~/components/UI/Notification/Alert';
 import { AuthenticationService } from '~/services/api/AuthAPI';
+import baseRequest from '~/services/api/BaseRequest';
 const { Title } = Typography;
 
 const LoginForm = () => {
@@ -25,6 +26,7 @@ const LoginForm = () => {
         const expiryDate = new Date(new Date().getTime() + remainingMilliseconds);
         Cookies.set('token', token, { expires: expiryDate });
         Cookies.set('currentUser', staff._id, { expires: expiryDate });
+        baseRequest.defaults.headers.Authorization = `Bearer ${Cookies.get('token')}`;
         navigate('/', { replace: true });
         AlertCustom({ type: 'success', title: 'Đăng nhập thành công' });
       } else {
