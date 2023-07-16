@@ -1,4 +1,3 @@
-/* eslint-disable no-template-curly-in-string */
 import React, { useState } from 'react';
 import { Form, Input, Button, Space, Row } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
@@ -7,18 +6,7 @@ import * as SagaActionTypes from '~/redux/constants';
 import { modalActions } from '~/redux/reducer/ModalReducer';
 import { useDispatch } from 'react-redux';
 import './style/CategoryForm.css';
-
-const validateMessages = {
-  required: 'Cần nhập ${label}!',
-  types: {
-    email: '${label} không hợp lệ!',
-    number: '',
-  },
-  number: {
-    min: '${label} phải ít nhất từ ${min} trở lên',
-    range: '${label} phải trong khoảng từ ${min} đến ${max}',
-  },
-};
+import { validateMessages } from '~/util/constants';
 
 const formItemLayout = {
   labelCol: {

@@ -40,14 +40,16 @@ function* actGetProductById(action) {
 
 function* actCreateProduct(action) {
   try {
-    const { newProduct } = action;
+    const { newProduct, callback } = action;
 
     const res = yield call(() => ProductService.createProduct(newProduct));
     const { status, data } = res;
 
     if (status === 201) {
-      // yield put({ type: SagaActionTypes.GET_PRODUCTS_SAGA });
       AlertCustom({ type: 'success', title: data.message });
+      if (callback) {
+        callback();
+      }
     } else {
       AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
     }

@@ -1,4 +1,3 @@
-/* eslint-disable no-template-curly-in-string */
 import React from 'react';
 import dayjs from 'dayjs';
 import { useState, useEffect } from 'react';
@@ -13,6 +12,7 @@ import * as SagaActionTypes from '~/redux/constants';
 import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
 import ProductsWarehouseTable from './ProductsWarehouseTable';
 import AlertCustom from '~/components/UI/Notification/Alert';
+import { validateMessages } from '~/util/constants';
 
 const dateFormat = 'DD/MM/YYYY';
 
@@ -45,18 +45,6 @@ const AddWarehouseReceipt = ({ receiptById }) => {
   const currentUser = useSelector((state) => state.authenticationSlice.currentUser);
 
   const isCreateReceiptSucceeded = useSelector((state) => state.receiptSlice.isCreateReceiptSucceeded);
-
-  const validateMessages = {
-    required: 'Cần nhập ${label}!',
-    types: {
-      email: '${label} không hợp lệ!',
-      number: '',
-    },
-    number: {
-      min: '${label} phải ít nhất từ ${min} trở lên',
-      range: '${label} phải trong khoảng từ ${min} đến ${max}',
-    },
-  };
 
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_PRODUCTS_SAGA });

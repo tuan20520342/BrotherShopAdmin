@@ -38,6 +38,10 @@ const ProductsPage = () => {
         dispatch(productActions.resellProduct({ productId: data.productId }));
       }
     });
+
+    return () => {
+      socket.close();
+    };
   }, [dispatch]);
 
   const [keyWord, setKeyWord] = useState('');

@@ -1,21 +1,9 @@
-/* eslint-disable no-template-curly-in-string */
 import React, { useState } from 'react';
 import { Form, Input, Button, Space, Row, Select, InputNumber, Image } from 'antd';
 import { modalActions } from '~/redux/reducer/ModalReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import './style/CustomInputNumber.css';
-
-const validateMessages = {
-  required: 'Cần nhập ${label}!',
-  types: {
-    email: '${label} không hợp lệ!',
-    number: '',
-  },
-  number: {
-    min: '${label} phải ít nhất từ ${min} trở lên',
-    range: '${label} phải trong khoảng từ ${min} đến ${max}',
-  },
-};
+import { validateMessages } from '~/util/constants';
 
 const formItemLayout = {
   labelCol: {

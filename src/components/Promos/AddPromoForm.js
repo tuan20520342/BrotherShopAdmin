@@ -1,24 +1,12 @@
-/* eslint-disable no-template-curly-in-string */
 import React, { useState } from 'react';
 import { Form, Input, Button, Space, Row, InputNumber, DatePicker } from 'antd';
 import dayjs from 'dayjs';
 import { modalActions } from '~/redux/reducer/ModalReducer';
 import * as SagaActionTypes from '~/redux/constants';
 import { useDispatch } from 'react-redux';
+import { validateMessages } from '~/util/constants';
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
-
-const validateMessages = {
-  required: 'Cần nhập ${label}!',
-  types: {
-    email: '${label} không hợp lệ!',
-    number: '',
-  },
-  number: {
-    min: '${label} phải ít nhất từ ${min} trở lên',
-    range: '${label} phải trong khoảng từ ${min} đến ${max}',
-  },
-};
 
 const formItemLayout = {
   labelCol: {

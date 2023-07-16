@@ -1,25 +1,13 @@
-/* eslint-disable no-template-curly-in-string */
 import React from 'react';
 import dayjs from 'dayjs';
 import { Form, Input, Button, Select, DatePicker, Row, Col } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { validateMessages } from '~/util/constants';
 
 const { Option } = Select;
 const { TextArea } = Input;
 const dateFormat = 'DD/MM/YYYY';
-
-const validateMessages = {
-  required: 'Cần nhập ${label}!',
-  types: {
-    email: '${label} không hợp lệ!',
-    number: '',
-  },
-  number: {
-    min: '${label} phải ít nhất từ ${min} trở lên',
-    range: '${label} phải trong khoảng từ ${min} đến ${max}',
-  },
-};
 
 const CustomerDetailForm = () => {
   const navigate = useNavigate();

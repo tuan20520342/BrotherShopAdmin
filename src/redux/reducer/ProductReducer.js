@@ -44,6 +44,9 @@ const productSlice = createSlice({
     },
     addProduct: (state, action) => {
       const newProduct = action.payload.product;
+      const isExistingProduct =
+        state.products.findIndex((product) => product._id.toString() === newProduct._id.toString()) !== -1;
+      if (isExistingProduct) return;
       state.products.push(newProduct);
     },
     editProduct: (state, action) => {

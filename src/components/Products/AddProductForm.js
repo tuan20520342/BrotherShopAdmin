@@ -1,4 +1,3 @@
-/* eslint-disable no-template-curly-in-string */
 import React, { useState } from 'react';
 import { Form, Input, Button, Select, InputNumber, Upload, Space, Modal, Row, Col, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +6,7 @@ import * as SagaActionTypes from '~/redux/constants';
 import CustomImgCrop from './CustomImgCrop';
 import Container from '../UI/Container/Container';
 import UploadButton from '../UI/Button/UploadButton';
+import { validateMessages } from '~/util/constants';
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -52,18 +52,6 @@ const getFolder = (type) => {
 
 const createFolder = (uploadFolder, isMainImg) => {
   return `brothershop/products/${isMainImg ? 'mainImg' : 'subImg'}/${uploadFolder}`;
-};
-
-const validateMessages = {
-  required: 'Cần nhập ${label}!',
-  types: {
-    email: '${label} không hợp lệ!',
-    number: '',
-  },
-  number: {
-    min: '${label} phải ít nhất từ ${min} trở lên',
-    range: '${label} phải trong khoảng từ ${min} đến ${max}',
-  },
 };
 
 const AddProductForm = () => {
@@ -139,7 +127,13 @@ const AddProductForm = () => {
       subFolder: subImgFolder,
     };
 
-    dispatch({ type: SagaActionTypes.CREATE_PRODUCT_SAGA, newProduct });
+    const handleResetForms = () => {
+      form.resetFields();
+      setMainFileList([]);
+      setSubFileList([]);
+    };
+
+    dispatch({ type: SagaActionTypes.CREATE_PRODUCT_SAGA, newProduct, callback: handleResetForms });
   };
 
   return (

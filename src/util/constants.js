@@ -1,8 +1,8 @@
 /* eslint-disable no-template-curly-in-string */
 export const validateMessages = Object.freeze({
-  required: 'Cần nhập ${label}!',
+  required: 'Bạn cần nhập ${label}',
   types: {
-    email: '${label} không hợp lệ!',
+    email: '${label} không hợp lệ',
     number: '',
   },
   number: {
