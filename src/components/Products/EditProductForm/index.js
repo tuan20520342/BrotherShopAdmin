@@ -138,7 +138,7 @@ const EditProductForm = ({ product }) => {
         layout="vertical"
       >
         <Row gutter={[16, 16]}>
-          <Col xs={24} sm={16} md={24} lg={16}>
+          <Col xs={24} sm={17} md={24} lg={17}>
             <ProductCommonInfor />
             <ProductPrice />
             <ProductSelectCategory
@@ -149,7 +149,7 @@ const EditProductForm = ({ product }) => {
             />
             <ProductQuantity sizes={product.sizes} />
           </Col>
-          <Col xs={24} sm={8} md={24} lg={8}>
+          <Col xs={24} sm={7} md={24} lg={7}>
             <ProductUploadImages ref={ref} product={product} loading={editLoading} />
           </Col>
         </Row>

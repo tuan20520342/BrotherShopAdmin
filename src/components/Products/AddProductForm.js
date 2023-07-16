@@ -149,7 +149,7 @@ const AddProductForm = () => {
       layout="vertical"
     >
       <Row gutter={[16, 16]}>
-        <Col xs={24} sm={16} md={24} lg={16}>
+        <Col xs={24} sm={17} md={24} lg={17}>
           <Container>
             <Row>
               <Col span={24}>
@@ -251,7 +251,7 @@ const AddProductForm = () => {
             </Row>
           </Container>
         </Col>
-        <Col xs={24} sm={8} md={24} lg={8}>
+        <Col xs={24} sm={7} md={24} lg={7}>
           <Container>
             <Row>
               <Col span={24}>
@@ -312,7 +312,7 @@ const AddProductForm = () => {
               </Col>
             </Row>
 
-            <Row style={{ paddingBottom: '20px' }}>
+            <Row style={{ paddingBottom: '20px' }} justify="center">
               <Space>
                 <Button size="large" type="primary" htmlType="submit">
                   Xác nhận

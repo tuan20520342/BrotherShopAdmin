@@ -1,5 +1,6 @@
 import * as UrlApi from '../url';
 import axios from 'axios';
+import baseRequest from './BaseRequest';
 
 export const AuthenticationService = {
   postLogin: (user) => {
@@ -17,5 +18,9 @@ export const AuthenticationService = {
 
   resetPassword: (data) => {
     return axios.post(UrlApi.URL_RESET_PASSWORD, data);
+  },
+
+  changePassword: (data) => {
+    return baseRequest.post(UrlApi.URL_CHANGE_PASSWORD, data);
   },
 };

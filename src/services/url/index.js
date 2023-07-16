@@ -4,6 +4,7 @@ export const DOMAIN_NAME = 'https://brother-shop-102.onrender.com';
 export const URL_AUTH_LOGIN = `${DOMAIN_NAME}/auth/staffs/login`;
 export const URL_FORGOT_PASSWORD = `${DOMAIN_NAME}/auth/forgot-password`;
 export const URL_RESET_PASSWORD = `${DOMAIN_NAME}/auth/reset-password`;
+export const URL_CHANGE_PASSWORD = `${DOMAIN_NAME}/staffs/change-password`;
 
 //PRODUCT
 export const URL_PRODUCTS = `${DOMAIN_NAME}/products`;
