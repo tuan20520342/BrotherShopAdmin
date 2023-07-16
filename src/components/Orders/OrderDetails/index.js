@@ -49,7 +49,7 @@ const OrderDetails = () => {
           paymentStatus: orderById.paymentStatus,
         }}
       >
-        <Row justify="space-between" style={{ gap: 26 }}>
+        <Row justify="space-between" style={{ gap: 16 }}>
           <Col
             style={{
               display: 'flex',
@@ -75,6 +75,7 @@ const OrderDetails = () => {
               style={{
                 flexWrap: 'wrap',
               }}
+              size="middle"
             >
               <Form.Item
                 name="shippingStatus"
@@ -131,7 +132,7 @@ const OrderDetails = () => {
         <Row gutter={[8, 16]}>
           <InfoCard order={orderById} />
           <Divider />
-          <Col span={24} style={{ marginBottom: '4px', textAlign: 'end' }}>
+          <Col span={24} style={{ textAlign: 'end' }}>
             <Search
               style={{ width: 'fit-content' }}
               name="search"
