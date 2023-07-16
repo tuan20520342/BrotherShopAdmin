@@ -5,6 +5,7 @@ import { modalActions } from '~/redux/reducer/ModalReducer';
 import * as SagaActionTypes from '~/redux/constants';
 import { useDispatch } from 'react-redux';
 import { validateMessages } from '~/util/constants';
+import { printNumberWithCommas } from '~/util/shared';
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 
@@ -136,7 +137,7 @@ const AddPromoForm = ({ promo }) => {
           min={0}
           addonAfter={'VNĐ'}
           placeholder="Tối thiểu"
-          formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+          formatter={(value) => printNumberWithCommas(value)}
           parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
           disabled={disabled}
         />
@@ -173,7 +174,7 @@ const AddPromoForm = ({ promo }) => {
           style={{ width: '80%' }}
           min={0}
           placeholder="Số lượng"
-          formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+          formatter={(value) => printNumberWithCommas(value)}
           parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
           disabled={disabled}
         />

@@ -9,6 +9,7 @@ import Search from 'antd/lib/input/Search';
 import { useNavigate } from 'react-router-dom';
 import * as SagaActionTypes from '~/redux/constants';
 import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
+import { printNumberWithCommas } from '~/util/shared';
 
 const { Option } = Select;
 const { Text } = Typography;
@@ -128,9 +129,9 @@ const OrderDetails = () => {
         </Col>
       </Row>
       <Row justify="end">
-        <Text style={{ fontSize: 20 }} strong>{`Tổng tiền: ${orderById?.totalProductsPrice
-          ?.toString()
-          .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')} VNĐ`}</Text>
+        <Text style={{ fontSize: 20 }} strong>{`Tổng tiền: ${printNumberWithCommas(
+          orderById?.totalProductsPrice || '',
+        )} VNĐ`}</Text>
       </Row>
     </Form>
   );

@@ -4,6 +4,7 @@ import { EyeFilled, DeleteFilled } from '@ant-design/icons';
 import TableTemplate from '~/components/UI/Table/TableTemplate';
 import LoadingSpin from '../UI/LoadingSpin/LoadingSpin';
 import { useNavigate } from 'react-router-dom';
+import { printNumberWithCommas } from '~/util/shared';
 
 const TableOrders = ({ keyWord, data, loading }) => {
   const navigate = useNavigate();
@@ -83,9 +84,7 @@ const TableOrders = ({ keyWord, data, loading }) => {
       align: 'end',
       ellipsis: true,
       sorter: (a, b) => a.totalProductsPrice - b.totalProductsPrice,
-      render: (value, record) => (
-        <div>{record.totalProductsPrice?.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')} đ</div>
-      ),
+      render: (value, record) => <div>{printNumberWithCommas(record.totalProductsPrice)} đ</div>,
     },
     {
       title: 'Thao tác',

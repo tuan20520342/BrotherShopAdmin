@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
 import { useDispatch } from 'react-redux';
 import * as SagaActionTypes from '~/redux/constants';
+import { printNumberWithCommas } from '~/util/shared';
 
 const TableProducts = ({ keyWord, data, loading }) => {
   const navigate = useNavigate();
@@ -62,13 +63,7 @@ const TableProducts = ({ keyWord, data, loading }) => {
       align: 'center',
       ellipsis: true,
       sorter: (a, b) => (a.oldPrice ?? a.price) - (b.oldPrice ?? b.price),
-      render: (value, record) => (
-        <div>
-          {record.oldPrice?.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',') ||
-            record.price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}{' '}
-          đ
-        </div>
-      ),
+      render: (value, record) => <div>{printNumberWithCommas(record.oldPrice || record.price)} đ</div>,
     },
     {
       title: <div style={{ textAlign: 'center' }}>Giá bán</div>,
@@ -77,7 +72,7 @@ const TableProducts = ({ keyWord, data, loading }) => {
       align: 'center',
       ellipsis: true,
       sorter: (a, b) => a.price - b.price,
-      render: (price) => <div>{price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')} đ</div>,
+      render: (price) => <div>{printNumberWithCommas(price)} đ</div>,
     },
     {
       title: <div style={{ textAlign: 'center' }}>Số lượng</div>,
@@ -89,7 +84,7 @@ const TableProducts = ({ keyWord, data, loading }) => {
         a.sizes.reduce((acc, size) => acc + size.quantity, 0) - b.sizes.reduce((acc, size) => acc + size.quantity, 0),
       render: (sizes) => {
         const quantity = sizes.reduce((acc, size) => acc + size.quantity, 0);
-        return <div>{quantity.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}</div>;
+        return <div>{printNumberWithCommas(quantity)}</div>;
       },
     },
     {
@@ -102,7 +97,7 @@ const TableProducts = ({ keyWord, data, loading }) => {
         a.sizes.reduce((acc, size) => acc + size.sold, 0) - b.sizes.reduce((acc, size) => acc + size.sold, 0),
       render: (sizes) => {
         const quantitySold = sizes.reduce((acc, size) => acc + size.sold, 0);
-        return <div>{quantitySold.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}</div>;
+        return <div>{printNumberWithCommas(quantitySold)}</div>;
       },
     },
 

@@ -5,8 +5,13 @@ import { Card, Typography } from 'antd';
 import AlertCustom from '~/components/UI/Notification/Alert';
 import { DashboardService } from '~/services/api/DashboardAPI';
 import SelectTime from './SelectTime';
+import { printNumberWithCommas } from '~/util/shared';
 
-const RevenueColumnChart = () => {
+const formatChartLabel = (value) => {
+  return printNumberWithCommas(value);
+};
+
+const RevenueAreaChart = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -35,6 +40,11 @@ const RevenueColumnChart = () => {
     xAxis: {
       tickCount: 5,
     },
+    yAxis: {
+      label: {
+        formatter: formatChartLabel,
+      },
+    },
     animation: false,
     slider: {
       start: 0,
@@ -46,6 +56,7 @@ const RevenueColumnChart = () => {
     meta: {
       revenue: {
         alias: 'Doanh thu',
+        formatter: formatChartLabel,
       },
     },
   };
@@ -66,4 +77,4 @@ const RevenueColumnChart = () => {
   );
 };
 
-export default RevenueColumnChart;
+export default RevenueAreaChart;

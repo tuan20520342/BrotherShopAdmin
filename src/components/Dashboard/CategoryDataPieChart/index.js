@@ -35,7 +35,7 @@ export default function CategoryDataPieChart() {
     label: {
       type: 'spider',
       labelHeight: 28,
-      content: '{name}\n{percentage}',
+      content: ({ percent }) => `${(percent * 100).toFixed(2)}%`,
     },
     interactions: [
       {

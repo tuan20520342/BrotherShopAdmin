@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import * as SagaActionTypes from '~/redux/constants';
 import { modalActions } from '~/redux/reducer/ModalReducer';
 import AddPromoForm from './AddPromoForm';
+import { printNumberWithCommas } from '~/util/shared';
 
 const TablePromos = ({ keyWord, data, loading }) => {
   const dispatch = useDispatch();
@@ -82,7 +83,7 @@ const TablePromos = ({ keyWord, data, loading }) => {
       align: 'center',
       ellipsis: true,
       sorter: (a, b) => a.amount > b.amount,
-      render: (amount) => amount.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ','),
+      render: (amount) => printNumberWithCommas(amount),
     },
     {
       title: <div style={{ textAlign: 'center' }}>Tối thiểu</div>,
@@ -91,7 +92,7 @@ const TablePromos = ({ keyWord, data, loading }) => {
       align: 'end',
       ellipsis: true,
       sorter: (a, b) => a.minPrice > b.minPrice,
-      render: (minPrice) => `${minPrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}đ`,
+      render: (minPrice) => `${printNumberWithCommas(minPrice)} đ`,
     },
     {
       title: 'Thao tác',

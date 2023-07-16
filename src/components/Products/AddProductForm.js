@@ -7,6 +7,7 @@ import CustomImgCrop from './CustomImgCrop';
 import Container from '../UI/Container/Container';
 import UploadButton from '../UI/Button/UploadButton';
 import { validateMessages } from '~/util/constants';
+import { printNumberWithCommas } from '~/util/shared';
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -202,7 +203,7 @@ const AddProductForm = () => {
                     min={0}
                     addonAfter={<div>VNĐ</div>}
                     placeholder="Giá bán"
-                    formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                    formatter={(value) => printNumberWithCommas(value)}
                     parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
                   />
                 </Form.Item>

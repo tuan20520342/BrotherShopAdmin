@@ -1,4 +1,5 @@
 import TableTemplate from '~/components/UI/Table/TableTemplate';
+import { printNumberWithCommas } from '~/util/shared';
 
 const TableProductSizes = ({ data }) => {
   const columns = [
@@ -19,7 +20,7 @@ const TableProductSizes = ({ data }) => {
       showOnDesktop: true,
       ellipsis: true,
       sorter: (a, b) => a.quantity - b.quantity,
-      render: (quantity) => quantity.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ','),
+      render: (quantity) => printNumberWithCommas(quantity),
     },
     {
       title: 'Đã bán',
@@ -30,7 +31,7 @@ const TableProductSizes = ({ data }) => {
       showOnDesktop: true,
       ellipsis: true,
       sorter: (a, b) => a.sold - b.sold,
-      render: (sold) => sold.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ','),
+      render: (sold) => printNumberWithCommas(sold),
     },
   ];
 

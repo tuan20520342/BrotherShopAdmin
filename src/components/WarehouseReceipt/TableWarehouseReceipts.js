@@ -4,6 +4,7 @@ import { EyeFilled } from '@ant-design/icons';
 import TableTemplate from '~/components/UI/Table/TableTemplate';
 import LoadingSpin from '../UI/LoadingSpin/LoadingSpin';
 import { useNavigate } from 'react-router-dom';
+import { printNumberWithCommas } from '~/util/shared';
 
 const totalQuantity = (receipt) => {
   return receipt.products.reduce((total, currentProduct) => {
@@ -85,13 +86,7 @@ const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
       ellipsis: true,
       sorter: (a, b) => totalQuantity(a) - totalQuantity(b),
       render: (text, record, index) => {
-        return (
-          <div>
-            {totalQuantity(record)
-              .toString()
-              .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}
-          </div>
-        );
+        return <div>{printNumberWithCommas(totalQuantity(record))}</div>;
       },
     },
     {
@@ -102,14 +97,7 @@ const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
       ellipsis: true,
       sorter: (a, b) => totalPrice(a) - totalPrice(b),
       render: (text, record, index) => {
-        return (
-          <div>
-            {totalPrice(record)
-              .toString()
-              .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}{' '}
-            đ
-          </div>
-        );
+        return <div>{printNumberWithCommas(totalPrice(record))} đ</div>;
       },
     },
 

@@ -43,7 +43,7 @@ export const URL_UPDATE_ORDER_STATUS = (id) => `${DOMAIN_NAME}/orders/${id}/stat
 
 // DASHBOARD
 export const URL_GET_STAT_CARD_DATA = '/dashboard/stat-card';
-export const URL_GET_REVENUE_SEVEN_DAYS_AGO = '/dashboard/revenue';
+export const URL_GET_REVENUE = '/dashboard/revenue';
 export const URL_GET_BEST_SELLER_PRODUCTS = '/dashboard/best-seller';
 export const URL_GET_PERCENTAGE_CATEGORIES = '/dashboard/category/percentage';
 export const URL_GET_SOLD_QUANTITY_PRODUCTS = '/dashboard/sold-quantity';

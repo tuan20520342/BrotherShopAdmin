@@ -1,5 +1,6 @@
 import { Image } from 'antd';
 import TableTemplate from '~/components/UI/Table/TableTemplate';
+import { printNumberWithCommas } from '~/util/shared';
 
 const TableProductsInOrder = ({ keyWord, data }) => {
   const columns = [
@@ -56,7 +57,7 @@ const TableProductsInOrder = ({ keyWord, data }) => {
       align: 'end',
       ellipsis: true,
       sorter: (a, b) => a.amount > b.amount,
-      render: (amount) => amount.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ','),
+      render: (amount) => printNumberWithCommas(amount),
     },
     {
       title: <div style={{ textAlign: 'center' }}>Giá </div>,
@@ -65,7 +66,7 @@ const TableProductsInOrder = ({ keyWord, data }) => {
       align: 'end',
       ellipsis: true,
       sorter: (a, b) => a.price > b.price,
-      render: (price) => `${price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')} đ`,
+      render: (price) => `${printNumberWithCommas(price)} đ`,
     },
     {
       title: <div style={{ textAlign: 'center' }}>Thành tiền</div>,
@@ -74,9 +75,7 @@ const TableProductsInOrder = ({ keyWord, data }) => {
       align: 'end',
       ellipsis: true,
       sorter: (a, b) => a.price * a.amount > b.price * b.amount,
-      render: (value, record) => (
-        <div>{(record.price * record.amount).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')} đ</div>
-      ),
+      render: (value, record) => <div>{printNumberWithCommas(record.price * record.amount)} đ</div>,
     },
   ];
 

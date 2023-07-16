@@ -4,6 +4,7 @@ import { modalActions } from '~/redux/reducer/ModalReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import './style/CustomInputNumber.css';
 import { validateMessages } from '~/util/constants';
+import { printNumberWithCommas } from '~/util/shared';
 
 const formItemLayout = {
   labelCol: {
@@ -165,7 +166,7 @@ const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProduct
                   min={0}
                   addonAfter={<div>VNĐ</div>}
                   placeholder="Giá bán"
-                  formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                  formatter={(value) => printNumberWithCommas(value)}
                   parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
                   disabled
                 />
@@ -188,7 +189,7 @@ const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProduct
           min={0}
           addonAfter={<div>VNĐ</div>}
           placeholder="Giá nhập"
-          formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+          formatter={(value) => printNumberWithCommas(value)}
           parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
           disabled={disabled}
         />
@@ -213,7 +214,7 @@ const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProduct
               className="input-number-right"
               min={0}
               placeholder="Số lượng"
-              formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+              formatter={(value) => printNumberWithCommas(value)}
               parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
               disabled={disabled}
             />
@@ -223,7 +224,7 @@ const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProduct
               className="input-number-right"
               min={0}
               placeholder="Số lượng"
-              formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+              formatter={(value) => printNumberWithCommas(value)}
               parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
               disabled={disabled}
             />
@@ -233,7 +234,7 @@ const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProduct
               className="input-number-right"
               min={0}
               placeholder="Số lượng"
-              formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+              formatter={(value) => printNumberWithCommas(value)}
               parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
               disabled={disabled}
             />
@@ -243,7 +244,7 @@ const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProduct
               className="input-number-right"
               min={0}
               placeholder="Số lượng"
-              formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+              formatter={(value) => printNumberWithCommas(value)}
               parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
               disabled={disabled}
             />
