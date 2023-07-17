@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as SagaActionTypes from '~/redux/constants';
 import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
 import OrderDetails from '~/components/Orders/OrderDetails';
+import NotFoundPage from './NotFound';
 
 const { Title } = Typography;
 
@@ -20,18 +21,21 @@ const OrderDetailsPage = () => {
 
   if (idLoading) {
     return <LoadingSpin />;
+  } else {
+    if (orderById?._id === -1) {
+      return <NotFoundPage />;
+    }
+    return (
+      <Row>
+        <Col span={24}>
+          <Title level={2}>{`Đơn hàng: ${orderById?._id?.slice(0, 8)?.toUpperCase()}`}</Title>
+        </Col>
+        <Col span={24}>
+          <OrderDetails />
+        </Col>
+      </Row>
+    );
   }
-
-  return (
-    <Row>
-      <Col span={24}>
-        <Title level={2}>{`Đơn hàng: ${orderById?._id?.slice(0, 8).toUpperCase()}`}</Title>
-      </Col>
-      <Col span={24}>
-        <OrderDetails />
-      </Col>
-    </Row>
-  );
 };
 
 export default OrderDetailsPage;

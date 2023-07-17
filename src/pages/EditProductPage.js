@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as SagaActionTypes from '~/redux/constants';
 import EditProductForm from '~/components/Products/EditProductForm';
 import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
+import NotFoundPage from './NotFound';
 
 const { Title } = Typography;
 
@@ -20,18 +21,21 @@ const EditProductPage = () => {
 
   if (idLoading) {
     return <LoadingSpin />;
+  } else {
+    if (productId?._id === -1) {
+      return <NotFoundPage />;
+    }
+    return (
+      <Row>
+        <Col span={24}>
+          <Title level={2}>{`Sản phẩm: ${productId.name}`}</Title>
+        </Col>
+        <Col span={24}>
+          <EditProductForm product={productId} />
+        </Col>
+      </Row>
+    );
   }
-
-  return (
-    <Row>
-      <Col span={24}>
-        <Title level={2}>{`Sản phẩm: ${productId.name}`}</Title>
-      </Col>
-      <Col span={24}>
-        <EditProductForm product={productId} />
-      </Col>
-    </Row>
-  );
 };
 
 export default EditProductPage;

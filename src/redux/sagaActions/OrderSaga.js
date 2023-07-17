@@ -32,9 +32,10 @@ function* actGetOrderById(action) {
       yield put(orderActions.getOrderByIdSuccess({ orderById: data.order }));
     } else {
       AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
+      yield put(orderActions.getOrderByIdFail());
     }
   } catch (err) {
-    AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
+    yield put(orderActions.getOrderByIdFail());
   }
 }
 

@@ -8,16 +8,16 @@ import Cookies from 'js-cookie';
 function* actPostStaff(action) {
   try {
     const { newStaff } = action;
-
     const res = yield call(() => StaffService.postStaff(newStaff));
-    if (res.status === 201) {
-      AlertCustom({ type: 'success', title: 'Thêm nhân viên thành công' });
+    const { status, data } = res;
+    if (status === 201) {
+      AlertCustom({ type: 'success', title: data.message });
       yield put(staffActions.createStaffSucceeded());
     } else {
-      AlertCustom({ type: 'error', title: 'Thêm nhân viên thất bại' });
+      AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
     }
   } catch (err) {
-    AlertCustom({ type: 'error', title: err?.response?.data.message });
+    AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
   }
 }
 
@@ -29,10 +29,10 @@ function* actGetListStaffs() {
     if (status === 200) {
       yield put(staffActions.getStaffsSuccess({ staffs: data.staffs }));
     } else {
-      console.log('Không lấy đc danh sách');
+      AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
     }
   } catch (err) {
-    console.log(err);
+    AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
   }
 }
 
@@ -45,10 +45,11 @@ function* actGetStaffById(action) {
     if (status === 200) {
       yield put(staffActions.getStaffByIdSuccess({ staffById: data.staff }));
     } else {
-      console.log('Không lấy đc nhân viên');
+      AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
+      yield put(staffActions.getStaffByIdFail());
     }
   } catch (err) {
-    console.log(err);
+    yield put(staffActions.getStaffByIdFail());
   }
 }
 
@@ -64,10 +65,10 @@ function* actDeleteStaff(action) {
       });
       yield put({ type: SagaActionTypes.GET_STAFFS_SAGA });
     } else {
-      AlertCustom({ type: 'error', title: 'Xóa loại nhân viên thất bại' });
+      AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
     }
   } catch (err) {
-    console.log(err);
+    AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
   }
 }
 
@@ -75,22 +76,22 @@ function* actPutStaff(action) {
   const { editStaff } = action;
   try {
     const res = yield call(() => StaffService.putStaff(editStaff));
+    const { status, data } = res;
 
-    if (res.status === 200) {
+    if (status === 200) {
       AlertCustom({
         type: 'success',
-        title: 'Chỉnh sửa nhân viên thành công',
+        title: data.message,
       });
     } else {
-      AlertCustom({ type: 'error', title: 'Chỉnh sửa nhân viên thất bại' });
+      AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
     }
-
     if (editStaff.staffId === Cookies.get('currentUser')) {
       yield put({ type: SagaActionTypes.GET_CURRENT_USER_SAGA });
     }
     yield put({ type: SagaActionTypes.GET_STAFF_BY_ID_SAGA, id: editStaff.staffId });
   } catch (err) {
-    AlertCustom({ type: 'error', title: err.response.data });
+    AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
     yield put({ type: SagaActionTypes.GET_STAFF_BY_ID_SAGA, id: editStaff.staffId });
   }
 }

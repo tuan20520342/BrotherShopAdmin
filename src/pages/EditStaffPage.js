@@ -24,17 +24,21 @@ const EditStaffPage = () => {
   } else {
     if (idLoading) {
       return <LoadingSpin />;
+    } else {
+      if (staffById?._id === -1) {
+        return <NotFoundPage />;
+      }
+      return (
+        <Row>
+          <Col span={24}>
+            <Title level={2}>{`Nhân viên: ${staffById.name}`}</Title>
+          </Col>
+          <Col span={24}>
+            <EditStaffForm />
+          </Col>
+        </Row>
+      );
     }
-    return (
-      <Row>
-        <Col span={24}>
-          <Title level={2}>{`Nhân viên: ${staffById.name}`}</Title>
-        </Col>
-        <Col span={24}>
-          <EditStaffForm />
-        </Col>
-      </Row>
-    );
   }
 };
 

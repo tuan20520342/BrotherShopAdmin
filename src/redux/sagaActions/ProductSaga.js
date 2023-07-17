@@ -32,9 +32,10 @@ function* actGetProductById(action) {
       yield put(productActions.getProductByIdSuccess({ productId: data.product }));
     } else {
       AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
+      yield put(productActions.getProductByIdFail());
     }
   } catch (err) {
-    AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
+    yield put(productActions.getProductByIdFail());
   }
 }
 

@@ -5,15 +5,7 @@ const initialState = {
   idLoading: false,
   customers: [],
   customerById: {
-    account: '',
-    role: '',
-    name: '',
-    address: [],
-    email: '',
-    phone: '',
-    gender: '',
-    birthday: '',
-    status: '',
+    _id: -1,
   },
 };
 
@@ -33,6 +25,9 @@ const customerSlice = createSlice({
     },
     getCustomerByIdSuccess: (state, action) => {
       state.customerById = action.payload.customerById;
+      state.idLoading = false;
+    },
+    getCustomerByIdFail: (state, action) => {
       state.idLoading = false;
     },
   },

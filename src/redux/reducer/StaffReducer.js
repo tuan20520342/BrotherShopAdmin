@@ -6,15 +6,7 @@ const initialState = {
   isCreateStaffSucceeded: false,
   staffs: [],
   staffById: {
-    account: '',
-    role: '',
-    name: '',
-    address: '',
-    email: '',
-    phone: '',
-    gender: '',
-    birthday: '',
-    status: '',
+    _id: -1,
   },
 };
 
@@ -38,6 +30,9 @@ const staffSlice = createSlice({
     },
     getStaffByIdSuccess: (state, action) => {
       state.staffById = action.payload.staffById;
+      state.idLoading = false;
+    },
+    getStaffByIdFail: (state, action) => {
       state.idLoading = false;
     },
   },

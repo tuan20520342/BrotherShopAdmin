@@ -5,7 +5,9 @@ const initialState = {
   idLoading: false,
   editLoading: false,
   orders: [],
-  orderById: {},
+  orderById: {
+    _id: -1,
+  },
 };
 
 const orderSlice = createSlice({
@@ -24,6 +26,9 @@ const orderSlice = createSlice({
     },
     getOrderByIdSuccess: (state, action) => {
       state.orderById = action.payload.orderById;
+      state.idLoading = false;
+    },
+    getOrderByIdFail: (state, action) => {
       state.idLoading = false;
     },
     editOrderStatusInLoading: (state, action) => {

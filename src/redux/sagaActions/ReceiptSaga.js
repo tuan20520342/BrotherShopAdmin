@@ -30,10 +30,11 @@ function* actGetReceiptById(action) {
     if (status === 200) {
       yield put(receiptActions.getReceiptByIdSuccess({ receiptById: data.receipt }));
     } else {
-      console.log('Không lấy được phiếu nhập kho');
+      AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
+      yield put(receiptActions.getReceiptByIdFail());
     }
   } catch (err) {
-    console.log(err);
+    yield put(receiptActions.getReceiptByIdFail());
   }
 }
 

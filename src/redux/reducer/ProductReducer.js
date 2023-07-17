@@ -7,14 +7,7 @@ const initialState = {
   editLoading: null,
   products: [],
   productId: {
-    name: '',
-    category: '',
-    price: 0,
-    oldPrice: 0,
-    description: '',
-    images: {},
-    sizes: [],
-    totalSold: 0,
+    _id: -1,
   },
 };
 
@@ -34,6 +27,9 @@ const productSlice = createSlice({
     },
     getProductByIdSuccess: (state, action) => {
       state.productId = action.payload.productId;
+      state.idLoading = false;
+    },
+    getProductByIdFail: (state, action) => {
       state.idLoading = false;
     },
     editProductLoading: (state, action) => {

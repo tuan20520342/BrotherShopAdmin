@@ -5,7 +5,9 @@ const initialState = {
   isCreateReceiptSucceeded: false,
   idLoading: false,
   items: [],
-  receiptById: {},
+  receiptById: {
+    _id: -1,
+  },
 };
 
 const receiptSlice = createSlice({
@@ -28,6 +30,9 @@ const receiptSlice = createSlice({
     },
     getReceiptByIdSuccess: (state, action) => {
       state.receiptById = action.payload.receiptById;
+      state.idLoading = false;
+    },
+    getReceiptByIdFail: (state, action) => {
       state.idLoading = false;
     },
     addReceipt: (state, action) => {
