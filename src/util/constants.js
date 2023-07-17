@@ -28,3 +28,5 @@ export const orderPaymentStatuses = Object.freeze({
   UNPAID: 'Chưa thanh toán',
   PAID: 'Đã thanh toán',
 });
+
+export const EMPTY_VALUE = '--';

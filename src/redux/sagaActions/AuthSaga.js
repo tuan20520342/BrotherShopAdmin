@@ -82,22 +82,28 @@ function* actResetPassword(action) {
 }
 
 function* actChangePassword(action) {
+  const {
+    data: { oldPassword, newPassword, onSuccess, onError },
+  } = action;
+
   try {
-    const { data } = action;
     const changePasswordData = {
-      password: data.password,
+      oldPassword: oldPassword,
+      newPassword: newPassword,
     };
 
     const res = yield call(() => AuthenticationService.changePassword(changePasswordData));
     if (res.status === 200) {
       AlertCustom({ type: 'success', title: res.data.message });
-      if (data.callback) {
-        data.callback();
+      if (onSuccess) {
+        onSuccess();
       }
     } else {
+      onError();
       AlertCustom({ type: 'error', title: res.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
     }
   } catch (err) {
+    onError();
     AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
   }
 }
