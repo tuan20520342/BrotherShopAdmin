@@ -1,4 +1,4 @@
-import { Space, Button, Popconfirm } from 'antd';
+import { Space, Button, Popconfirm, Tag } from 'antd';
 import dayjs from 'dayjs';
 import { EyeFilled, DeleteFilled } from '@ant-design/icons';
 import TableTemplate from '~/components/UI/Table/TableTemplate';
@@ -95,6 +95,18 @@ const TablePromos = ({ keyWord, data, loading }) => {
       render: (minPrice) => `${printNumberWithCommas(minPrice)} đ`,
     },
     {
+      title: 'Tình trạng',
+      dataIndex: 'expired',
+      key: 'expired',
+      align: 'center',
+      ellipsis: true,
+      render: (expired) => {
+        if (expired) {
+          return <Tag color={'red'}>Ngừng sử dụng</Tag>;
+        } else return <Tag color={'green'}>Đang áp dụng</Tag>;
+      },
+    },
+    {
       title: 'Thao tác',
       key: 'action',
       align: 'center',
@@ -106,15 +118,19 @@ const TablePromos = ({ keyWord, data, loading }) => {
       render: (text, record, index) => (
         <Space size="middle" key={index}>
           <Button type="primary" icon={<EyeFilled />} onClick={() => handleEditPromo(record)} />
-          <Popconfirm
-            placement="top"
-            title="Bạn có chắc muốn xóa khuyến mãi này?"
-            okText="Xác nhận"
-            cancelText="Hủy"
-            onConfirm={() => handleRemovePromo(record)}
-          >
-            <Button type="primary" icon={<DeleteFilled />} danger />
-          </Popconfirm>
+          {record.expired ? (
+            <Button type="primary" icon={<DeleteFilled />} disabled />
+          ) : (
+            <Popconfirm
+              placement="top"
+              title="Bạn có chắc muốn xóa khuyến mãi này?"
+              okText="Xác nhận"
+              cancelText="Hủy"
+              onConfirm={() => handleRemovePromo(record)}
+            >
+              <Button type="primary" icon={<DeleteFilled />} danger />
+            </Popconfirm>
+          )}
         </Space>
       ),
     },

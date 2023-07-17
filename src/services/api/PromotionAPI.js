@@ -15,6 +15,6 @@ export const PromotionService = {
     return baseRequest.put(UrlApi.URL_EDIT_PROMOTION(data.id), data);
   },
   deletePromotionById: (id) => {
-    return baseRequest.get(UrlApi.URL_DELETE_PROMOTION(id));
+    return baseRequest.delete(UrlApi.URL_DELETE_PROMOTION(id));
   },
 };
