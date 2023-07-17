@@ -115,7 +115,7 @@ export default React.forwardRef(function ProductUploadImages({ product, loading 
           </Form.Item>
         </Col>
       </Row>
-      <Row justify="center">
+      <Row>
         <Space style={{ paddingBottom: '20px' }}>
           <Button size="large" type="primary" htmlType="submit" loading={loading}>
             Xác nhận

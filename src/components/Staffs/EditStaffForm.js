@@ -1,4 +1,3 @@
-/* eslint-disable no-template-curly-in-string */
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import { Form, Input, Button, Select, DatePicker, Space, Row, Col } from 'antd';

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Input, Button, Space, Row } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
@@ -40,11 +40,13 @@ const formItemLayoutWithOutLabel = {
 };
 
 const AddCategoryForm = () => {
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
+    setLoading(true);
     const { category, types } = values;
 
     const newCategory = {
@@ -52,7 +54,17 @@ const AddCategoryForm = () => {
       types,
     };
 
-    dispatch({ type: SagaActionTypes.CREATE_CATEGORY_SAGA, newCategory });
+    const handleResetForms = () => {
+      form.resetFields();
+      setLoading(false);
+    };
+
+    dispatch({
+      type: SagaActionTypes.CREATE_CATEGORY_SAGA,
+      newCategory,
+      onSuccess: handleResetForms,
+      onError: () => setLoading(false),
+    });
   };
 
   const handleClose = () => {
@@ -83,15 +95,15 @@ const AddCategoryForm = () => {
       </Form.Item>
       <Form.List
         name="types"
-        rules={[
-          {
-            validator: async (_, types) => {
-              if (!types || types.length < 1) {
-                return Promise.reject(new Error('Cần ít nhất 1 loại'));
-              }
-            },
-          },
-        ]}
+        // rules={[
+        //   {
+        //     validator: async (_, types) => {
+        //       if (!types || types.length < 1) {
+        //         return Promise.reject(new Error('Cần ít nhất 1 loại'));
+        //       }
+        //     },
+        //   },
+        // ]}
       >
         {(fields, { add, remove }, { errors }) => (
           <>
@@ -144,7 +156,7 @@ const AddCategoryForm = () => {
       </Form.List>
       <Row justify="end">
         <Space>
-          <Button type="primary" htmlType="submit">
+          <Button loading={loading} type="primary" htmlType="submit">
             Xác nhận
           </Button>
           <Button type="primary" danger onClick={handleClose}>

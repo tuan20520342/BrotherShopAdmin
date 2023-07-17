@@ -39,22 +39,25 @@ function* actGetProductById(action) {
 }
 
 function* actCreateProduct(action) {
+  const { newProduct, onSuccess, onError } = action;
   try {
-    const { newProduct, callback } = action;
-
     const res = yield call(() => ProductService.createProduct(newProduct));
     const { status, data } = res;
 
     if (status === 201) {
       AlertCustom({ type: 'success', title: data.message });
-      if (callback) {
-        callback();
+      if (onSuccess) {
+        onSuccess();
       }
     } else {
       AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
     }
   } catch (err) {
     AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
+  } finally {
+    if (onError) {
+      onError();
+    }
   }
 }
 

@@ -58,6 +58,7 @@ const createFolder = (uploadFolder, isMainImg) => {
 const AddProductForm = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
@@ -107,6 +108,7 @@ const AddProductForm = () => {
   };
 
   const onFinish = async (values) => {
+    setLoading(true);
     const mainFileImg = await getBase64(mainFileList[0].originFileObj);
     const subFileImg = await getBase64(subFileList[0].originFileObj);
 
@@ -132,9 +134,15 @@ const AddProductForm = () => {
       form.resetFields();
       setMainFileList([]);
       setSubFileList([]);
+      setLoading(false);
     };
 
-    dispatch({ type: SagaActionTypes.CREATE_PRODUCT_SAGA, newProduct, callback: handleResetForms });
+    dispatch({
+      type: SagaActionTypes.CREATE_PRODUCT_SAGA,
+      newProduct,
+      onSuccess: handleResetForms,
+      onError: () => setLoading(false),
+    });
   };
 
   return (
@@ -312,9 +320,9 @@ const AddProductForm = () => {
               </Col>
             </Row>
 
-            <Row style={{ paddingBottom: '20px' }} justify="center">
+            <Row style={{ paddingBottom: '20px' }}>
               <Space>
-                <Button size="large" type="primary" htmlType="submit">
+                <Button loading={loading} size="large" type="primary" htmlType="submit">
                   Xác nhận
                 </Button>
                 <Button size="large" type="primary" danger onClick={handleClose}>

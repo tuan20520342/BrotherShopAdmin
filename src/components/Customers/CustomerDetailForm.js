@@ -1,6 +1,7 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import { Form, Input, Button, Select, DatePicker, Row, Col } from 'antd';
+import { Form, Input, Button, Select, DatePicker, Row, Col, Typography } from 'antd';
+import { EnvironmentOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { validateMessages } from '~/util/constants';
@@ -8,6 +9,7 @@ import FormContainer from '../UI/Container/FormContainer';
 
 const { Option } = Select;
 const { TextArea } = Input;
+const { Title } = Typography;
 const dateFormat = 'DD/MM/YYYY';
 
 const CustomerDetailForm = () => {
@@ -24,7 +26,6 @@ const CustomerDetailForm = () => {
   return (
     <FormContainer>
       <Form
-        name="add_staff_form"
         form={form}
         onFinish={onFinish}
         initialValues={{
@@ -97,13 +98,20 @@ const CustomerDetailForm = () => {
               <Form.List name="address">
                 {(fields, { add, remove }, { errors }) => (
                   <>
-                    {fields.map((field, index) => (
-                      <Form.Item key={field.key}>
-                        <Form.Item {...field} noStyle>
-                          <TextArea rows={2} placeholder="Tên loại danh mục" disabled={true} />
+                    {fields.length > 0 ? (
+                      fields.map((field, index) => (
+                        <Form.Item key={field.key}>
+                          <Form.Item {...field} noStyle>
+                            <TextArea rows={2} disabled={true} />
+                          </Form.Item>
                         </Form.Item>
-                      </Form.Item>
-                    ))}
+                      ))
+                    ) : (
+                      <Col justify="center" align="middle">
+                        <EnvironmentOutlined style={{ fontSize: 50 }} />
+                        <Title level={5}>Khách hàng chưa có địa chỉ giao hàng</Title>
+                      </Col>
+                    )}
                   </>
                 )}
               </Form.List>

@@ -139,7 +139,7 @@ const TablePromos = ({ keyWord, data, loading }) => {
   const handleEditPromo = (promo) => {
     dispatch(
       modalActions.showModal({
-        title: 'Thêm khuyến mãi',
+        title: 'Chi tiết khuyến mãi',
         ComponentContent: <AddPromoForm promo={promo} />,
       }),
     );

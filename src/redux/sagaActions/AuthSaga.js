@@ -99,11 +99,15 @@ function* actChangePassword(action) {
         onSuccess();
       }
     } else {
-      onError();
+      if (onError) {
+        onError();
+      }
       AlertCustom({ type: 'error', title: res.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
     }
   } catch (err) {
-    onError();
+    if (onError) {
+      onError();
+    }
     AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
   }
 }

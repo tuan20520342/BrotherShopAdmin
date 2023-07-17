@@ -1,6 +1,5 @@
-/* eslint-disable no-template-curly-in-string */
 import React, { useRef, useState } from 'react';
-import { Form, Row, Col, Alert } from 'antd';
+import { Form, Row, Col } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import * as SagaActionTypes from '~/redux/constants';
 import ProductCommonInfor from './ProductCommonInfor';
@@ -114,47 +113,36 @@ const EditProductForm = ({ product }) => {
   const currentType = product.category.types?.find((type) => type.products.includes(product._id));
 
   return (
-    <>
-      {editLoading && (
-        <Alert
-          message="Cập nhật sản phẩm"
-          description="Đang cập nhật sản phẩm"
-          type="info"
-          showIcon
-          style={{ marginBottom: '30px' }}
-        />
-      )}
-      <Form
-        name="edit_product_form"
-        form={form}
-        onFinish={onFinish}
-        initialValues={{
-          name: product.name,
-          description: product.description,
-          price: product.price,
-          oldPrice: product.oldPrice,
-        }}
-        validateMessages={validateMessages}
-        layout="vertical"
-      >
-        <Row gutter={[16, 16]}>
-          <Col xs={24} sm={17} md={24} lg={17}>
-            <ProductCommonInfor />
-            <ProductPrice />
-            <ProductSelectCategory
-              types={types}
-              onChange={(value) => setSelectedCategory(value)}
-              currentType={currentType}
-              product={product}
-            />
-            <ProductQuantity sizes={product.sizes} />
-          </Col>
-          <Col xs={24} sm={7} md={24} lg={7}>
-            <ProductUploadImages ref={ref} product={product} loading={editLoading} />
-          </Col>
-        </Row>
-      </Form>
-    </>
+    <Form
+      name="edit_product_form"
+      form={form}
+      onFinish={onFinish}
+      initialValues={{
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        oldPrice: product.oldPrice,
+      }}
+      validateMessages={validateMessages}
+      layout="vertical"
+    >
+      <Row gutter={[16, 16]}>
+        <Col xs={24} sm={17} md={24} lg={17}>
+          <ProductCommonInfor />
+          <ProductPrice />
+          <ProductSelectCategory
+            types={types}
+            onChange={(value) => setSelectedCategory(value)}
+            currentType={currentType}
+            product={product}
+          />
+          <ProductQuantity sizes={product.sizes} />
+        </Col>
+        <Col xs={24} sm={7} md={24} lg={7}>
+          <ProductUploadImages ref={ref} product={product} loading={editLoading} />
+        </Col>
+      </Row>
+    </Form>
   );
 };
 export default EditProductForm;

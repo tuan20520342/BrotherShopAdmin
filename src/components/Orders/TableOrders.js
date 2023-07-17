@@ -1,6 +1,6 @@
-import { Space, Button, Popconfirm } from 'antd';
+import { Space, Button } from 'antd';
 import dayjs from 'dayjs';
-import { EyeFilled, DeleteFilled } from '@ant-design/icons';
+import { EyeFilled } from '@ant-design/icons';
 import TableTemplate from '~/components/UI/Table/TableTemplate';
 import LoadingSpin from '../UI/LoadingSpin/LoadingSpin';
 import { useNavigate } from 'react-router-dom';
@@ -98,15 +98,6 @@ const TableOrders = ({ keyWord, data, loading }) => {
       render: (text, record, index) => (
         <Space size="middle" key={index}>
           <Button type="primary" icon={<EyeFilled />} onClick={() => handleEditOrder(record)} />
-          <Popconfirm
-            placement="top"
-            title="Bạn có chắc muốn xóa đơn hàng này?"
-            okText="Xác nhận"
-            cancelText="Hủy"
-            onConfirm={() => handleRemoveOrder(record)}
-          >
-            <Button type="primary" icon={<DeleteFilled />} danger />
-          </Popconfirm>
         </Space>
       ),
     },
@@ -115,8 +106,6 @@ const TableOrders = ({ keyWord, data, loading }) => {
   const handleEditOrder = (order) => {
     navigate(`/orders/${order._id}`);
   };
-
-  const handleRemoveOrder = (record) => {};
 
   if (loading) {
     return <LoadingSpin />;

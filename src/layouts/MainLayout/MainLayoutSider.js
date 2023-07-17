@@ -116,7 +116,7 @@ const MainLayoutSider = ({ collapsed, setCollapsed, setVisibleButton }) => {
           style={{ objectFit: 'cover', width: '80%', maxWidth: '80px', height: 'auto', margin: '20px' }}
           src={require('~/assets/clothing-shop.png')}
           alt="icon avatar"
-        ></img>
+        />
       </Row>
       <Menu
         theme="dark"

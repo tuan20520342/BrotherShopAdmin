@@ -42,6 +42,7 @@ const formItemLayoutWithOutLabel = {
 const EditCategoryForm = ({ category }) => {
   const [enableModify, setEnableModify] = useState(false);
   const [componentDisabled, setComponentDisabled] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -63,6 +64,7 @@ const EditCategoryForm = ({ category }) => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
+    setLoading(true);
     const { category: updatedName, types } = values;
 
     const updatedTypes = types.map((item, index) => {
@@ -78,7 +80,7 @@ const EditCategoryForm = ({ category }) => {
       categoryId: category._id,
     };
 
-    dispatch({ type: SagaActionTypes.UPDATE_CATEGORY_SAGA, updatedCategory });
+    dispatch({ type: SagaActionTypes.UPDATE_CATEGORY_SAGA, updatedCategory, callback: () => setLoading(false) });
   };
 
   const handleClose = () => {
@@ -87,7 +89,7 @@ const EditCategoryForm = ({ category }) => {
 
   return (
     <Form
-      name="add_category_form"
+      name="edit_category_form"
       form={form}
       onFinish={onFinish}
       initialValues={{
@@ -179,7 +181,7 @@ const EditCategoryForm = ({ category }) => {
             <Button type="primary" danger onClick={handleCancel}>
               Hủy
             </Button>
-            <Button type="primary" htmlType="submit">
+            <Button loading={loading} type="primary" htmlType="submit">
               Lưu
             </Button>
           </Space>
