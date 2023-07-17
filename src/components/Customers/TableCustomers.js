@@ -45,7 +45,6 @@ const TableCustomers = ({ keyWord, data, loading }) => {
       key: 'name',
       sorter: (item1, item2) => item1.name.localeCompare(item2.name),
       ellipsis: true,
-      align: 'center',
     },
     {
       title: 'Ngày sinh',
@@ -75,7 +74,6 @@ const TableCustomers = ({ keyWord, data, loading }) => {
       dataIndex: 'email',
       key: 'email',
       ellipsis: true,
-      align: 'center',
     },
     {
       title: <div style={{ textAlign: 'center' }}>Số đơn hàng</div>,

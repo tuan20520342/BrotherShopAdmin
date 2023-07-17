@@ -53,6 +53,7 @@ const TableStaffs = ({ keyWord, data, loading }) => {
       dataIndex: 'phone',
       key: 'phone',
       ellipsis: true,
+      align: 'center',
     },
     {
       title: 'Email',
