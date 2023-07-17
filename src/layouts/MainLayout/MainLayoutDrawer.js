@@ -13,6 +13,7 @@ import {
 import { useLocation, useNavigate } from 'react-router-dom';
 import './styles/customdrawer.css';
 import { useSelector } from 'react-redux';
+import { role } from '~/util/constants';
 
 const MainLayoutDrawer = ({ setCollapsed, collapsed }) => {
   const location = useLocation();
@@ -97,7 +98,7 @@ const MainLayoutDrawer = ({ setCollapsed, collapsed }) => {
     },
   ];
 
-  if (currentUser?.role?.name === 'Nhân viên') items.splice(1, 1);
+  if (currentUser?.role?.name === role.STAFF) items.splice(1, 1);
 
   return (
     <Drawer

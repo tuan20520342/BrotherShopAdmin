@@ -29,6 +29,11 @@ export const orderPaymentStatuses = Object.freeze({
   PAID: 'Đã thanh toán',
 });
 
+export const role = Object.freeze({
+  MANAGER: 'Chủ cửa hàng',
+  STAFF: 'Nhân viên',
+});
+
 export const staffStates = {
   ACTIVE: 'Đang làm',
   NONACTIVE: 'Đã nghỉ',

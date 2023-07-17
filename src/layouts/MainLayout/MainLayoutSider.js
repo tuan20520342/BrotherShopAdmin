@@ -13,6 +13,7 @@ import {
 import { useLocation, useNavigate } from 'react-router-dom';
 import Sider from 'antd/es/layout/Sider';
 import { useSelector } from 'react-redux';
+import { role } from '~/util/constants';
 
 const MainLayoutSider = ({ collapsed, setCollapsed, setVisibleButton }) => {
   const location = useLocation();
@@ -95,7 +96,7 @@ const MainLayoutSider = ({ collapsed, setCollapsed, setVisibleButton }) => {
     },
   ];
 
-  if (currentUser?.role?.name === 'Nhân viên') items.splice(1, 1);
+  if (currentUser?.role?.name === role.STAFF) items.splice(1, 1);
 
   return (
     <Sider

@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import * as SagaActionTypes from '~/redux/constants';
 import NotFoundPage from './NotFound';
+import { role } from '~/util/constants';
 const { Title } = Typography;
 
 const StaffsPage = () => {
@@ -17,14 +18,14 @@ const StaffsPage = () => {
   const [keyWord, setKeyWord] = useState('');
 
   useEffect(() => {
-    if (currentUser?.role?.name === 'Chủ cửa hàng') dispatch({ type: SagaActionTypes.GET_STAFFS_SAGA });
+    if (currentUser?.role?.name === role.MANAGER) dispatch({ type: SagaActionTypes.GET_STAFFS_SAGA });
   }, [dispatch, currentUser]);
 
   const handleAddStaff = () => {
     navigate('/add-staff');
   };
 
-  if (currentUser?.role?.name === 'Nhân viên') {
+  if (currentUser?.role?.name === role.STAFF) {
     return <NotFoundPage />;
   }
 

@@ -6,6 +6,7 @@ import * as SagaActionTypes from '~/redux/constants';
 import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
 import EditStaffForm from '~/components/Staffs/EditStaffForm';
 import NotFoundPage from './NotFound';
+import { role } from '~/util/constants';
 
 const { Title } = Typography;
 
@@ -14,11 +15,11 @@ const EditStaffPage = () => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.authenticationSlice);
   useEffect(() => {
-    if (currentUser?.role?.name === 'Chủ cửa hàng') dispatch({ type: SagaActionTypes.GET_STAFF_BY_ID_SAGA, id: id });
+    if (currentUser?.role?.name === role.MANAGER) dispatch({ type: SagaActionTypes.GET_STAFF_BY_ID_SAGA, id: id });
   }, [dispatch, id, currentUser]);
   const { idLoading, staffById } = useSelector((state) => state.staffSlice);
 
-  if (currentUser?.role?.name === 'Nhân viên') {
+  if (currentUser?.role?.name === role.STAFF) {
     return <NotFoundPage />;
   } else {
     if (idLoading) {
