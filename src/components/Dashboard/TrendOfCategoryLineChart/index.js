@@ -4,6 +4,7 @@ import { DashboardService } from '~/services/api/DashboardAPI';
 import AlertCustom from '~/components/UI/Notification/Alert';
 import { Card } from 'antd';
 import TrendLineSkeleton from './TrendLineSkeleton';
+import { blue } from '@ant-design/colors';
 
 export default function TrendOfCategoryLineChart() {
   const [data, setData] = useState();
@@ -32,6 +33,28 @@ export default function TrendOfCategoryLineChart() {
     xField: 'date',
     yField: 'sold',
     seriesField: 'category',
+    label: true,
+    point: {
+      size: 5,
+      shape: 'circle',
+      style: {
+        fill: 'white',
+        stroke: '#5B8FF9',
+        lineWidth: 2,
+      },
+    },
+    tooltip: {
+      showMarkers: false,
+    },
+    state: {
+      active: {
+        style: {
+          shadowBlur: 4,
+          stroke: '#000',
+          fill: blue[2],
+        },
+      },
+    },
   };
 
   if (!data) {

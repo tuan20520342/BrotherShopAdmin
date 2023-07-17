@@ -51,7 +51,7 @@ export default function SoldQuantityProductsColumnChart() {
   }
 
   return (
-    <Card title="Sản phẩm đã bán" style={{ marginTop: '30px' }}>
+    <Card title="Số lượng sản phẩm đã bán" style={{ margin: '30px 0' }}>
       <Bar {...config} />
     </Card>
   );

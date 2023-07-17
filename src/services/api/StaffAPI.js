@@ -27,9 +27,8 @@ export const StaffService = {
   },
 
   putStaff: (editStaff) => {
-    const { role, name, address, email, phone, gender, birthday, staffId } = editStaff;
+    const { name, address, email, phone, gender, birthday, staffId, status } = editStaff;
     return baseRequest.put(UrlApi.URL_PUT_STAFF, {
-      role: role,
       name: name,
       address: address,
       email: email,
@@ -37,6 +36,7 @@ export const StaffService = {
       gender: gender,
       birthday: birthday,
       staffId: staffId,
+      status: status,
     });
   },
 };

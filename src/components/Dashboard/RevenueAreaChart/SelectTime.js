@@ -34,7 +34,7 @@ function SelectTime({ onTimeChange }) {
     }
 
     e.preventDefault();
-    setItems([...items, { label: `${name} năm qua`, value: parseInt(name) * 365 }]);
+    setItems([...items, { label: `${name} năm qua`, value: parseFloat(name) * 365 }]);
     setName('');
 
     setTimeout(() => {
@@ -79,10 +79,8 @@ function SelectTime({ onTimeChange }) {
           </Space>
         </>
       )}
-      options={items.map((item) => ({
-        label: item.label,
-        value: item.value,
-      }))}
+      options={items}
+      defaultValue={items[0]}
       onChange={handleChangeTime}
     />
   );
