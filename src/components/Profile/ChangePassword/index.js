@@ -8,7 +8,7 @@ const { Panel } = Collapse;
 
 const ChangePasswordForm = () => {
   const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(['1']);
+  const [open, setOpen] = useState([]);
   const dispatch = useDispatch();
   const [form] = Form.useForm();
 
