@@ -12,11 +12,13 @@ import {
 } from '@ant-design/icons';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Sider from 'antd/es/layout/Sider';
+import { useSelector } from 'react-redux';
 
 const MainLayoutSider = ({ collapsed, setCollapsed, setVisibleButton }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [hidden, setHidden] = useState(false);
+  const { currentUser } = useSelector((state) => state.authenticationSlice);
 
   const items = [
     {
@@ -93,6 +95,8 @@ const MainLayoutSider = ({ collapsed, setCollapsed, setVisibleButton }) => {
     },
   ];
 
+  if (currentUser?.role?.name === 'Nhân viên') items.splice(1, 1);
+
   return (
     <Sider
       collapsible
@@ -100,7 +104,6 @@ const MainLayoutSider = ({ collapsed, setCollapsed, setVisibleButton }) => {
       onCollapse={(value) => setCollapsed(value)}
       breakpoint="md"
       onBreakpoint={(broken) => {
-        //gia tri broken thay doi khi qua breakpoint
         if (broken) {
           setHidden(true);
           setVisibleButton(true);
@@ -148,7 +151,7 @@ const MainLayoutSider = ({ collapsed, setCollapsed, setVisibleButton }) => {
             ? '8'
             : '-1',
         ]}
-      ></Menu>
+      />
     </Sider>
   );
 };
