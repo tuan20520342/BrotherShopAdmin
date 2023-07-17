@@ -29,4 +29,9 @@ export const orderPaymentStatuses = Object.freeze({
   PAID: 'Đã thanh toán',
 });
 
+export const staffStates = {
+  ACTIVE: 'Đang làm',
+  NONACTIVE: 'Đã nghỉ',
+};
+
 export const EMPTY_VALUE = '--';

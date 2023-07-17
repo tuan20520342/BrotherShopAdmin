@@ -5,7 +5,7 @@ import { Form, Input, Button, Select, DatePicker, Space, Row, Col } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import * as SagaActionTypes from '~/redux/constants';
-import { validateMessages } from '~/util/constants';
+import { staffStates, validateMessages } from '~/util/constants';
 import FormContainer from '../UI/Container/FormContainer';
 
 const { Option } = Select;
@@ -40,7 +40,7 @@ const EditStaffForm = () => {
   };
 
   const onFinish = (values) => {
-    let editStaff = {
+    const editStaff = {
       staffId: staffById._id,
       name: values.name,
       address: values.address,
@@ -158,8 +158,8 @@ const EditStaffForm = () => {
               ]}
             >
               <Select placeholder="Tình trạng" allowClear disabled={componentDisabled}>
-                <Option value="active">Đang làm</Option>
-                <Option value="nonactive">Đã nghỉ</Option>
+                <Option value={staffStates.ACTIVE}>{staffStates.ACTIVE}</Option>
+                <Option value={staffStates.NONACTIVE}>{staffStates.NONACTIVE}</Option>
               </Select>
             </Form.Item>
           </Col>
