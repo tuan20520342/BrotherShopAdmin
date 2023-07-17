@@ -3,9 +3,10 @@ import { Line } from '@ant-design/plots';
 import { DashboardService } from '~/services/api/DashboardAPI';
 import AlertCustom from '~/components/UI/Notification/Alert';
 import { Card } from 'antd';
+import TrendLineSkeleton from './TrendLineSkeleton';
 
 export default function TrendOfCategoryLineChart() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
 
   useEffect(() => {
     const getTrendOfCategories = async () => {
@@ -32,6 +33,10 @@ export default function TrendOfCategoryLineChart() {
     yField: 'sold',
     seriesField: 'category',
   };
+
+  if (!data) {
+    return <TrendLineSkeleton />;
+  }
 
   return (
     <Card title="Xu hướng mua hàng theo danh mục" style={{ marginTop: '30px' }}>

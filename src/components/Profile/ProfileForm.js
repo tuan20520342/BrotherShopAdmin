@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
-import { Form, Input, Button, Select, DatePicker, Space, Row, Col } from 'antd';
+import { Form, Input, Button, Select, DatePicker, Space, Row, Col, Collapse } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import * as SagaActionTypes from '~/redux/constants';
 import { validateMessages } from '~/util/constants';
 import FormContainer from '../UI/Container/FormContainer';
+import ChangePasswordForm from './ChangePassword';
 
 const { Option } = Select;
 const { TextArea } = Input;
+const { Panel } = Collapse;
 const dateFormat = 'DD/MM/YYYY';
 
 const ProfileForm = () => {
@@ -34,16 +36,12 @@ const ProfileForm = () => {
     onReset();
   };
 
-  const handleChangePassword = () => {
-    navigate('/profile/change-password');
-  };
-
   const onReset = () => {
     form.resetFields();
   };
 
   const onFinish = (values) => {
-    let editUser = {
+    const editUser = {
       staffId: currentUser._id,
       role: currentUser.role._id,
       name: values.name,
@@ -84,6 +82,7 @@ const ProfileForm = () => {
             md: 24,
             lg: 32,
           }}
+          style={{ marginBottom: 20 }}
         >
           <Col xs={24} sm={12} md={24} lg={12} key={1}>
             <Form.Item
@@ -159,10 +158,12 @@ const ProfileForm = () => {
               <TextArea rows={2} placeholder="Địa chỉ" disabled={componentDisabled} />
             </Form.Item>
           </Col>
-          <Col xs={24} key={9}>
-            <Button type="dashed" onClick={() => handleChangePassword()}>
-              Thay đổi mật khẩu
-            </Button>
+          <Col xs={24} sm={24} md={24} key={8}>
+            <Collapse>
+              <Panel header="Thay đổi mật khẩu" key="1">
+                <ChangePasswordForm />
+              </Panel>
+            </Collapse>
           </Col>
         </Row>
         <Row justify="end">

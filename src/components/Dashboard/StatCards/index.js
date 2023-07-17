@@ -5,6 +5,7 @@ import StatCardItem from '~/components/Dashboard/StatCards/StatCardItem';
 import { useEffect, useState } from 'react';
 import { DashboardService } from '~/services/api/DashboardAPI';
 import AlertCustom from '~/components/UI/Notification/Alert';
+import StatCardSkeleton from './StatCardSkeleton';
 
 function StatCardList() {
   const [data, setData] = useState();
@@ -27,6 +28,10 @@ function StatCardList() {
 
     getStatCardData();
   }, []);
+
+  if (!data) {
+    return <StatCardSkeleton />;
+  }
 
   return (
     <>

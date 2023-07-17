@@ -3,9 +3,10 @@ import { useEffect, useState } from 'react';
 import { DashboardService } from '~/services/api/DashboardAPI';
 import AlertCustom from '../../UI/Notification/Alert';
 import { useNavigate } from 'react-router-dom';
+import BestSellerSkeleton from './BestSellerSkeleton';
 
 function BestSellerProducts() {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,6 +27,10 @@ function BestSellerProducts() {
 
     getBestSellerProducts();
   }, []);
+
+  if (!products) {
+    return <BestSellerSkeleton />;
+  }
 
   return (
     <Card

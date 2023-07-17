@@ -74,8 +74,8 @@ function* actDeleteStaff(action) {
 function* actPutStaff(action) {
   const { editStaff } = action;
   try {
-    let res = yield call(() => StaffService.putStaff(editStaff));
-    console.log(res);
+    const res = yield call(() => StaffService.putStaff(editStaff));
+
     if (res.status === 200) {
       AlertCustom({
         type: 'success',
@@ -84,12 +84,12 @@ function* actPutStaff(action) {
     } else {
       AlertCustom({ type: 'error', title: 'Chỉnh sửa nhân viên thất bại' });
     }
+
     if (editStaff.staffId === Cookies.get('currentUser')) {
       yield put({ type: SagaActionTypes.GET_CURRENT_USER_SAGA });
     }
     yield put({ type: SagaActionTypes.GET_STAFF_BY_ID_SAGA, id: editStaff.staffId });
   } catch (err) {
-    console.log(err);
     AlertCustom({ type: 'error', title: err.response.data });
     yield put({ type: SagaActionTypes.GET_STAFF_BY_ID_SAGA, id: editStaff.staffId });
   }

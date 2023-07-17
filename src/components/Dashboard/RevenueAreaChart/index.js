@@ -5,13 +5,14 @@ import AlertCustom from '~/components/UI/Notification/Alert';
 import { DashboardService } from '~/services/api/DashboardAPI';
 import SelectTime from './SelectTime';
 import { printNumberWithCommas } from '~/util/shared';
+import RevenueChartSkeleton from './RevenueChartSkeleton';
 
 const formatChartLabel = (value) => {
   return printNumberWithCommas(value);
 };
 
 const RevenueAreaChart = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
 
   useEffect(() => {
     getRevenue(7);
@@ -59,6 +60,10 @@ const RevenueAreaChart = () => {
       },
     },
   };
+
+  if (!data) {
+    return <RevenueChartSkeleton />;
+  }
 
   return (
     <Card
