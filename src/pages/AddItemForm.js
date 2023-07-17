@@ -2,8 +2,8 @@ import React from 'react';
 import { Typography, Row, Col } from 'antd';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import NotFoundPage from './NotFound';
 import { role } from '~/util/constants';
+import NotAllowPage from './NotAllowPage';
 
 const { Title } = Typography;
 
@@ -12,7 +12,7 @@ const AddItemForm = ({ title, form }) => {
   const { currentUser } = useSelector((state) => state.authenticationSlice);
 
   if (location.pathname === '/add-staff' && currentUser?.role?.name === role.STAFF) {
-    return <NotFoundPage />;
+    return <NotAllowPage />;
   }
 
   return (

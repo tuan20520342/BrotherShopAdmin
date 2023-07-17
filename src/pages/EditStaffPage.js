@@ -7,6 +7,7 @@ import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
 import EditStaffForm from '~/components/Staffs/EditStaffForm';
 import NotFoundPage from './NotFound';
 import { role } from '~/util/constants';
+import NotAllowPage from './NotAllowPage';
 
 const { Title } = Typography;
 
@@ -20,7 +21,7 @@ const EditStaffPage = () => {
   const { idLoading, staffById } = useSelector((state) => state.staffSlice);
 
   if (currentUser?.role?.name === role.STAFF) {
-    return <NotFoundPage />;
+    return <NotAllowPage />;
   } else {
     if (idLoading) {
       return <LoadingSpin />;
