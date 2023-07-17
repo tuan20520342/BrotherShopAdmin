@@ -5,31 +5,37 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as SagaActionTypes from '~/redux/constants';
 import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
 import EditStaffForm from '~/components/Staffs/EditStaffForm';
+import NotFoundPage from './NotFound';
+import { role } from '~/util/constants';
 
 const { Title } = Typography;
 
 const EditStaffPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const { currentUser } = useSelector((state) => state.authenticationSlice);
   useEffect(() => {
-    dispatch({ type: SagaActionTypes.GET_STAFF_BY_ID_SAGA, id: id });
-  }, [dispatch, id]);
+    if (currentUser?.role?.name === role.MANAGER) dispatch({ type: SagaActionTypes.GET_STAFF_BY_ID_SAGA, id: id });
+  }, [dispatch, id, currentUser]);
   const { idLoading, staffById } = useSelector((state) => state.staffSlice);
 
-  if (idLoading) {
-    return <LoadingSpin />;
+  if (currentUser?.role?.name === role.STAFF) {
+    return <NotFoundPage />;
+  } else {
+    if (idLoading) {
+      return <LoadingSpin />;
+    }
+    return (
+      <Row>
+        <Col span={24}>
+          <Title level={2}>{`Nhân viên: ${staffById.name}`}</Title>
+        </Col>
+        <Col span={24}>
+          <EditStaffForm />
+        </Col>
+      </Row>
+    );
   }
-
-  return (
-    <Row>
-      <Col span={24}>
-        <Title level={2}>{`Nhân viên: ${staffById.name}`}</Title>
-      </Col>
-      <Col span={24}>
-        <EditStaffForm />
-      </Col>
-    </Row>
-  );
 };
 
 export default EditStaffPage;

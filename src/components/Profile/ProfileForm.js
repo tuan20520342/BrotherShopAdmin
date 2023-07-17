@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
-import { Form, Input, Button, Select, DatePicker, Space, Row, Col, Typography } from 'antd';
+import { Form, Input, Button, Select, DatePicker, Space, Row, Col, Typography, Divider } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import * as SagaActionTypes from '~/redux/constants';
@@ -60,7 +60,9 @@ const ProfileForm = () => {
 
   return (
     <FormContainer>
-      <Title level={3}>Cập nhật thông tin tài khoản</Title>
+      <Title level={3} style={{ marginTop: 0 }}>
+        Cập nhật thông tin tài khoản
+      </Title>
       <Form
         name="add_staff_form"
         form={form}
@@ -181,6 +183,7 @@ const ProfileForm = () => {
           )}
         </Row>
       </Form>
+      <Divider />
       <Title level={3}>Thay đổi mật khẩu</Title>
       <ChangePasswordForm />
     </FormContainer>

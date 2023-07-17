@@ -6,21 +6,28 @@ import Toolbar from '~/components/UI/Toolbar';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import * as SagaActionTypes from '~/redux/constants';
+import NotFoundPage from './NotFound';
+import { role } from '~/util/constants';
 const { Title } = Typography;
 
 const StaffsPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { currentUser } = useSelector((state) => state.authenticationSlice);
   const { staffs, loading } = useSelector((state) => state.staffSlice);
   const [keyWord, setKeyWord] = useState('');
 
   useEffect(() => {
-    dispatch({ type: SagaActionTypes.GET_STAFFS_SAGA });
-  }, [dispatch]);
+    if (currentUser?.role?.name === role.MANAGER) dispatch({ type: SagaActionTypes.GET_STAFFS_SAGA });
+  }, [dispatch, currentUser]);
 
   const handleAddStaff = () => {
     navigate('/add-staff');
   };
+
+  if (currentUser?.role?.name === role.STAFF) {
+    return <NotFoundPage />;
+  }
 
   return (
     <Row>
