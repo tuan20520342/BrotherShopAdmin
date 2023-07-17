@@ -115,15 +115,17 @@ export default React.forwardRef(function ProductUploadImages({ product, loading 
           </Form.Item>
         </Col>
       </Row>
+      <Row justify="center">
+        <Space style={{ paddingBottom: '20px' }}>
+          <Button size="large" type="primary" htmlType="submit" loading={loading}>
+            Xác nhận
+          </Button>
+          <Button size="large" type="primary" danger onClick={handleClose}>
+            Đóng
+          </Button>
+        </Space>
+      </Row>
 
-      <Space style={{ paddingBottom: '20px' }}>
-        <Button size="large" type="primary" htmlType="submit" loading={loading}>
-          Xác nhận
-        </Button>
-        <Button size="large" type="primary" danger onClick={handleClose}>
-          Đóng
-        </Button>
-      </Space>
       <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
         <img
           alt="example"

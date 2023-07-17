@@ -81,6 +81,27 @@ function* actResetPassword(action) {
   }
 }
 
+function* actChangePassword(action) {
+  try {
+    const { data } = action;
+    const changePasswordData = {
+      password: data.password,
+    };
+
+    const res = yield call(() => AuthenticationService.changePassword(changePasswordData));
+    if (res.status === 200) {
+      AlertCustom({ type: 'success', title: res.data.message });
+      if (data.callback) {
+        data.callback();
+      }
+    } else {
+      AlertCustom({ type: 'error', title: res.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
+    }
+  } catch (err) {
+    AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
+  }
+}
+
 export function* followGetCurrentUser() {
   yield takeLatest(SagaActionTypes.GET_CURRENT_USER_SAGA, actGetCurrentUser);
 }
@@ -93,4 +114,8 @@ export function* followForgotPassword() {
 
 export function* followResetPassword() {
   yield takeLatest(SagaActionTypes.RESET_PASSWORD_SAGA, actResetPassword);
+}
+
+export function* followChangePassword() {
+  yield takeLatest(SagaActionTypes.CHANGE_PASSWORD_SAGA, actChangePassword);
 }

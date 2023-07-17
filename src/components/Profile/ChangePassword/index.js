@@ -1,16 +1,28 @@
 import { LockOutlined, UnlockOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Col } from 'antd';
+
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import '~/components/Login/styles/LoginForm.css';
+import * as SagaActionTypes from '~/redux/constants';
 
 const ChangePasswordForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onClose = () => {
     navigate('/profile');
   };
 
   const onFinish = async (values) => {
-    console.log(values);
+    const data = {
+      password: values.confirmPassword,
+      callback: () => navigate('/profile'),
+    };
+    dispatch({
+      type: SagaActionTypes.CHANGE_PASSWORD_SAGA,
+      data: data,
+    });
   };
 
   return (
