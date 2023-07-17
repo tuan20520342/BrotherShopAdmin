@@ -132,13 +132,7 @@ const EditCategoryForm = ({ category }) => {
                   ]}
                   noStyle
                 >
-                  <Input
-                    placeholder="Tên loại danh mục"
-                    style={{
-                      width: '60%',
-                    }}
-                    disabled={componentDisabled}
-                  />
+                  <Input placeholder="Tên loại danh mục" disabled={componentDisabled} />
                 </Form.Item>
                 {fields.length > 1 && category.types[index]?.products.length > 0 ? null : (
                   <MinusCircleOutlined
@@ -154,7 +148,7 @@ const EditCategoryForm = ({ category }) => {
                 type="dashed"
                 onClick={() => add()}
                 style={{
-                  width: '60%',
+                  width: '100%',
                 }}
                 icon={<PlusOutlined />}
                 disabled={componentDisabled}

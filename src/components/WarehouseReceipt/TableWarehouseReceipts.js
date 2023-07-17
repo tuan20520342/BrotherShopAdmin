@@ -90,10 +90,10 @@ const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
       },
     },
     {
-      title: 'Tổng giá',
+      title: <div style={{ textAlign: 'center' }}>Tổng giá</div>,
       dataIndex: 'price',
       key: 'price',
-      align: 'center',
+      align: 'end',
       ellipsis: true,
       sorter: (a, b) => totalPrice(a) - totalPrice(b),
       render: (text, record, index) => {

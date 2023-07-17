@@ -169,6 +169,7 @@ const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProduct
                   formatter={(value) => printNumberWithCommas(value)}
                   parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
                   disabled
+                  style={{ width: '100%' }}
                 />
               </Form.Item>
             </>
@@ -192,6 +193,7 @@ const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProduct
           formatter={(value) => printNumberWithCommas(value)}
           parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
           disabled={disabled}
+          style={{ width: '100%' }}
         />
       </Form.Item>
       <Form.Item
