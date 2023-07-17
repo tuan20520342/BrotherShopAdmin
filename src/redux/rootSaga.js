@@ -45,11 +45,11 @@ export default function* rootSaga() {
     //Order
     OrderSaga.followActGetOrders(),
     OrderSaga.followActGetOrderById(),
+    OrderSaga.followActUpdateOrderStatus(),
     //Promotion
     PromotionSaga.followActGetPromos(),
     PromotionSaga.followActCreatePromo(),
     PromotionSaga.followActRemovePromo(),
     PromotionSaga.followActUpdatePromo(),
-    OrderSaga.followActUpdateOrderStatus(),
   ]);
 }

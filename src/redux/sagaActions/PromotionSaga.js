@@ -24,10 +24,8 @@ function* actGetPromos() {
 function* actCreatePromo(action) {
   try {
     const { newPromo } = action;
-
     const res = yield call(() => PromotionService.createPromotion(newPromo));
     const { status, data } = res;
-    console.log(res);
     if (status === 201) {
       AlertCustom({ type: 'success', title: data.message });
       yield put(modalActions.hideModal());
@@ -43,7 +41,6 @@ function* actCreatePromo(action) {
 function* actUpdatePromo(action) {
   try {
     const { editPromo } = action;
-
     const res = yield call(() => PromotionService.updatePromotion(editPromo));
     const { status, data } = res;
     if (status === 200) {
@@ -63,7 +60,7 @@ function* actRemovePromo(action) {
     const { promoId } = action;
     const res = yield call(() => PromotionService.deletePromotionById(promoId));
     const { status, data } = res;
-
+    console.log(res);
     if (status === 200) {
       yield put(modalActions.hideModal());
       AlertCustom({ type: 'success', title: data.message });
