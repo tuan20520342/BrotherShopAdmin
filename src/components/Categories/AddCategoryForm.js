@@ -126,12 +126,7 @@ const AddCategoryForm = () => {
                   ]}
                   noStyle
                 >
-                  <Input
-                    placeholder="Tên loại danh mục"
-                    style={{
-                      width: '60%',
-                    }}
-                  />
+                  <Input placeholder="Tên loại danh mục" />
                 </Form.Item>
                 {fields.length > 1 ? (
                   <MinusCircleOutlined className="dynamic-delete-button" onClick={() => remove(field.name)} />
@@ -143,7 +138,7 @@ const AddCategoryForm = () => {
                 type="dashed"
                 onClick={() => add()}
                 style={{
-                  width: '60%',
+                  width: '100%',
                 }}
                 icon={<PlusOutlined />}
               >

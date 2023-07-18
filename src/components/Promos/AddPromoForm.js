@@ -163,6 +163,7 @@ const AddPromoForm = ({ promo }) => {
           }}
           format="DD-MM-YYYY HH:mm"
           disabled={disabled}
+          style={{ width: '100%' }}
         />
       </Form.Item>
       <Form.Item
@@ -176,12 +177,12 @@ const AddPromoForm = ({ promo }) => {
       >
         <InputNumber
           className="rounded"
+          style={{ width: '100%' }}
           min={0}
           placeholder="Số lượng"
           formatter={(value) => printNumberWithCommas(value)}
           parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
           disabled={disabled}
-          style={{ width: '100%' }}
         />
       </Form.Item>
       <Form.Item
