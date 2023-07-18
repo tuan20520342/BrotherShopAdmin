@@ -132,7 +132,11 @@ const EditCategoryForm = ({ category }) => {
                   ]}
                   noStyle
                 >
-                  <Input placeholder="Tên loại danh mục" disabled={componentDisabled} />
+                  {fields.length > 1 && category.types[index]?.products.length > 0 ? (
+                    <Input style={{ width: '100%' }} placeholder="Tên loại danh mục" disabled={componentDisabled} />
+                  ) : (
+                    <Input style={{ width: '88.5%' }} placeholder="Tên loại danh mục" disabled={componentDisabled} />
+                  )}
                 </Form.Item>
                 {fields.length > 1 && category.types[index]?.products.length > 0 ? null : (
                   <MinusCircleOutlined
