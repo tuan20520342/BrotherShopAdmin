@@ -3,13 +3,28 @@ import { Button, Form, Input, Typography, Row } from 'antd';
 import '../styles/LoginForm.css';
 import * as SagaActionTypes from '~/redux/constants';
 import { useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const { Title, Paragraph } = Typography;
 
 const ForgotPasswordForm = () => {
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const onSuccess = () => {
+    navigate('/login');
+    setLoading(false);
+  };
+
+  const onError = () => {
+    setLoading(false);
+  };
 
   const onFinish = (values) => {
+    setLoading(true);
+
     const data = {
       email: values.email,
       isCustomer: false,
@@ -17,8 +32,11 @@ const ForgotPasswordForm = () => {
     dispatch({
       type: SagaActionTypes.FORGOT_PASSWORD_SAGA,
       data: data,
+      onSuccess,
+      onError,
     });
   };
+
   return (
     <div id="components-form-login">
       <Row justify="center">
@@ -48,7 +66,7 @@ const ForgotPasswordForm = () => {
         >
           <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
         </Form.Item>
-        <Button size="large" type="primary" htmlType="submit" className="login-form-button">
+        <Button loading={loading} size="large" type="primary" htmlType="submit" className="login-form-button">
           Xác nhận
         </Button>
       </Form>

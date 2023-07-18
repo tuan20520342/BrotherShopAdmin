@@ -22,8 +22,8 @@ function* actGetPromos() {
 }
 
 function* actCreatePromo(action) {
+  const { newPromo, callback } = action;
   try {
-    const { newPromo } = action;
     const res = yield call(() => PromotionService.createPromotion(newPromo));
     const { status, data } = res;
     if (status === 201) {
@@ -35,14 +35,18 @@ function* actCreatePromo(action) {
     }
   } catch (err) {
     AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
+  } finally {
+    callback();
   }
 }
 
 function* actUpdatePromo(action) {
+  const { editPromo, callback } = action;
+
   try {
-    const { editPromo } = action;
     const res = yield call(() => PromotionService.updatePromotion(editPromo));
     const { status, data } = res;
+
     if (status === 200) {
       AlertCustom({ type: 'success', title: data.message });
       yield put(modalActions.hideModal());
@@ -52,6 +56,8 @@ function* actUpdatePromo(action) {
     }
   } catch (err) {
     AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
+  } finally {
+    callback();
   }
 }
 
@@ -60,17 +66,33 @@ function* actRemovePromo(action) {
     const { promoId } = action;
     const res = yield call(() => PromotionService.deletePromotionById(promoId));
     const { status, data } = res;
-    console.log(res);
+
     if (status === 200) {
       yield put(modalActions.hideModal());
+      yield put({ type: SagaActionTypes.GET_PROMOS_SAGA });
       AlertCustom({ type: 'success', title: data.message });
     } else {
       AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
     }
   } catch (err) {
     AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
-  } finally {
-    yield put({ type: SagaActionTypes.GET_PROMOS_SAGA });
+  }
+}
+
+function* actRestorePromo(action) {
+  try {
+    const { promoId } = action;
+    const res = yield call(() => PromotionService.restorePromotion(promoId));
+    const { status, data } = res;
+
+    if (status === 200) {
+      yield put({ type: SagaActionTypes.GET_PROMOS_SAGA });
+      AlertCustom({ type: 'success', title: data.message });
+    } else {
+      AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
+    }
+  } catch (err) {
+    AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
   }
 }
 
@@ -88,4 +110,8 @@ export function* followActRemovePromo() {
 
 export function* followActUpdatePromo() {
   yield takeLatest(SagaActionTypes.UPDATE_PROMO_SAGA, actUpdatePromo);
+}
+
+export function* followActRestorePromo() {
+  yield takeLatest(SagaActionTypes.RESTORE_PROMO_SAGA, actRestorePromo);
 }

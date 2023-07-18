@@ -44,23 +44,26 @@ function* actPutCurrentUser(action) {
 }
 
 function* actForgotPassword(action) {
+  const { data, onSuccess, onError } = action;
   try {
-    const { data } = action;
     const res = yield call(() => AuthenticationService.forgotPassword(data));
 
     if (res.status === 200) {
+      onSuccess();
       AlertCustom({ type: 'success', title: res.data.message });
     } else {
+      onError();
       AlertCustom({ type: 'error', title: res.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
     }
   } catch (err) {
+    onError();
     AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
   }
 }
 
 function* actResetPassword(action) {
+  const { data, onSuccess, onError } = action;
   try {
-    const { data } = action;
     const resetPasswordData = {
       token: data.token,
       password: data.password,
@@ -69,14 +72,14 @@ function* actResetPassword(action) {
 
     const res = yield call(() => AuthenticationService.resetPassword(resetPasswordData));
     if (res.status === 201) {
+      onSuccess();
       AlertCustom({ type: 'success', title: res.data.message });
-      if (data.callback) {
-        data.callback();
-      }
     } else {
+      onError();
       AlertCustom({ type: 'error', title: res.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
     }
   } catch (err) {
+    onError();
     AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
   }
 }
@@ -95,19 +98,13 @@ function* actChangePassword(action) {
     const res = yield call(() => AuthenticationService.changePassword(changePasswordData));
     if (res.status === 200) {
       AlertCustom({ type: 'success', title: res.data.message });
-      if (onSuccess) {
-        onSuccess();
-      }
+      onSuccess();
     } else {
-      if (onError) {
-        onError();
-      }
+      onError();
       AlertCustom({ type: 'error', title: res.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
     }
   } catch (err) {
-    if (onError) {
-      onError();
-    }
+    onError();
     AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
   }
 }

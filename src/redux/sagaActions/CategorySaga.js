@@ -34,17 +34,12 @@ function* actUpdateCategory(action) {
 
       yield put({ type: SagaActionTypes.GET_CATEGORIES_SAGA });
     } else {
-      if (callback) {
-        callback();
-      }
       AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
     }
   } catch (err) {
     AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
   } finally {
-    if (callback) {
-      callback();
-    }
+    callback();
   }
 }
 
@@ -80,19 +75,13 @@ function* actCreateCategory(action) {
       AlertCustom({ type: 'success', title: data.message });
       yield put({ type: SagaActionTypes.GET_CATEGORIES_SAGA });
       yield put(modalActions.hideModal());
-      if (onSuccess) {
-        onSuccess();
-      }
+      onSuccess();
     } else {
-      if (onError) {
-        onError();
-      }
+      onError();
       AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
     }
   } catch (err) {
-    if (onError) {
-      onError();
-    }
+    onError();
     AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
   }
 }

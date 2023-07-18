@@ -4,22 +4,36 @@ import '../styles/LoginForm.css';
 import * as SagaActionTypes from '~/redux/constants';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 const { Title } = Typography;
 
 const ResetPasswordForm = ({ token }) => {
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const onSuccess = () => {
+    navigate('/login');
+    setLoading(false);
+  };
+
+  const onError = () => {
+    setLoading(false);
+  };
+
   const onFinish = (values) => {
+    setLoading(true);
+
     const data = {
       token: token,
       password: values.password,
       confirmPassword: values.confirmPassword,
-      callback: () => navigate('/login'),
     };
     dispatch({
       type: SagaActionTypes.RESET_PASSWORD_SAGA,
       data: data,
+      onSuccess,
+      onError,
     });
   };
 
@@ -83,6 +97,7 @@ const ResetPasswordForm = ({ token }) => {
           />
         </Form.Item>
         <Button
+          loading={loading}
           style={{ marginTop: '10px' }}
           size="large"
           type="primary"

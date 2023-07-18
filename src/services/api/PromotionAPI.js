@@ -17,4 +17,7 @@ export const PromotionService = {
   deletePromotionById: (id) => {
     return baseRequest.delete(UrlApi.URL_DELETE_PROMOTION(id));
   },
+  restorePromotion: (id) => {
+    return baseRequest.put(UrlApi.URL_RESTORE_PROMOTION(id));
+  },
 };

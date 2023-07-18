@@ -1,6 +1,6 @@
 import { Space, Button, Popconfirm, Tag } from 'antd';
 import dayjs from 'dayjs';
-import { EyeFilled, DeleteFilled } from '@ant-design/icons';
+import { EyeFilled, DeleteFilled, UndoOutlined } from '@ant-design/icons';
 import TableTemplate from '~/components/UI/Table/TableTemplate';
 import LoadingSpin from '../UI/LoadingSpin/LoadingSpin';
 import { useDispatch } from 'react-redux';
@@ -119,7 +119,15 @@ const TablePromos = ({ keyWord, data, loading }) => {
         <Space size="middle" key={index}>
           <Button type="primary" icon={<EyeFilled />} onClick={() => handleEditPromo(record)} />
           {record.expired ? (
-            <Button type="primary" icon={<DeleteFilled />} disabled />
+            <Popconfirm
+              placement="top"
+              title="Bạn muốn khôi phục khuyến mãi này?"
+              okText="Xác nhận"
+              cancelText="Hủy"
+              onConfirm={() => handleRestorePromotion(record._id)}
+            >
+              <Button type="default" icon={<UndoOutlined />} />
+            </Popconfirm>
           ) : (
             <Popconfirm
               placement="top"
@@ -147,6 +155,10 @@ const TablePromos = ({ keyWord, data, loading }) => {
 
   const handleRemovePromo = (promo) => {
     dispatch({ type: SagaActionTypes.DELETE_PROMO_SAGA, promoId: promo._id });
+  };
+
+  const handleRestorePromotion = (promotionId) => {
+    dispatch({ type: SagaActionTypes.RESTORE_PROMO_SAGA, promoId: promotionId });
   };
 
   if (loading) {

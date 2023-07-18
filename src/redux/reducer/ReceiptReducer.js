@@ -43,6 +43,14 @@ const receiptSlice = createSlice({
         state.items.push(newReceipt);
       }
     },
+    editReceipt: (state, action) => {
+      const { editedReceipt } = action.payload;
+      const existingReceiptIndex = state.items.findIndex((item) => item._id === editedReceipt._id.toString());
+
+      if (existingReceiptIndex !== -1) {
+        state.items[existingReceiptIndex] = editedReceipt;
+      }
+    },
   },
 });
 

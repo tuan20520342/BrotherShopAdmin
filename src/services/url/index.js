@@ -1,4 +1,4 @@
-export const DOMAIN_NAME = 'http://localhost:3001';
+export const DOMAIN_NAME = 'https://brother-shop-102.onrender.com';
 
 //AUTHENTICATION
 export const URL_AUTH_LOGIN = `${DOMAIN_NAME}/auth/staffs/login`;
@@ -56,3 +56,4 @@ export const URL_PROMOTIONS_ID = (id) => `${DOMAIN_NAME}/promotions/${id}`;
 export const URL_CREATE_PROMOTION = `/promotions`;
 export const URL_EDIT_PROMOTION = (id) => `${DOMAIN_NAME}/promotions/${id}`;
 export const URL_DELETE_PROMOTION = (id) => `${DOMAIN_NAME}/promotions/${id}`;
+export const URL_RESTORE_PROMOTION = (id) => `${DOMAIN_NAME}/promotions/${id}/restore`;

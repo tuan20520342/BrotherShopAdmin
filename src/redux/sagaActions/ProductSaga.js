@@ -47,18 +47,14 @@ function* actCreateProduct(action) {
 
     if (status === 201) {
       AlertCustom({ type: 'success', title: data.message });
-      if (onSuccess) {
-        onSuccess();
-      }
+      onSuccess();
     } else {
+      onError();
       AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
     }
   } catch (err) {
+    onError();
     AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
-  } finally {
-    if (onError) {
-      onError();
-    }
   }
 }
 

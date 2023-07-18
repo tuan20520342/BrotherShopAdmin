@@ -54,7 +54,6 @@ const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProduct
   const onChange = (value) => {
     if (value !== undefined && products !== null) {
       const productById = products.find((item) => item._id === value);
-      console.log(productById);
       setProductById(productById);
 
       form.setFieldsValue({
@@ -153,12 +152,21 @@ const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProduct
                 <Input disabled />
               </Form.Item>
               <Form.Item name="image" label="Hình ảnh">
-                <Image
-                  width={100}
-                  src={`https://res.cloudinary.com/ddajkcbs2/image/upload/${
-                    product ? product.images.mainImg : productById.images.mainImg
-                  }`}
-                />
+                <>
+                  <Image
+                    width={100}
+                    src={`https://res.cloudinary.com/ddajkcbs2/image/upload/${
+                      product ? product.images.mainImg : productById.images.mainImg
+                    }`}
+                  />
+                  <span style={{ margin: '6px' }}></span>
+                  <Image
+                    width={100}
+                    src={`https://res.cloudinary.com/ddajkcbs2/image/upload/${
+                      product ? product.images.subImg : productById.images.subImg
+                    }`}
+                  />
+                </>
               </Form.Item>
               <Form.Item name="price" label="Giá bán">
                 <InputNumber
@@ -169,6 +177,7 @@ const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProduct
                   formatter={(value) => printNumberWithCommas(value)}
                   parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
                   disabled
+                  style={{ width: '100%' }}
                 />
               </Form.Item>
             </>
@@ -192,6 +201,7 @@ const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProduct
           formatter={(value) => printNumberWithCommas(value)}
           parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
           disabled={disabled}
+          style={{ width: '100%' }}
         />
       </Form.Item>
       <Form.Item

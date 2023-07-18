@@ -33,6 +33,7 @@ const AddPromoForm = ({ promo }) => {
   const [form] = Form.useForm();
 
   const [disabled, setDisabled] = useState(promo ? true : false);
+  const [loading, setLoading] = useState(false);
 
   const handleEnableModify = () => {
     setDisabled(false);
@@ -48,6 +49,8 @@ const AddPromoForm = ({ promo }) => {
   };
 
   const onFinish = (values) => {
+    setLoading(true);
+
     if (promo) {
       const editPromo = {
         id: promo?._id,
@@ -59,7 +62,7 @@ const AddPromoForm = ({ promo }) => {
         amount: values.amount,
         minPrice: values.minPrice,
       };
-      dispatch({ type: SagaActionTypes.UPDATE_PROMO_SAGA, editPromo });
+      dispatch({ type: SagaActionTypes.UPDATE_PROMO_SAGA, editPromo, callback: () => setLoading(false) });
     } else {
       const newPromo = {
         name: values.name,
@@ -70,7 +73,7 @@ const AddPromoForm = ({ promo }) => {
         amount: values.amount,
         minPrice: values.minPrice,
       };
-      dispatch({ type: SagaActionTypes.CREATE_PROMO_SAGA, newPromo });
+      dispatch({ type: SagaActionTypes.CREATE_PROMO_SAGA, newPromo, callback: () => setLoading(false) });
     }
   };
 
@@ -121,6 +124,7 @@ const AddPromoForm = ({ promo }) => {
           addonAfter={'%'}
           placeholder="Phần trăm ưu đãi"
           disabled={disabled}
+          style={{ width: '100%' }}
         />
       </Form.Item>
       <Form.Item
@@ -140,6 +144,7 @@ const AddPromoForm = ({ promo }) => {
           formatter={(value) => printNumberWithCommas(value)}
           parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
           disabled={disabled}
+          style={{ width: '100%' }}
         />
       </Form.Item>
       <Form.Item
@@ -171,12 +176,12 @@ const AddPromoForm = ({ promo }) => {
       >
         <InputNumber
           className="rounded"
-          style={{ width: '80%' }}
           min={0}
           placeholder="Số lượng"
           formatter={(value) => printNumberWithCommas(value)}
           parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
           disabled={disabled}
+          style={{ width: '100%' }}
         />
       </Form.Item>
       <Form.Item
@@ -206,14 +211,14 @@ const AddPromoForm = ({ promo }) => {
               <Button type="primary" danger onClick={handleFormCancel}>
                 Hủy
               </Button>
-              <Button type="primary" htmlType="submit">
+              <Button loading={loading} type="primary" htmlType="submit">
                 Lưu
               </Button>
             </Space>
           )
         ) : (
           <Space>
-            <Button type="primary" htmlType="submit">
+            <Button loading={loading} type="primary" htmlType="submit">
               Xác nhận
             </Button>
             <Button type="primary" danger onClick={handleClose}>

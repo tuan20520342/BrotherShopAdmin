@@ -51,5 +51,6 @@ export default function* rootSaga() {
     PromotionSaga.followActCreatePromo(),
     PromotionSaga.followActRemovePromo(),
     PromotionSaga.followActUpdatePromo(),
+    PromotionSaga.followActRestorePromo(),
   ]);
 }

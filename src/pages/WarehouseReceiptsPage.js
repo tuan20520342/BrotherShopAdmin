@@ -27,6 +27,10 @@ const WarehouseReceiptsPage = () => {
       if (action === 'create') {
         dispatch(receiptActions.addReceipt({ newReceipt: data.newReceipt }));
       }
+
+      if (action === 'edit') {
+        dispatch(receiptActions.editReceipt({ editedReceipt: data.editedReceipt }));
+      }
     });
   }, [dispatch]);
 

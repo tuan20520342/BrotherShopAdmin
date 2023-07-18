@@ -39,9 +39,8 @@ function* actGetReceiptById(action) {
 }
 
 function* actCreateReceipt(action) {
+  const { newReceipt, callback } = action;
   try {
-    const { newReceipt } = action;
-
     const res = yield call(() => ReceiptService.createReceipt(newReceipt));
     const { status, data } = res;
 
@@ -53,12 +52,14 @@ function* actCreateReceipt(action) {
     }
   } catch (err) {
     AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
+  } finally {
+    callback();
   }
 }
 
 function* actUpdateReceipt(action) {
+  const { updateReceipt, callback } = action;
   try {
-    const { updateReceipt } = action;
     const res = yield call(() => ReceiptService.updateReceipt(updateReceipt));
 
     const { status, data } = res;
@@ -70,6 +71,8 @@ function* actUpdateReceipt(action) {
     }
   } catch (err) {
     AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
+  } finally {
+    callback();
   }
 }
 
