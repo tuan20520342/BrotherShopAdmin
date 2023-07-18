@@ -22,8 +22,21 @@ const OrderDetails = () => {
 
   const [form] = Form.useForm();
   const { orderById, editLoading } = useSelector((state) => state.orderSlice);
-
+  const [disabled, setDisabled] = useState(true);
   const dispatch = useDispatch();
+
+  const handleEnableModify = () => {
+    setDisabled(false);
+  };
+
+  const handleFormCancel = () => {
+    setDisabled(true);
+    onReset();
+  };
+
+  const onReset = () => {
+    form.resetFields();
+  };
 
   const handleClose = () => {
     navigate('/orders');
@@ -89,6 +102,7 @@ const OrderDetails = () => {
                     width: '150px',
                   }}
                   placeholder="Trạng thái"
+                  disabled={disabled}
                 >
                   {Object.values(orderShippingStatuses).map((status) => (
                     <Option key={status} value={status}>
@@ -109,6 +123,7 @@ const OrderDetails = () => {
                     width: '150px',
                   }}
                   placeholder="Tình trạng thanh toán"
+                  disabled={disabled}
                 >
                   {Object.values(orderPaymentStatuses).map((status) => (
                     <Option key={status} value={status}>
@@ -117,14 +132,25 @@ const OrderDetails = () => {
                   ))}
                 </Select>
               </Form.Item>
-              <Space>
-                <Button type="primary" htmlType="submit" loading={editLoading}>
-                  Xác nhận
-                </Button>
-                <Button type="primary" danger onClick={handleClose}>
-                  Đóng
-                </Button>
-              </Space>
+              {disabled ? (
+                <Space>
+                  <Button type="primary" onClick={() => handleEnableModify()}>
+                    Chỉnh sửa
+                  </Button>
+                  <Button type="primary" danger onClick={handleClose}>
+                    Đóng
+                  </Button>
+                </Space>
+              ) : (
+                <Space>
+                  <Button type="primary" danger onClick={handleFormCancel}>
+                    Hủy
+                  </Button>
+                  <Button type="primary" htmlType="submit" loading={editLoading}>
+                    Lưu
+                  </Button>
+                </Space>
+              )}
             </Space>
           </Col>
         </Row>

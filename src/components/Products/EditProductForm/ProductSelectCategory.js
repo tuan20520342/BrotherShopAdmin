@@ -4,7 +4,7 @@ import Container from '~/components/UI/Container/Container';
 const { Title } = Typography;
 const { Option } = Select;
 
-function ProductSelectCategory({ types, onChange, currentType, product }) {
+function ProductSelectCategory({ types, onChange, currentType, product, disabled }) {
   return (
     <Container>
       <Row
@@ -36,6 +36,7 @@ function ProductSelectCategory({ types, onChange, currentType, product }) {
               allowClear
               optionLabelProp="label"
               onChange={(value) => onChange(value)}
+              disabled={disabled}
             >
               {types.map((type) => (
                 <Option key={type._id} value={JSON.stringify(type)} label={type?.type || type?.name}>

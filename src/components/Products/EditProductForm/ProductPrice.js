@@ -4,7 +4,7 @@ import { printNumberWithCommas } from '~/util/shared';
 
 const { Title } = Typography;
 
-function ProductPrice() {
+function ProductPrice({ disabled }) {
   return (
     <Container>
       <Row
@@ -28,6 +28,7 @@ function ProductPrice() {
               placeholder="Giá gốc"
               formatter={(value) => printNumberWithCommas(value)}
               parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
+              disabled={disabled}
             />
           </Form.Item>
         </Col>
@@ -48,6 +49,7 @@ function ProductPrice() {
               placeholder="Giá bán"
               formatter={(value) => printNumberWithCommas(value)}
               parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
+              disabled={disabled}
             />
           </Form.Item>
         </Col>

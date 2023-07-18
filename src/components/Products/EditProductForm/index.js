@@ -62,6 +62,8 @@ const EditProductForm = ({ product }) => {
   const { categories } = useSelector((state) => state.categorySlice);
   const { editLoading } = useSelector((state) => state.productSlice);
 
+  const [disabled, setDisabled] = useState(true);
+
   const types = [];
   categories.forEach((element) => {
     if (element.types.length > 0) {
@@ -70,6 +72,10 @@ const EditProductForm = ({ product }) => {
       types.push(element);
     }
   });
+
+  const onReset = () => {
+    form.resetFields();
+  };
 
   const onFinish = async (values) => {
     const { name, price, description, oldPrice } = values;
@@ -128,18 +134,26 @@ const EditProductForm = ({ product }) => {
     >
       <Row gutter={[16, 16]}>
         <Col xs={24} sm={17} md={24} lg={17}>
-          <ProductCommonInfor />
-          <ProductPrice />
+          <ProductCommonInfor disabled={disabled} />
+          <ProductPrice disabled={disabled} />
           <ProductSelectCategory
             types={types}
             onChange={(value) => setSelectedCategory(value)}
             currentType={currentType}
             product={product}
+            disabled={disabled}
           />
           <ProductQuantity sizes={product.sizes} />
         </Col>
         <Col xs={24} sm={7} md={24} lg={7}>
-          <ProductUploadImages ref={ref} product={product} loading={editLoading} />
+          <ProductUploadImages
+            ref={ref}
+            product={product}
+            loading={editLoading}
+            disabled={disabled}
+            setDisabled={setDisabled}
+            onReset={onReset}
+          />
         </Col>
       </Row>
     </Form>

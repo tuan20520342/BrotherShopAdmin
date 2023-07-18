@@ -67,7 +67,7 @@ function* actUpdateProduct(action) {
     const { status, data } = res;
 
     if (status === 200) {
-      yield put({ type: SagaActionTypes.GET_PRODUCTS_SAGA });
+      yield put({ type: SagaActionTypes.GET_PRODUCT_BY_ID_SAGA, id: updatedProduct.id });
       AlertCustom({ type: 'success', title: data.message });
     } else {
       AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });

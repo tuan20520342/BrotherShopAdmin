@@ -4,7 +4,7 @@ import Container from '~/components/UI/Container/Container';
 const { Title } = Typography;
 const { TextArea } = Input;
 
-function ProductCommonInfor() {
+function ProductCommonInfor({ disabled }) {
   return (
     <Container>
       <Space
@@ -23,11 +23,11 @@ function ProductCommonInfor() {
             },
           ]}
         >
-          <Input placeholder="Tên sản phẩm" />
+          <Input placeholder="Tên sản phẩm" disabled={disabled} />
         </Form.Item>
 
         <Form.Item name="description" label="Mô tả" rules={[{ required: true }]}>
-          <TextArea rows={6} placeholder="Mô tả" />
+          <TextArea rows={6} placeholder="Mô tả" disabled={disabled} />
         </Form.Item>
       </Space>
     </Container>

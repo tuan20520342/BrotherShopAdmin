@@ -49,9 +49,10 @@ function* actUpdateOrderStatus(action) {
 
     if (status === 200) {
       yield put(orderActions.editOrderStatusCompleted());
+      yield put({ type: SagaActionTypes.GET_ORDER_BY_ID_SAGA, id: orderId });
       AlertCustom({ type: 'success', title: data.message });
     } else {
-      AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại zzz' });
+      AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
     }
   } catch (error) {
     AlertCustom({ type: 'error', title: error.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
