@@ -24,7 +24,7 @@ function* actGetCurrentUser() {
 }
 
 function* actPutCurrentUser(action) {
-  const { editUser } = action;
+  const { editUser, onEditLoading } = action;
   try {
     const res = yield call(() => StaffService.putStaff(editUser));
 
@@ -38,8 +38,10 @@ function* actPutCurrentUser(action) {
     }
     yield put({ type: SagaActionTypes.GET_CURRENT_USER_SAGA });
   } catch (err) {
-    AlertCustom({ type: 'error', title: err.response.data });
+    AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
     yield put({ type: SagaActionTypes.GET_CURRENT_USER_SAGA });
+  } finally {
+    onEditLoading();
   }
 }
 

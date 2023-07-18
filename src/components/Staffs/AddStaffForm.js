@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import { Form, Input, Button, Select, DatePicker, Space, Row, Col } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -14,6 +14,7 @@ const dateFormat = 'DD/MM/YYYY';
 const AddStaffForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const { isCreateStaffSucceeded } = useSelector((state) => state.staffSlice);
   const [form] = Form.useForm();
 
@@ -27,7 +28,12 @@ const AddStaffForm = () => {
     navigate('/staffs');
   };
 
+  const onEditLoading = () => {
+    setLoading(false);
+  };
+
   const onFinish = (values) => {
+    setLoading(true);
     let newStaff = {
       name: values.staff_name,
       address: values.staff_address,
@@ -39,6 +45,7 @@ const AddStaffForm = () => {
     dispatch({
       type: SagaActionTypes.POST_STAFF_SAGA,
       newStaff: newStaff,
+      onEditLoading,
     });
   };
 
@@ -130,7 +137,7 @@ const AddStaffForm = () => {
         </Row>
         <Row justify="end">
           <Space>
-            <Button size="large" type="primary" htmlType="submit">
+            <Button loading={loading} size="large" type="primary" htmlType="submit">
               Xác nhận
             </Button>
             <Button size="large" type="primary" danger onClick={handleClose}>

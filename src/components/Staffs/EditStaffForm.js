@@ -17,6 +17,7 @@ const EditStaffForm = () => {
   const [enableModify, setEnableModify] = useState(false);
   const [componentDisabled, setComponentDisabled] = useState(true);
   const { staffById } = useSelector((state) => state.staffSlice);
+  const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
 
   const handleEnableModify = () => {
@@ -34,11 +35,16 @@ const EditStaffForm = () => {
     onReset();
   };
 
+  const onEditLoading = () => {
+    setLoading(false);
+  };
+
   const onReset = () => {
     form.resetFields();
   };
 
   const onFinish = (values) => {
+    setLoading(true);
     const editStaff = {
       staffId: staffById._id,
       name: values.name,
@@ -52,6 +58,7 @@ const EditStaffForm = () => {
     dispatch({
       type: SagaActionTypes.PUT_STAFF_SAGA,
       editStaff: editStaff,
+      onEditLoading,
     });
   };
 
@@ -189,7 +196,7 @@ const EditStaffForm = () => {
               <Button type="primary" size="large" danger onClick={handleFormCancel}>
                 Hủy
               </Button>
-              <Button type="primary" size="large" htmlType="submit">
+              <Button loading={loading} type="primary" size="large" htmlType="submit">
                 Lưu
               </Button>
             </Space>

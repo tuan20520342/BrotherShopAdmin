@@ -6,8 +6,8 @@ import AlertCustom from '~/components/UI/Notification/Alert';
 import Cookies from 'js-cookie';
 
 function* actPostStaff(action) {
+  const { newStaff, onEditLoading } = action;
   try {
-    const { newStaff } = action;
     const res = yield call(() => StaffService.postStaff(newStaff));
     const { status, data } = res;
     if (status === 201) {
@@ -18,6 +18,8 @@ function* actPostStaff(action) {
     }
   } catch (err) {
     AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
+  } finally {
+    onEditLoading();
   }
 }
 
@@ -73,7 +75,7 @@ function* actDeleteStaff(action) {
 }
 
 function* actPutStaff(action) {
-  const { editStaff } = action;
+  const { editStaff, onEditLoading } = action;
   try {
     const res = yield call(() => StaffService.putStaff(editStaff));
     const { status, data } = res;
@@ -93,6 +95,8 @@ function* actPutStaff(action) {
   } catch (err) {
     AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
     yield put({ type: SagaActionTypes.GET_STAFF_BY_ID_SAGA, id: editStaff.staffId });
+  } finally {
+    onEditLoading();
   }
 }
 

@@ -18,6 +18,7 @@ const ProfileForm = () => {
   const dispatch = useDispatch();
   const [enableModify, setEnableModify] = useState(false);
   const [componentDisabled, setComponentDisabled] = useState(true);
+  const [loading, setLoading] = useState(false);
   const { currentUser } = useSelector((state) => state.authenticationSlice);
   const [form] = Form.useForm();
 
@@ -36,11 +37,16 @@ const ProfileForm = () => {
     onReset();
   };
 
+  const onEditLoading = () => {
+    setLoading(false);
+  };
+
   const onReset = () => {
     form.resetFields();
   };
 
   const onFinish = (values) => {
+    setLoading(true);
     const editUser = {
       staffId: currentUser._id,
       role: currentUser.role._id,
@@ -55,6 +61,7 @@ const ProfileForm = () => {
     dispatch({
       type: SagaActionTypes.PUT_CURRENT_USER_SAGA,
       editUser: editUser,
+      onEditLoading,
     });
   };
 
@@ -176,7 +183,7 @@ const ProfileForm = () => {
               <Button size="large" type="primary" danger onClick={handleFormCancel}>
                 Hủy
               </Button>
-              <Button size="large" type="primary" htmlType="submit">
+              <Button loading={loading} size="large" type="primary" htmlType="submit">
                 Lưu
               </Button>
             </Space>
