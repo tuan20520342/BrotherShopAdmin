@@ -4,6 +4,7 @@ import TableTemplate from '~/components/UI/Table/TableTemplate';
 import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
 import { useDispatch } from 'react-redux';
 import * as SagaActionTypes from '~/redux/constants';
+import { role } from '~/util/constants';
 import { useNavigate } from 'react-router-dom';
 
 const TableStaffs = ({ keyWord, data, loading }) => {
@@ -52,6 +53,7 @@ const TableStaffs = ({ keyWord, data, loading }) => {
       dataIndex: 'phone',
       key: 'phone',
       ellipsis: true,
+      align: 'center',
     },
     {
       title: 'Email',
@@ -84,7 +86,7 @@ const TableStaffs = ({ keyWord, data, loading }) => {
       render: (text, record, index) => (
         <Space size="middle" key={index}>
           <Button type="primary" icon={<EyeFilled />} onClick={() => handleEditStaff(record)}></Button>
-          {record.role.name === 'Chủ cửa hàng' || record.status === 'Đã nghỉ' ? (
+          {record.role.name === role.MANAGER || record.status === 'Đã nghỉ' ? (
             <Button type="primary" icon={<DeleteFilled />} disabled />
           ) : (
             <Popconfirm

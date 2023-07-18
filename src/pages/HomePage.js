@@ -1,5 +1,5 @@
 import { Col, Row } from 'antd';
-import RevenueColumnChart from '~/components/Dashboard/RevenueAreaChart';
+import RevenueAreaChart from '~/components/Dashboard/RevenueAreaChart';
 
 import CategoryDataPieChart from '~/components/Dashboard/CategoryDataPieChart';
 import TrendOfCategoryLineChart from '~/components/Dashboard/TrendOfCategoryLineChart';
@@ -14,7 +14,7 @@ const HomePage = () => {
         <StatCardList />
       </Row>
 
-      <RevenueColumnChart />
+      <RevenueAreaChart />
 
       <Row gutter={[16, 16]}>
         <Col xs={24} sm={12}>

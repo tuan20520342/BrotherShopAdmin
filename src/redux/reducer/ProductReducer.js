@@ -7,14 +7,7 @@ const initialState = {
   editLoading: null,
   products: [],
   productId: {
-    name: '',
-    category: '',
-    price: 0,
-    oldPrice: 0,
-    description: '',
-    images: {},
-    sizes: [],
-    totalSold: 0,
+    _id: -1,
   },
 };
 
@@ -36,6 +29,9 @@ const productSlice = createSlice({
       state.productId = action.payload.productId;
       state.idLoading = false;
     },
+    getProductByIdFail: (state, action) => {
+      state.idLoading = false;
+    },
     editProductLoading: (state, action) => {
       state.editLoading = true;
     },
@@ -44,6 +40,9 @@ const productSlice = createSlice({
     },
     addProduct: (state, action) => {
       const newProduct = action.payload.product;
+      const isExistingProduct =
+        state.products.findIndex((product) => product._id.toString() === newProduct._id.toString()) !== -1;
+      if (isExistingProduct) return;
       state.products.push(newProduct);
     },
     editProduct: (state, action) => {

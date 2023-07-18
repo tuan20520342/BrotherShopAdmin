@@ -30,17 +30,17 @@ function* actGetReceiptById(action) {
     if (status === 200) {
       yield put(receiptActions.getReceiptByIdSuccess({ receiptById: data.receipt }));
     } else {
-      console.log('Không lấy được phiếu nhập kho');
+      AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
+      yield put(receiptActions.getReceiptByIdFail());
     }
   } catch (err) {
-    console.log(err);
+    yield put(receiptActions.getReceiptByIdFail());
   }
 }
 
 function* actCreateReceipt(action) {
+  const { newReceipt, callback } = action;
   try {
-    const { newReceipt } = action;
-
     const res = yield call(() => ReceiptService.createReceipt(newReceipt));
     const { status, data } = res;
 
@@ -52,6 +52,27 @@ function* actCreateReceipt(action) {
     }
   } catch (err) {
     AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
+  } finally {
+    callback();
+  }
+}
+
+function* actUpdateReceipt(action) {
+  const { updateReceipt, callback } = action;
+  try {
+    const res = yield call(() => ReceiptService.updateReceipt(updateReceipt));
+
+    const { status, data } = res;
+    if (status === 200) {
+      AlertCustom({ type: 'success', title: data.message });
+      yield put({ type: SagaActionTypes.GET_RECEIPT_BY_ID_SAGA, id: updateReceipt.receiptId });
+    } else {
+      AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
+    }
+  } catch (err) {
+    AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
+  } finally {
+    callback();
   }
 }
 
@@ -65,4 +86,8 @@ export function* followActCreateReceipt() {
 
 export function* followActGetReceiptById() {
   yield takeLatest(SagaActionTypes.GET_RECEIPT_BY_ID_SAGA, actGetReceiptById);
+}
+
+export function* followActUpdateReceipt() {
+  yield takeLatest(SagaActionTypes.UPDATE_RECEIPT_SAGA, actUpdateReceipt);
 }

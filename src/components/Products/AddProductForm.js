@@ -1,12 +1,13 @@
-/* eslint-disable no-template-curly-in-string */
 import React, { useState } from 'react';
-import { PlusOutlined } from '@ant-design/icons';
 import { Form, Input, Button, Select, InputNumber, Upload, Space, Modal, Row, Col, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import * as SagaActionTypes from '~/redux/constants';
 import CustomImgCrop from './CustomImgCrop';
 import Container from '../UI/Container/Container';
+import UploadButton from '../UI/Button/UploadButton';
+import { validateMessages } from '~/util/constants';
+import { printNumberWithCommas } from '~/util/shared';
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -54,21 +55,10 @@ const createFolder = (uploadFolder, isMainImg) => {
   return `brothershop/products/${isMainImg ? 'mainImg' : 'subImg'}/${uploadFolder}`;
 };
 
-const validateMessages = {
-  required: 'Cần nhập ${label}!',
-  types: {
-    email: '${label} không hợp lệ!',
-    number: '',
-  },
-  number: {
-    min: '${label} phải ít nhất từ ${min} trở lên',
-    range: '${label} phải trong khoảng từ ${min} đến ${max}',
-  },
-};
-
 const AddProductForm = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
@@ -100,31 +90,25 @@ const AddProductForm = () => {
   };
 
   const handleChange = ({ fileList: newFileList }) => {
+    if (newFileList.length > 0) {
+      newFileList[0].status = 'done';
+    }
     setSubFileList(newFileList);
   };
 
   const handleMainChange = ({ fileList: newFileList }) => {
+    if (newFileList.length > 0) {
+      newFileList[0].status = 'done';
+    }
     setMainFileList(newFileList);
   };
-
-  const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
-        Upload
-      </div>
-    </div>
-  );
 
   const handleClose = () => {
     navigate('/products');
   };
 
   const onFinish = async (values) => {
+    setLoading(true);
     const mainFileImg = await getBase64(mainFileList[0].originFileObj);
     const subFileImg = await getBase64(subFileList[0].originFileObj);
 
@@ -146,7 +130,19 @@ const AddProductForm = () => {
       subFolder: subImgFolder,
     };
 
-    dispatch({ type: SagaActionTypes.CREATE_PRODUCT_SAGA, newProduct });
+    const handleResetForms = () => {
+      form.resetFields();
+      setMainFileList([]);
+      setSubFileList([]);
+      setLoading(false);
+    };
+
+    dispatch({
+      type: SagaActionTypes.CREATE_PRODUCT_SAGA,
+      newProduct,
+      onSuccess: handleResetForms,
+      onError: () => setLoading(false),
+    });
   };
 
   return (
@@ -155,13 +151,13 @@ const AddProductForm = () => {
       form={form}
       onFinish={onFinish}
       initialValues={{
-        staff_other_information: '',
+        description: '',
       }}
       validateMessages={validateMessages}
       layout="vertical"
     >
       <Row gutter={[16, 16]}>
-        <Col xs={24} sm={16} md={24} lg={16}>
+        <Col xs={24} sm={17} md={24} lg={17}>
           <Container>
             <Row>
               <Col span={24}>
@@ -215,7 +211,7 @@ const AddProductForm = () => {
                     min={0}
                     addonAfter={<div>VNĐ</div>}
                     placeholder="Giá bán"
-                    formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                    formatter={(value) => printNumberWithCommas(value)}
                     parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
                   />
                 </Form.Item>
@@ -263,7 +259,7 @@ const AddProductForm = () => {
             </Row>
           </Container>
         </Col>
-        <Col xs={24} sm={8} md={24} lg={8}>
+        <Col xs={24} sm={7} md={24} lg={7}>
           <Container>
             <Row>
               <Col span={24}>
@@ -279,8 +275,9 @@ const AddProductForm = () => {
                         onPreview={handlePreview}
                         onChange={handleMainChange}
                         style={{ display: 'inline-block' }}
+                        customRequest={() => {}}
                       >
-                        {mainFileList.length >= 1 ? null : uploadButton}
+                        {mainFileList.length >= 1 ? null : <UploadButton />}
                       </Upload>
                     </CustomImgCrop>
                     <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
@@ -304,8 +301,9 @@ const AddProductForm = () => {
                         fileList={subFileList}
                         onPreview={handlePreview}
                         onChange={handleChange}
+                        customRequest={() => {}}
                       >
-                        {subFileList.length >= 3 ? null : uploadButton}
+                        {subFileList.length >= 1 ? null : <UploadButton />}
                       </Upload>
                     </CustomImgCrop>
                     <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
@@ -324,7 +322,7 @@ const AddProductForm = () => {
 
             <Row style={{ paddingBottom: '20px' }}>
               <Space>
-                <Button size="large" type="primary" htmlType="submit">
+                <Button loading={loading} size="large" type="primary" htmlType="submit">
                   Xác nhận
                 </Button>
                 <Button size="large" type="primary" danger onClick={handleClose}>

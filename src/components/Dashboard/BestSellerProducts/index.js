@@ -2,10 +2,11 @@ import { Avatar, Card, List, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 import { DashboardService } from '~/services/api/DashboardAPI';
 import AlertCustom from '../../UI/Notification/Alert';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import BestSellerSkeleton from './BestSellerSkeleton';
 
 function BestSellerProducts() {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,6 +28,10 @@ function BestSellerProducts() {
     getBestSellerProducts();
   }, []);
 
+  if (!products) {
+    return <BestSellerSkeleton />;
+  }
+
   return (
     <Card
       title="Top sản phẩm bán chạy"
@@ -37,10 +42,10 @@ function BestSellerProducts() {
         itemLayout="horizontal"
         dataSource={products}
         renderItem={(item) => (
-          <List.Item>
+          <List.Item extra={<p style={{ padding: '0 12px' }}>Đã bán {item.totalSold}</p>}>
             <List.Item.Meta
               avatar={<Avatar src={`${process.env.REACT_APP_CLOUDINARY_URL}/${item.images.mainImg}`} />}
-              title={<span>{item.name}</span>}
+              title={<Link to={`/products/${item._id}`}>{item.name}</Link>}
               description={
                 <div
                   style={{

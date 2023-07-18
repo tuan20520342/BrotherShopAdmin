@@ -15,6 +15,9 @@ import EditProductPage from '~/pages/EditProductPage';
 import EditStaffPage from '~/pages/EditStaffPage';
 import CustomerDetailsPage from '~/pages/CustomerDetailsPage';
 import WarehouseReceiptDetailsPage from '~/pages/WarehouseReceiptDetailsPage';
+import OrderDetailsPage from '~/pages/OrderDetailsPage';
+import ChangePasswordPage from '~/pages/ChangePasswordPage';
+import PromosPage from '~/pages/PromosPage';
 
 const CommonRoutes = [
   {
@@ -62,12 +65,20 @@ const CommonRoutes = [
     element: <OrdersPage />,
   },
   {
+    path: '/orders/:id',
+    element: <OrderDetailsPage />,
+  },
+  {
     path: '/customers',
     element: <CustomersPage />,
   },
   {
     path: '/customers/:id',
     element: <CustomerDetailsPage />,
+  },
+  {
+    path: '/promos',
+    element: <PromosPage />,
   },
   {
     path: '*',
@@ -80,6 +91,10 @@ const CommonRoutes = [
   {
     path: '/add-warehouse-receipt',
     element: <AddItemForm title={'Thêm phiếu nhập kho'} form={<AddWarehouseReceipt />} />,
+  },
+  {
+    path: '/profile/change-password',
+    element: <ChangePasswordPage />,
   },
 ];
 

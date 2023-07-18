@@ -4,8 +4,9 @@ import TableTemplate from '~/components/UI/Table/TableTemplate';
 import AddProductToReceipt from './AddProductToReceipt';
 import { modalActions } from '~/redux/reducer/ModalReducer';
 import { useDispatch } from 'react-redux';
+import { printNumberWithCommas } from '~/util/shared';
 
-const ProductsWarehouseTable = ({ keyWord, data, onEditProduct, onRemoveProduct }) => {
+const ProductsWarehouseTable = ({ keyWord, data, onEditProduct, onRemoveProduct, editDisability }) => {
   const dispatch = useDispatch();
 
   const columns = [
@@ -59,7 +60,7 @@ const ProductsWarehouseTable = ({ keyWord, data, onEditProduct, onRemoveProduct 
       align: 'center',
       ellipsis: true,
       sorter: (a, b) => a.importPrice - b.importPrice,
-      render: (price) => <div>{price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')} đ</div>,
+      render: (price) => <div>{printNumberWithCommas(price)} đ</div>,
     },
     {
       title: <div style={{ textAlign: 'center' }}>Số lượng</div>,
@@ -71,7 +72,7 @@ const ProductsWarehouseTable = ({ keyWord, data, onEditProduct, onRemoveProduct 
         a.sizes.reduce((acc, size) => acc + size.quantity, 0) - b.sizes.reduce((acc, size) => acc + size.quantity, 0),
       render: (sizes) => {
         const quantity = sizes.reduce((acc, size) => acc + size.quantity, 0);
-        return <div>{quantity.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}</div>;
+        return <div>{printNumberWithCommas(quantity)}</div>;
       },
     },
     {
@@ -91,8 +92,9 @@ const ProductsWarehouseTable = ({ keyWord, data, onEditProduct, onRemoveProduct 
             okText="Xác nhận"
             cancelText="Hủy"
             onConfirm={() => handleRemoveProduct(record)}
+            disabled={editDisability ?? false}
           >
-            <Button type="primary" icon={<DeleteFilled />} danger></Button>
+            <Button type="primary" icon={<DeleteFilled />} disabled={editDisability ?? false} danger></Button>
           </Popconfirm>
         </Space>
       ),
@@ -107,7 +109,9 @@ const ProductsWarehouseTable = ({ keyWord, data, onEditProduct, onRemoveProduct 
     dispatch(
       modalActions.showModal({
         title: 'Cập nhật sản phẩm',
-        ComponentContent: <AddProductToReceipt product={product} onEditProduct={onEditProduct} />,
+        ComponentContent: (
+          <AddProductToReceipt product={product} onEditProduct={onEditProduct} editDisability={editDisability} />
+        ),
       }),
     );
   };

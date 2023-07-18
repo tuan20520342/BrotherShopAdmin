@@ -23,10 +23,8 @@ function* actGetListCategories() {
 }
 
 function* actUpdateCategory(action) {
+  const { updatedCategory, callback } = action;
   try {
-    const { updatedCategory } = action;
-    yield put(categoryActions.getCategoriesLoading());
-
     const res = yield call(() => CategoryService.updateCategory(updatedCategory));
     const { status, data } = res;
 
@@ -40,6 +38,8 @@ function* actUpdateCategory(action) {
     }
   } catch (err) {
     AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
+  } finally {
+    callback();
   }
 }
 
@@ -65,21 +65,23 @@ function* actRemoveCategory(action) {
 }
 
 function* actCreateCategory(action) {
-  try {
-    const { newCategory } = action;
-    yield put(categoryActions.getCategoriesLoading());
+  const { newCategory, onSuccess, onError } = action;
 
+  try {
     const res = yield call(() => CategoryService.createCategory(newCategory));
     const { status, data } = res;
 
     if (status === 201) {
       AlertCustom({ type: 'success', title: data.message });
-      yield put(modalActions.hideModal());
       yield put({ type: SagaActionTypes.GET_CATEGORIES_SAGA });
+      yield put(modalActions.hideModal());
+      onSuccess();
     } else {
+      onError();
       AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
     }
   } catch (err) {
+    onError();
     AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
   }
 }

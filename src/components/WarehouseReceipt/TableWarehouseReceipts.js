@@ -4,6 +4,7 @@ import { EyeFilled } from '@ant-design/icons';
 import TableTemplate from '~/components/UI/Table/TableTemplate';
 import LoadingSpin from '../UI/LoadingSpin/LoadingSpin';
 import { useNavigate } from 'react-router-dom';
+import { printNumberWithCommas } from '~/util/shared';
 
 const totalQuantity = (receipt) => {
   return receipt.products.reduce((total, currentProduct) => {
@@ -34,6 +35,7 @@ const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
       width: '5%',
       key: '',
       align: 'center',
+      ellipsis: true,
       render: (text, record, index) => data.indexOf(record) + 1,
     },
 
@@ -52,8 +54,7 @@ const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
           String(dayjs(record.date).format('DD/MM/YYYY')).toLowerCase().includes(value.toLowerCase())
         );
       },
-      showOnResponse: true,
-      showOnDesktop: true,
+      ellipsis: true,
       render: (text, record, index) => record._id.slice(0, 8).toUpperCase(),
     },
     {
@@ -61,8 +62,7 @@ const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
       dataIndex: 'date',
       key: 'date',
       align: 'center',
-      showOnResponse: true,
-      showOnDesktop: true,
+      ellipsis: true,
       sorter: (a, b) => dayjs(a.date).unix() - dayjs(b.date).unix(),
       render: (date) => `${dayjs(date).format('DD/MM/YYYY')}`,
     },
@@ -72,8 +72,6 @@ const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
       dataIndex: 'products',
       key: 'quantity',
       align: 'center',
-      showOnResponse: true,
-      showOnDesktop: true,
       ellipsis: true,
       sorter: (a, b) => a.products.length - b.products.length,
       render: (text, record, index) => {
@@ -85,38 +83,21 @@ const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
       dataIndex: 'products',
       key: 'totalquantity',
       align: 'center',
-      showOnResponse: true,
-      showOnDesktop: true,
       ellipsis: true,
       sorter: (a, b) => totalQuantity(a) - totalQuantity(b),
       render: (text, record, index) => {
-        return (
-          <div>
-            {totalQuantity(record)
-              .toString()
-              .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}
-          </div>
-        );
+        return <div>{printNumberWithCommas(totalQuantity(record))}</div>;
       },
     },
     {
-      title: 'Tổng giá',
+      title: <div style={{ textAlign: 'center' }}>Tổng giá</div>,
       dataIndex: 'price',
       key: 'price',
-      align: 'center',
-      showOnResponse: true,
-      showOnDesktop: true,
+      align: 'end',
       ellipsis: true,
       sorter: (a, b) => totalPrice(a) - totalPrice(b),
       render: (text, record, index) => {
-        return (
-          <div>
-            {totalPrice(record)
-              .toString()
-              .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}{' '}
-            đ
-          </div>
-        );
+        return <div>{printNumberWithCommas(totalPrice(record))} đ</div>;
       },
     },
 
@@ -127,8 +108,6 @@ const TableWarehouseReceipts = ({ keyWord, data, loading }) => {
       id: 'action',
       ellipsis: true,
       width: '10%',
-      showOnResponse: true,
-      showOnDesktop: true,
       fixed: 'right',
       render: (text, record, index) => (
         <Space size="middle" key={index}>

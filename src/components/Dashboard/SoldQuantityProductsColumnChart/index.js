@@ -3,9 +3,10 @@ import { Bar } from '@ant-design/plots';
 import AlertCustom from '~/components/UI/Notification/Alert';
 import { DashboardService } from '~/services/api/DashboardAPI';
 import { Card } from 'antd';
+import QuantityChartSkeleton from './QuantityChartSkeleton';
 
 export default function SoldQuantityProductsColumnChart() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
 
   useEffect(() => {
     const getSoldQuantity = async () => {
@@ -45,8 +46,12 @@ export default function SoldQuantityProductsColumnChart() {
     },
   };
 
+  if (!data) {
+    return <QuantityChartSkeleton />;
+  }
+
   return (
-    <Card title="Sản phẩm đã bán" style={{ marginTop: '30px' }}>
+    <Card title="Số lượng sản phẩm đã bán" style={{ margin: '30px 0' }}>
       <Bar {...config} />
     </Card>
   );

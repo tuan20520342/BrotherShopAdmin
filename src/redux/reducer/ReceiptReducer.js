@@ -5,7 +5,9 @@ const initialState = {
   isCreateReceiptSucceeded: false,
   idLoading: false,
   items: [],
-  receiptById: {},
+  receiptById: {
+    _id: -1,
+  },
 };
 
 const receiptSlice = createSlice({
@@ -30,9 +32,24 @@ const receiptSlice = createSlice({
       state.receiptById = action.payload.receiptById;
       state.idLoading = false;
     },
+    getReceiptByIdFail: (state, action) => {
+      state.idLoading = false;
+    },
     addReceipt: (state, action) => {
       const { newReceipt } = action.payload;
-      state.items.push(newReceipt);
+      const existingReceiptIndex = state.items.findIndex((item) => item._id === newReceipt._id.toString());
+
+      if (existingReceiptIndex === -1) {
+        state.items.push(newReceipt);
+      }
+    },
+    editReceipt: (state, action) => {
+      const { editedReceipt } = action.payload;
+      const existingReceiptIndex = state.items.findIndex((item) => item._id === editedReceipt._id.toString());
+
+      if (existingReceiptIndex !== -1) {
+        state.items[existingReceiptIndex] = editedReceipt;
+      }
     },
   },
 });

@@ -2,6 +2,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import * as SagaActionTypes from '../constants';
 import { customerActions } from '../reducer/CustomerReducer';
 import { CustomerService } from '~/services/api/CustomerAPI';
+import AlertCustom from '~/components/UI/Notification/Alert';
 
 function* actGetListCustomers() {
   try {
@@ -12,27 +13,27 @@ function* actGetListCustomers() {
     if (status === 200) {
       yield put(customerActions.getCustomersSuccess({ customers: data.customers }));
     } else {
-      console.log('Không lấy đc danh sách');
+      AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
     }
   } catch (err) {
-    console.log(err);
+    AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
   }
 }
 
 function* actGetCustomerById(action) {
   try {
     const { id } = action;
-
     yield put(customerActions.getCustomerByIdInLoading());
     const res = yield call(() => CustomerService.getCustomerById(id));
     const { status, data } = res;
     if (status === 200) {
       yield put(customerActions.getCustomerByIdSuccess({ customerById: data.customer }));
     } else {
-      console.log('Không lấy đc nhân viên');
+      AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
+      yield put(customerActions.getCustomerByIdFail());
     }
   } catch (err) {
-    console.log(err);
+    yield put(customerActions.getCustomerByIdFail());
   }
 }
 

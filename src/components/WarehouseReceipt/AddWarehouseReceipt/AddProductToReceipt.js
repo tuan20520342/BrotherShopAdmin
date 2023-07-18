@@ -1,21 +1,10 @@
-/* eslint-disable no-template-curly-in-string */
 import React, { useState } from 'react';
 import { Form, Input, Button, Space, Row, Select, InputNumber, Image } from 'antd';
 import { modalActions } from '~/redux/reducer/ModalReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import './style/CustomInputNumber.css';
-
-const validateMessages = {
-  required: 'Cần nhập ${label}!',
-  types: {
-    email: '${label} không hợp lệ!',
-    number: '',
-  },
-  number: {
-    min: '${label} phải ít nhất từ ${min} trở lên',
-    range: '${label} phải trong khoảng từ ${min} đến ${max}',
-  },
-};
+import { validateMessages } from '~/util/constants';
+import { printNumberWithCommas } from '~/util/shared';
 
 const formItemLayout = {
   labelCol: {
@@ -45,10 +34,12 @@ const sizeLayout = {
   },
 };
 
-const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProducts }) => {
+const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProducts, editDisability }) => {
   const { products } = useSelector((state) => state.productSlice);
   const dispatch = useDispatch();
   const [productById, setProductById] = useState('');
+  const [disabled, setDisabled] = useState(product ? true : false);
+
   const [form] = Form.useForm();
 
   const optionsProducts = products
@@ -63,7 +54,6 @@ const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProduct
   const onChange = (value) => {
     if (value !== undefined && products !== null) {
       const productById = products.find((item) => item._id === value);
-      console.log(productById);
       setProductById(productById);
 
       form.setFieldsValue({
@@ -71,6 +61,19 @@ const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProduct
         price: productById.price,
       });
     }
+  };
+
+  const handleEnableModify = () => {
+    setDisabled(false);
+  };
+
+  const handleFormCancel = () => {
+    setDisabled(true);
+    onReset();
+  };
+
+  const onReset = () => {
+    form.resetFields();
   };
 
   const onFinish = (values) => {
@@ -149,12 +152,21 @@ const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProduct
                 <Input disabled />
               </Form.Item>
               <Form.Item name="image" label="Hình ảnh">
-                <Image
-                  width={100}
-                  src={`https://res.cloudinary.com/ddajkcbs2/image/upload/${
-                    product ? product.images.mainImg : productById.images.mainImg
-                  }`}
-                />
+                <>
+                  <Image
+                    width={100}
+                    src={`https://res.cloudinary.com/ddajkcbs2/image/upload/${
+                      product ? product.images.mainImg : productById.images.mainImg
+                    }`}
+                  />
+                  <span style={{ margin: '6px' }}></span>
+                  <Image
+                    width={100}
+                    src={`https://res.cloudinary.com/ddajkcbs2/image/upload/${
+                      product ? product.images.subImg : productById.images.subImg
+                    }`}
+                  />
+                </>
               </Form.Item>
               <Form.Item name="price" label="Giá bán">
                 <InputNumber
@@ -162,9 +174,10 @@ const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProduct
                   min={0}
                   addonAfter={<div>VNĐ</div>}
                   placeholder="Giá bán"
-                  formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                  formatter={(value) => printNumberWithCommas(value)}
                   parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
                   disabled
+                  style={{ width: '100%' }}
                 />
               </Form.Item>
             </>
@@ -185,8 +198,10 @@ const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProduct
           min={0}
           addonAfter={<div>VNĐ</div>}
           placeholder="Giá nhập"
-          formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+          formatter={(value) => printNumberWithCommas(value)}
           parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
+          disabled={disabled}
+          style={{ width: '100%' }}
         />
       </Form.Item>
       <Form.Item
@@ -209,8 +224,9 @@ const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProduct
               className="input-number-right"
               min={0}
               placeholder="Số lượng"
-              formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+              formatter={(value) => printNumberWithCommas(value)}
               parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
+              disabled={disabled}
             />
           </Form.Item>
           <Form.Item name="M" label="M" {...sizeLayout}>
@@ -218,8 +234,9 @@ const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProduct
               className="input-number-right"
               min={0}
               placeholder="Số lượng"
-              formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+              formatter={(value) => printNumberWithCommas(value)}
               parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
+              disabled={disabled}
             />
           </Form.Item>
           <Form.Item name="L" label="L" {...sizeLayout}>
@@ -227,8 +244,9 @@ const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProduct
               className="input-number-right"
               min={0}
               placeholder="Số lượng"
-              formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+              formatter={(value) => printNumberWithCommas(value)}
               parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
+              disabled={disabled}
             />
           </Form.Item>
           <Form.Item name="XL" label="XL" {...sizeLayout}>
@@ -236,21 +254,46 @@ const AddProductToReceipt = ({ onAddProduct, onEditProduct, product, listProduct
               className="input-number-right"
               min={0}
               placeholder="Số lượng"
-              formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+              formatter={(value) => printNumberWithCommas(value)}
               parser={(value) => parseInt(value.replace(/\$\s?|(,*)/g, ''))}
+              disabled={disabled}
             />
           </Form.Item>
         </Form.Item>
       </Form.Item>
       <Row justify="end">
-        <Space>
-          <Button type="primary" htmlType="submit">
-            Xác nhận
-          </Button>
-          <Button type="primary" danger onClick={handleClose}>
-            Đóng
-          </Button>
-        </Space>
+        {product ? (
+          disabled ? (
+            <Space>
+              {!editDisability && (
+                <Button type="primary" onClick={() => handleEnableModify()}>
+                  Chỉnh sửa
+                </Button>
+              )}
+              <Button type="primary" danger onClick={handleClose}>
+                Đóng
+              </Button>
+            </Space>
+          ) : (
+            <Space>
+              <Button type="primary" danger onClick={handleFormCancel}>
+                Hủy
+              </Button>
+              <Button type="primary" htmlType="submit">
+                Lưu
+              </Button>
+            </Space>
+          )
+        ) : (
+          <Space>
+            <Button type="primary" htmlType="submit">
+              Xác nhận
+            </Button>
+            <Button type="primary" danger onClick={handleClose}>
+              Đóng
+            </Button>
+          </Space>
+        )}
       </Row>
     </Form>
   );

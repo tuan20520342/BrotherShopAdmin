@@ -5,9 +5,12 @@ import './styles/LoginForm.css';
 import { useNavigate } from 'react-router-dom';
 import AlertCustom from '~/components/UI/Notification/Alert';
 import { AuthenticationService } from '~/services/api/AuthAPI';
+import baseRequest from '~/services/api/BaseRequest';
+import { useState } from 'react';
 const { Title } = Typography;
 
 const LoginForm = () => {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const onFinish = async (values) => {
@@ -17,6 +20,7 @@ const LoginForm = () => {
       password: password,
     };
     try {
+      setLoading(true);
       const { data, status } = await AuthenticationService.postLogin(user);
 
       if (status === 200) {
@@ -25,16 +29,19 @@ const LoginForm = () => {
         const expiryDate = new Date(new Date().getTime() + remainingMilliseconds);
         Cookies.set('token', token, { expires: expiryDate });
         Cookies.set('currentUser', staff._id, { expires: expiryDate });
+        baseRequest.defaults.headers.Authorization = `Bearer ${Cookies.get('token')}`;
         navigate('/', { replace: true });
         AlertCustom({ type: 'success', title: 'Đăng nhập thành công' });
       } else {
         AlertCustom({ type: 'error', title: 'Sai email hoặc password, vui lòng kiểm tra lại!' });
       }
     } catch (err) {
-      console.log(err);
       AlertCustom({ type: 'error', title: 'Sai email hoặc password, vui lòng kiểm tra lại!' });
+    } finally {
+      setLoading(false);
     }
   };
+
   return (
     <div id="components-form-login">
       <Row justify="center">
@@ -82,7 +89,7 @@ const LoginForm = () => {
         <a className="login-form-forgot" href="/forget-password">
           Quên mật khẩu?
         </a>
-        <Button size="large" type="primary" htmlType="submit" className="login-form-button">
+        <Button loading={loading} size="large" type="primary" htmlType="submit" className="login-form-button">
           Đăng nhập
         </Button>
       </Form>

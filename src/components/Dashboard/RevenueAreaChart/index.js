@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Area } from '@ant-design/plots';
-
 import { Card, Typography } from 'antd';
 import AlertCustom from '~/components/UI/Notification/Alert';
 import { DashboardService } from '~/services/api/DashboardAPI';
 import SelectTime from './SelectTime';
+import { printNumberWithCommas } from '~/util/shared';
+import RevenueChartSkeleton from './RevenueChartSkeleton';
 
-const RevenueColumnChart = () => {
-  const [data, setData] = useState([]);
+const formatChartLabel = (value) => {
+  return printNumberWithCommas(value);
+};
+
+const RevenueAreaChart = () => {
+  const [data, setData] = useState();
 
   useEffect(() => {
     getRevenue(7);
@@ -35,6 +40,11 @@ const RevenueColumnChart = () => {
     xAxis: {
       tickCount: 5,
     },
+    yAxis: {
+      label: {
+        formatter: formatChartLabel,
+      },
+    },
     animation: false,
     slider: {
       start: 0,
@@ -46,9 +56,14 @@ const RevenueColumnChart = () => {
     meta: {
       revenue: {
         alias: 'Doanh thu',
+        formatter: formatChartLabel,
       },
     },
   };
+
+  if (!data) {
+    return <RevenueChartSkeleton />;
+  }
 
   return (
     <Card
@@ -66,4 +81,4 @@ const RevenueColumnChart = () => {
   );
 };
 
-export default RevenueColumnChart;
+export default RevenueAreaChart;

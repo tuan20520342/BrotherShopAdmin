@@ -1,4 +1,3 @@
-/* eslint-disable no-template-curly-in-string */
 import React from 'react';
 import dayjs from 'dayjs';
 import { useState, useEffect } from 'react';
@@ -10,35 +9,42 @@ import { useDispatch, useSelector } from 'react-redux';
 import { modalActions } from '~/redux/reducer/ModalReducer';
 import AddProductToReceipt from './AddProductToReceipt';
 import * as SagaActionTypes from '~/redux/constants';
-import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
 import ProductsWarehouseTable from './ProductsWarehouseTable';
 import AlertCustom from '~/components/UI/Notification/Alert';
+import { validateMessages } from '~/util/constants';
+import FormContainer from '~/components/UI/Container/FormContainer';
 
 const dateFormat = 'DD/MM/YYYY';
 
-const AddWarehouseReceipt = () => {
+const AddWarehouseReceipt = ({ receiptById }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [keyWord, setKeyWord] = useState('');
-  const { loading } = useSelector((state) => state.productSlice);
+  const [disabled, setDisabled] = useState(receiptById ? true : false);
+  const [loading, setLoading] = useState(false);
 
-  const [products, setProducts] = useState([]);
+  const productInReceiptById = receiptById?.products?.map((product) => {
+    const {
+      productId: { images, _id, name, price },
+      importPrice,
+      sizes,
+    } = product;
+    const mappedProduct = {
+      images,
+      _id,
+      name,
+      price,
+      importPrice,
+      sizes: sizes.map((sizes) => ({ name: sizes.name, quantity: sizes.quantity })),
+    };
+    return mappedProduct;
+  });
+
+  const [products, setProducts] = useState(productInReceiptById ?? []);
   const currentUser = useSelector((state) => state.authenticationSlice.currentUser);
 
   const isCreateReceiptSucceeded = useSelector((state) => state.receiptSlice.isCreateReceiptSucceeded);
-
-  const validateMessages = {
-    required: 'Cần nhập ${label}!',
-    types: {
-      email: '${label} không hợp lệ!',
-      number: '',
-    },
-    number: {
-      min: '${label} phải ít nhất từ ${min} trở lên',
-      range: '${label} phải trong khoảng từ ${min} đến ${max}',
-    },
-  };
 
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_PRODUCTS_SAGA });
@@ -84,6 +90,20 @@ const AddWarehouseReceipt = () => {
     );
   };
 
+  const handleEnableModify = () => {
+    setDisabled(false);
+  };
+
+  const handleFormCancel = () => {
+    setDisabled(true);
+    onReset();
+    setProducts(productInReceiptById);
+  };
+
+  const onReset = () => {
+    form.resetFields();
+  };
+
   const handleClose = () => {
     navigate('/warehouse-receipt');
   };
@@ -92,10 +112,18 @@ const AddWarehouseReceipt = () => {
     form.submit();
   };
 
+  const formCallback = () => {
+    setLoading(false);
+  };
+
   const onFinish = (values) => {
     if (products.length === 0) {
       AlertCustom({ type: 'error', title: 'Cần ít nhất một sản phẩm' });
-    } else {
+      return;
+    }
+
+    setLoading(true);
+    if (!receiptById) {
       const formattedProducts = products.map((product) => ({
         productId: product._id,
         sizes: product.sizes,
@@ -103,102 +131,113 @@ const AddWarehouseReceipt = () => {
       }));
       const newReceipt = { ...values, products: formattedProducts, staff: currentUser._id };
 
-      dispatch({ type: SagaActionTypes.CREATE_RECEIPT_SAGA, newReceipt });
+      dispatch({ type: SagaActionTypes.CREATE_RECEIPT_SAGA, newReceipt, callback: formCallback });
+      return;
     }
-  };
 
-  if (loading) {
-    return <LoadingSpin />;
-  }
+    const { staff, ...rest } = values;
+    const formattedProducts = products.map((product) => ({
+      productId: product._id,
+      sizes: product.sizes,
+      importPrice: product.importPrice,
+    }));
+    const updateReceipt = {
+      ...rest,
+      products: formattedProducts,
+      receiptId: receiptById._id,
+      staff: receiptById.staff._id,
+    };
+
+    dispatch({ type: SagaActionTypes.UPDATE_RECEIPT_SAGA, updateReceipt, callback: formCallback });
+  };
 
   return (
     <>
       <Row>
         <Col span={24}>
-          <Form
-            name="add_reciept_form"
-            form={form}
-            onFinish={onFinish}
-            initialValues={{
-              staff: currentUser.name,
-            }}
-            validateMessages={validateMessages}
-            style={{
-              background: 'white',
-              padding: '20px',
-              borderRadius: '6px',
-              filter: 'drop-shadow(0 1px 1px rgb(0 0 0 / 0.05))',
-              marginBottom: '10px',
-            }}
-          >
-            <Row
-              gutter={{
-                xs: 8,
-                sm: 16,
-                md: 24,
-                lg: 32,
+          <FormContainer>
+            <Form
+              name="add_reciept_form"
+              form={form}
+              onFinish={onFinish}
+              initialValues={{
+                staff: receiptById ? receiptById?.staff?.name : currentUser.name,
+                date: receiptById ? dayjs(receiptById?.date) : '',
+                supplier: receiptById ? receiptById?.supplier : '',
+                deliver: receiptById ? receiptById?.deliver : '',
               }}
+              validateMessages={validateMessages}
+              layout="vertical"
             >
-              <Col xs={24} sm={12} md={24} lg={12}>
-                <Form.Item
-                  name="date"
-                  label="Ngày nhập hàng"
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
-                >
-                  <DatePicker
-                    placeholder="Ngày nhập hàng"
-                    format={dateFormat}
-                    disabledDate={(current) => current.isAfter(dayjs())}
-                  />
-                </Form.Item>
-              </Col>
-              <Col xs={24} sm={12} md={24} lg={12}>
-                <Form.Item name="staff" label="Nhân viên nhập hàng">
-                  <Input
-                    showsearch="true"
-                    placeholder="Nhân viên"
-                    // value={currentUser.name}
-                    // filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
-                    // onChange={onChange}
-                    disabled
-                  />
-                </Form.Item>
-              </Col>
-              <Col xs={24} sm={12} md={24} lg={12}>
-                <Form.Item
-                  name="supplier"
-                  label="Nhà cung cấp"
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
-                >
-                  <Input placeholder="Nhà cung cấp" />
-                </Form.Item>
-              </Col>
-              <Col xs={24} sm={12} md={24} lg={12}>
-                <Form.Item
-                  name="deliver"
-                  label="Người giao hàng"
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
-                >
-                  <Input placeholder="Người giao hàng" />
-                </Form.Item>
-              </Col>
-            </Row>
-          </Form>
+              <Row
+                gutter={{
+                  xs: 8,
+                  sm: 16,
+                  md: 24,
+                  lg: 32,
+                }}
+              >
+                <Col xs={24} sm={24} md={24} lg={12}>
+                  <Form.Item
+                    name="date"
+                    label="Ngày nhập hàng"
+                    rules={[
+                      {
+                        required: true,
+                      },
+                    ]}
+                  >
+                    <DatePicker
+                      placeholder="Ngày nhập hàng"
+                      format={dateFormat}
+                      disabledDate={(current) => current.isAfter(dayjs())}
+                      disabled={disabled}
+                      style={{ width: '100%' }}
+                    />
+                  </Form.Item>
+                </Col>
+                <Col xs={24} sm={24} md={24} lg={12}>
+                  <Form.Item name="staff" label="Nhân viên nhập hàng">
+                    <Input placeholder="Nhân viên" disabled />
+                  </Form.Item>
+                </Col>
+                <Col xs={24} sm={24} md={24} lg={12}>
+                  <Form.Item
+                    name="supplier"
+                    label="Nhà cung cấp"
+                    rules={[
+                      {
+                        required: true,
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Nhà cung cấp" disabled={disabled} />
+                  </Form.Item>
+                </Col>
+                <Col xs={24} sm={24} md={24} lg={12}>
+                  <Form.Item
+                    name="deliver"
+                    label="Người giao hàng"
+                    rules={[
+                      {
+                        required: true,
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Người giao hàng" disabled={disabled} />
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Form>
+          </FormContainer>
         </Col>
         <Col span={24}>
-          <Toolbar title={'Thêm sản phẩm'} setKeyWord={setKeyWord} handleAdd={handleShowModalAddProduct} />
+          <Toolbar
+            title={'Thêm sản phẩm'}
+            setKeyWord={setKeyWord}
+            handleAdd={handleShowModalAddProduct}
+            buttonDisability={disabled}
+          />
         </Col>
         <Col span={24}>
           <ProductsWarehouseTable
@@ -206,19 +245,42 @@ const AddWarehouseReceipt = () => {
             data={products}
             onEditProduct={handleEditProduct}
             onRemoveProduct={handleRemoveProduct}
+            editDisability={disabled}
           />
         </Col>
         <Col span={24}></Col>
       </Row>
-      <Row justify="end" style={{ marginTop: '8px' }}>
-        <Space>
-          <Button size="large" type="primary" onClick={handleSubmit}>
-            Lưu
-          </Button>
-          <Button size="large" type="primary" danger onClick={handleClose}>
-            Hủy
-          </Button>
-        </Space>
+      <Row justify="end" style={{ marginTop: '8px', marginBottom: '8px' }}>
+        {receiptById ? (
+          disabled ? (
+            <Space>
+              <Button size="large" type="primary" onClick={handleEnableModify}>
+                Chỉnh sửa
+              </Button>
+              <Button size="large" type="primary" danger onClick={handleClose}>
+                Đóng
+              </Button>
+            </Space>
+          ) : (
+            <Space>
+              <Button size="large" type="primary" danger onClick={handleFormCancel}>
+                Hủy
+              </Button>
+              <Button loading={loading} size="large" type="primary" onClick={handleSubmit}>
+                Lưu
+              </Button>
+            </Space>
+          )
+        ) : (
+          <Space>
+            <Button loading={loading} size="large" type="primary" onClick={handleSubmit}>
+              Xác nhận
+            </Button>
+            <Button size="large" type="primary" danger onClick={handleClose}>
+              Đóng
+            </Button>
+          </Space>
+        )}
       </Row>
       <ModalForm />
     </>

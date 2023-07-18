@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import EditCategoryForm from './EditCategoryForm';
 import LoadingSpin from '~/components/UI/LoadingSpin/LoadingSpin';
 import * as SagaActionTypes from '~/redux/constants';
+import { EMPTY_VALUE } from '~/util/constants';
 
 const TableCategories = ({ keyWord, data, loading }) => {
   const dispatch = useDispatch();
@@ -52,7 +53,7 @@ const TableCategories = ({ keyWord, data, loading }) => {
       key: 'types',
       ellipsis: true,
       sorter: (item1, item2) => item1.name.localeCompare(item2.name),
-      render: (types) => (types.length > 0 ? types.map((type) => type.type).join(', ') : 'Không có loại nào'),
+      render: (types) => (types.length > 0 ? types.map((type) => type.type).join(', ') : EMPTY_VALUE),
     },
     {
       title: 'Thao tác',

@@ -14,12 +14,11 @@ const ProductsPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { products, loading } = useSelector((state) => state.productSlice);
-  console.log(products);
 
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_PRODUCTS_SAGA });
 
-    const socket = openSocket(process.env.REACT_APP_DEV_BE_URL);
+    const socket = openSocket(process.env.REACT_APP_PROD_BE_URL);
     socket.on('products', (data) => {
       const { action } = data;
 
@@ -39,6 +38,10 @@ const ProductsPage = () => {
         dispatch(productActions.resellProduct({ productId: data.productId }));
       }
     });
+
+    return () => {
+      socket.close();
+    };
   }, [dispatch]);
 
   const [keyWord, setKeyWord] = useState('');

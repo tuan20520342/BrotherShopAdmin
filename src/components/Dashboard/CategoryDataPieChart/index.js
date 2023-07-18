@@ -3,9 +3,10 @@ import { Pie } from '@ant-design/plots';
 import { Card, Typography } from 'antd';
 import { DashboardService } from '~/services/api/DashboardAPI';
 import AlertCustom from '~/components/UI/Notification/Alert';
+import CategoryChartSkeleton from './CategoryChartSkeleton';
 
 export default function CategoryDataPieChart() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
 
   useEffect(() => {
     const getPercentageCategories = async () => {
@@ -26,6 +27,10 @@ export default function CategoryDataPieChart() {
     getPercentageCategories();
   }, []);
 
+  if (!data) {
+    return <CategoryChartSkeleton />;
+  }
+
   const config = {
     appendPadding: 10,
     data,
@@ -35,7 +40,7 @@ export default function CategoryDataPieChart() {
     label: {
       type: 'spider',
       labelHeight: 28,
-      content: '{name}\n{percentage}',
+      content: ({ percent }) => `${(percent * 100).toFixed(2)}%`,
     },
     interactions: [
       {

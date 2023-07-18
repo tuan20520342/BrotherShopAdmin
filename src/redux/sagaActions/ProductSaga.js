@@ -32,26 +32,28 @@ function* actGetProductById(action) {
       yield put(productActions.getProductByIdSuccess({ productId: data.product }));
     } else {
       AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
+      yield put(productActions.getProductByIdFail());
     }
   } catch (err) {
-    AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
+    yield put(productActions.getProductByIdFail());
   }
 }
 
 function* actCreateProduct(action) {
+  const { newProduct, onSuccess, onError } = action;
   try {
-    const { newProduct } = action;
-
     const res = yield call(() => ProductService.createProduct(newProduct));
     const { status, data } = res;
 
     if (status === 201) {
-      // yield put({ type: SagaActionTypes.GET_PRODUCTS_SAGA });
       AlertCustom({ type: 'success', title: data.message });
+      onSuccess();
     } else {
+      onError();
       AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
     }
   } catch (err) {
+    onError();
     AlertCustom({ type: 'error', title: err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });
   }
 }
@@ -65,7 +67,7 @@ function* actUpdateProduct(action) {
     const { status, data } = res;
 
     if (status === 200) {
-      yield put({ type: SagaActionTypes.GET_PRODUCTS_SAGA });
+      yield put({ type: SagaActionTypes.GET_PRODUCT_BY_ID_SAGA, id: updatedProduct.id });
       AlertCustom({ type: 'success', title: data.message });
     } else {
       AlertCustom({ type: 'error', title: data?.message || 'Có lỗi xảy ra, vui lòng thử lại' });

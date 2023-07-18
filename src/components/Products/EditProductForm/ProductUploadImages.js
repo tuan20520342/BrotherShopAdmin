@@ -15,7 +15,10 @@ const getBase64 = (file) =>
     reader.onerror = (error) => reject(error);
   });
 
-export default React.forwardRef(function ProductUploadImages({ product, loading }, ref) {
+export default React.forwardRef(function ProductUploadImages(
+  { product, loading, disabled, setDisabled, onReset },
+  ref,
+) {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
@@ -51,11 +54,42 @@ export default React.forwardRef(function ProductUploadImages({ product, loading 
   };
 
   const handleChange = ({ fileList: newFileList }) => {
+    if (newFileList.length > 0) {
+      newFileList[0].status = 'done';
+    }
     setFileList(newFileList);
   };
 
   const handleMainChange = ({ fileList: newFileList }) => {
+    if (newFileList.length > 0) {
+      newFileList[0].status = 'done';
+    }
     setMainFileList(newFileList);
+  };
+
+  const handleEnableModify = () => {
+    setDisabled(false);
+  };
+
+  const handleFormCancel = () => {
+    setDisabled(true);
+    setMainFileList([
+      {
+        uid: '-1',
+        name: 'Hình ảnh chính',
+        status: 'done',
+        url: `https://res.cloudinary.com/ddajkcbs2/image/upload/${product.images.mainImg}`,
+      },
+    ]);
+    setFileList([
+      {
+        uid: '-1',
+        name: 'Hình ảnh minh họa',
+        status: 'done',
+        url: `https://res.cloudinary.com/ddajkcbs2/image/upload/${product.images.subImg}`,
+      },
+    ]);
+    onReset();
   };
 
   const handleClose = () => {
@@ -86,6 +120,8 @@ export default React.forwardRef(function ProductUploadImages({ product, loading 
                 onPreview={handlePreview}
                 onChange={handleMainChange}
                 style={{ display: 'inline-block' }}
+                customRequest={() => {}}
+                disabled={disabled}
               >
                 {mainFileList.length >= 1 ? null : <UploadButton />}
               </Upload>
@@ -95,22 +131,42 @@ export default React.forwardRef(function ProductUploadImages({ product, loading 
         <Col span={24}>
           <Form.Item name="subImg" label="Thêm ảnh mô tả">
             <CustomImgCrop>
-              <Upload listType="picture-card" fileList={subFileList} onPreview={handlePreview} onChange={handleChange}>
+              <Upload
+                listType="picture-card"
+                fileList={subFileList}
+                onPreview={handlePreview}
+                onChange={handleChange}
+                customRequest={() => {}}
+                disabled={disabled}
+              >
                 {subFileList.length === 1 ? null : <UploadButton />}
               </Upload>
             </CustomImgCrop>
           </Form.Item>
         </Col>
       </Row>
+      <Row style={{ paddingBottom: '20px' }}>
+        {disabled ? (
+          <Space>
+            <Button size="large" type="primary" onClick={() => handleEnableModify()}>
+              Chỉnh sửa
+            </Button>
+            <Button size="large" type="primary" danger onClick={handleClose}>
+              Đóng
+            </Button>
+          </Space>
+        ) : (
+          <Space>
+            <Button size="large" type="primary" danger onClick={handleFormCancel}>
+              Hủy
+            </Button>
+            <Button size="large" type="primary" htmlType="submit" loading={loading}>
+              Lưu
+            </Button>
+          </Space>
+        )}
+      </Row>
 
-      <Space style={{ paddingBottom: '20px' }}>
-        <Button size="large" type="primary" htmlType="submit" loading={loading}>
-          Xác nhận
-        </Button>
-        <Button size="large" type="primary" danger onClick={handleClose}>
-          Đóng
-        </Button>
-      </Space>
       <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
         <img
           alt="example"
